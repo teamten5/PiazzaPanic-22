@@ -3,6 +3,7 @@ package com.mygdx.game.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.ingredient.IngredientName;
 
 import java.util.LinkedList;
 
@@ -22,7 +23,7 @@ public class Player {
 	private float posY;
 	private Texture texture;
 	// The LinkedList is used as an implementation of a stack
-	private LinkedList<String> carryStack;
+	private LinkedList<IngredientName> carryStack;
 	
 
 	//==========================================================\\
@@ -35,7 +36,7 @@ public class Player {
 		this.posX = startX;
 		this.posY = startY;
 		this.texture = new Texture(texture);
-		this.carryStack = new LinkedList<String>();
+		this.carryStack = new LinkedList<IngredientName>();
 	}
 	
 	
@@ -65,21 +66,21 @@ public class Player {
 	//==========================================================\\
 	
 	// Adds new ingredient to the carry stack
-	public void pushIngredient(String ingredient)
+	public void pushIngredient(IngredientName ingredient)
 	{
 		carryStack.add(ingredient);
 	}
 	
 	// Returns the top element of the carry stack
-	public String peekIngredient() 
+	public IngredientName peekIngredient()
 	{
 		return carryStack.get(carryStack.size() - 1);
 	}
 	
 	// Removes the top element of the carry stack and returns it
-	public String popIngredient()
+	public IngredientName popIngredient()
 	{
-		String ingredient = peekIngredient();
+		IngredientName ingredient = peekIngredient();
 		carryStack.remove(carryStack.size() - 1);
 		return ingredient;
 	}
