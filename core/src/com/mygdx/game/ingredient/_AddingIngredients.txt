@@ -33,7 +33,7 @@ IngredientTextures.java
 
 Now that you've 'created' your ingredient, you need to assign it a texture. To do this, we need
 to add it to the IngredientTextures HashMap. Go to the file, and add the Ingredient to the
-provided 'textures' HashMap.
+provided HashMap titled 'textures'.
 e.g. let's say we want to assign 'SAUSAGE_RAW' the texture of 'ingredient_sausage_raw.png', and
 we want to assign 'SAUSAGE_COOKED' the texture of 'ingredient_sausage_cooked.png', we append it as
 so:

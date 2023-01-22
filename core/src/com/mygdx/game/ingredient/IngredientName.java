@@ -7,6 +7,13 @@ package com.mygdx.game.ingredient;
  */
 public enum IngredientName {
 
+    /*
+        The null ingredient. Used to represent an empty carryStack (see Player > peekStack(), popStack()).
+        NULL_INGREDIENT isn't and shouldn't be used for any recipes or stations.
+     */
+    NULL_INGREDIENT,
+
+    // Real ingredients
     BUNS_TOASTED,
     BUNS_UNTOASTED,
     LETTUCE_CUT,

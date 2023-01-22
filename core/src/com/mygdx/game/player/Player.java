@@ -3,6 +3,7 @@ package com.mygdx.game.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.ingredient.IngredientName;
 
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ public class Player {
 	private int id;
 	private float posX;
 	private float posY;
-	private Texture texture;
+	private Sprite sprite;
 	// The LinkedList is used as an implementation of a stack
 	private LinkedList<IngredientName> carryStack;
 	
@@ -35,8 +36,8 @@ public class Player {
 		this.id = id;
 		this.posX = startX;
 		this.posY = startY;
-		this.texture = new Texture(texture);
-		this.carryStack = new LinkedList<IngredientName>();
+		this.sprite = new Sprite(new Texture(texture));
+		this.carryStack = new LinkedList<>();
 	}
 	
 	
@@ -69,11 +70,17 @@ public class Player {
 	public void pushIngredient(IngredientName ingredient)
 	{
 		carryStack.add(ingredient);
+		System.out.println("PUSHED " + ingredient + " TO CHEF " + (getID() + 1) + " STACK");
 	}
 	
 	// Returns the top element of the carry stack
 	public IngredientName peekIngredient()
 	{
+		if(carryStack.size() == 0)
+		{
+			return IngredientName.NULL_INGREDIENT;
+		}
+
 		return carryStack.get(carryStack.size() - 1);
 	}
 	
@@ -81,7 +88,13 @@ public class Player {
 	public IngredientName popIngredient()
 	{
 		IngredientName ingredient = peekIngredient();
-		carryStack.remove(carryStack.size() - 1);
+		if(ingredient != IngredientName.NULL_INGREDIENT)
+		{
+			carryStack.remove(carryStack.size() - 1);
+		}
+
+		System.out.println("POPPED " + ingredient + " FROM CHEF " + (getID() + 1) + " STACK");
+
 		return ingredient;
 	}
 	
@@ -96,6 +109,6 @@ public class Player {
 	
 	public float getYPos() { return posY; }
 	
-	public Texture getTexture() { return texture; }
+	public Sprite getSprite() { return sprite; }
 	
 }

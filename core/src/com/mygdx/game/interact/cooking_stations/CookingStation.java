@@ -7,15 +7,13 @@ import com.mygdx.game.interact.InteractableBase;
 /**
  * @author Thomas McCarthy
  *
- * Station for cutting, inherits properties from the InteractableBase class
+ * Station for cooking, inherits properties from the InteractableBase class
  */
-public class CuttingStation extends InteractableBase {
+public class CookingStation extends InteractableBase {
 
     static IngredientMap ingredientMap = new IngredientMap() {{
 
-        put(IngredientName.LETTUCE_UNCUT, IngredientName.LETTUCE_CUT);
-        put(IngredientName.TOMATO_UNCUT, IngredientName.TOMATO_CUT);
-        put(IngredientName.ONION_UNCUT, IngredientName.ONION_CUT);
+        put(IngredientName.PATTY_RAW, IngredientName.PATTY_COOKED);
 
     }};
 
@@ -24,7 +22,7 @@ public class CuttingStation extends InteractableBase {
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
 
-    public CuttingStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_cutting.png", ingredientMap, 5.0f);
+    public CookingStation(float xPos, float yPos) {
+        super(xPos, yPos, "station_cooking.png", ingredientMap, 5.0f);
     }
 }

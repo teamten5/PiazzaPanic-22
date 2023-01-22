@@ -3,13 +3,15 @@ package com.mygdx.game.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.interact.InteractEngine;
 
 /**
  * 
  * @author Thomas McCarthy
  * 
  * The PlayerEngine class creates and renders the games' three chefs. It also handles
- * chef switching and general interaction.
+ * chef switching and detects interaction input (although the handling of interactions
+ * is then done by the InteractEngine)
  *
  */
 public final class PlayerEngine {
@@ -39,7 +41,7 @@ public final class PlayerEngine {
 	public static void update(SpriteBatch batch) 
 	{
 		for(Player chef : chefs) {
-			batch.draw(chef.getTexture(), chef.getXPos(), chef.getYPos());
+			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos());
 		}
 		
 		activeChef.handleMovement();
@@ -57,6 +59,12 @@ public final class PlayerEngine {
 		}
 		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
 			activeChef = chefs[2]; 
+		}
+
+		// Check for interaction input
+		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
+		{
+			InteractEngine.interact();
 		}
 	}
 	
