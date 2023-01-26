@@ -25,6 +25,8 @@ public class CuttingStation extends InteractableBase {
     //==========================================================\\
 
     public CuttingStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_cutting.png", ingredientMap, 5.0f);
+
+        super(xPos, yPos, "station_cutting.png", ingredientMap, 5.0f, true);
+
     }
 }

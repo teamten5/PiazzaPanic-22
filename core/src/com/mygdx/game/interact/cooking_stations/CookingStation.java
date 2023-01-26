@@ -23,6 +23,8 @@ public class CookingStation extends InteractableBase {
     //==========================================================\\
 
     public CookingStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_cooking.png", ingredientMap, 5.0f);
+
+        super(xPos, yPos, "station_cooking.png", ingredientMap, 5.0f, false);
+
     }
 }

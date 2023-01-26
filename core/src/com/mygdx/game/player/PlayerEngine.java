@@ -2,8 +2,14 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.ingredient.IngredientName;
+import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractEngine;
+
+import java.util.LinkedList;
 
 /**
  * 
@@ -18,7 +24,7 @@ public final class PlayerEngine {
 	
 	static Player[] chefs;
 	static Player activeChef;
-	
+
 	
 	//==========================================================\\
 	//                      INITIALISER                         \\
@@ -42,6 +48,24 @@ public final class PlayerEngine {
 	{
 		for(Player chef : chefs) {
 			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos());
+
+			// Render the top three ingredients of the Chef's carry stack
+			for(int i=2; i>-1; i--)
+			{
+				Sprite ingredientSprite = new Sprite(IngredientTextures.getTexture(chef.peekAtDepth(3 - i)));
+				float size = 30f;
+
+				ingredientSprite.setSize(size, size);
+				ingredientSprite.setCenter(ingredientSprite.getWidth() / 2f, ingredientSprite.getHeight() / 2f);
+
+				ingredientSprite.setAlpha(1 - ((2 - i) * 0.45f));
+
+				float xOffset = ((i - 1) * -35f) + (chef.getSprite().getWidth() / 2) - (size / 2f);
+				ingredientSprite.setX(chef.getXPos() + xOffset);
+				ingredientSprite.setY(chef.getYPos() + 70f);
+
+				ingredientSprite.draw(batch);
+			}
 		}
 		
 		activeChef.handleMovement();
