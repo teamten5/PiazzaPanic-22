@@ -20,14 +20,27 @@ public class InteractableBase {
 	private float xPos;
 	private float yPos;
 	private Texture texture;
+
+	private Texture indicatorArrow = new Texture("indicator_arrow.png");
+
+	// Ingredient Information
 	private IngredientMap ingredientMap;
 	private IngredientName inputIngredient;
 	private IngredientName outputIngredient;
 	private boolean hasIngredient;
+
+	// Station Information
 	private boolean isIngredientStation;
 	private float preparationTime;
 	private float currentTime;
-	private Texture indicatorArrow = new Texture("indicator_arrow.png");
+
+	/*
+		Some stations require a chef to stand by them while preparing
+		an ingredient. In these cases, lockChef is set to True,
+		and the locked chef is stored in the connectedChef variable.
+	 */
+	private boolean lockChef;
+	private Player connectedChef;
 	
 	
 	//==========================================================\\
@@ -35,7 +48,7 @@ public class InteractableBase {
 	//==========================================================\\
 	
 	// Cooking Station Constructor takes a texture, an ingredient map, and a given preparation time
-	public InteractableBase(float xPos, float yPos, String texture, IngredientMap ingredientMap, float preparationTime)
+	public InteractableBase(float xPos, float yPos, String texture, IngredientMap ingredientMap, float preparationTime, boolean lockChef)
 	{
 		this.isIngredientStation = false;
 		this.xPos = xPos;
@@ -44,6 +57,8 @@ public class InteractableBase {
 		this.ingredientMap = ingredientMap;
 		this.preparationTime = preparationTime;
 		this.hasIngredient = false;
+		this.lockChef = lockChef;
+		this.connectedChef = null;
 	}
 	
 	// Ingredient Station Constructor takes a texture, an output ingredient, and no preparation time
@@ -65,15 +80,12 @@ public class InteractableBase {
 	// The active chef can only engage with an interactable if they are within the right range
 	public boolean tryInteraction(float chefXPos, float chefYPos, final float interactRange)
 	{
-		System.out.println("Attempting interaction with " + getClass() + " at " + getXPos() + ", " + getYPos());
-
 		float xDist = Math.abs(chefXPos - xPos);
 		float yDist = Math.abs(chefYPos - yPos);
 
 		// If chef is within range, handle the appropriate interaction
 		if(xDist <= interactRange && yDist <= interactRange)
 		{
-			System.out.println("CAN INTERACT");
 			handleInteraction();
 			return true;
 		}
@@ -109,6 +121,14 @@ public class InteractableBase {
 			outputIngredient = ingredientMap.getOutputIngredient(activeChef.popIngredient());
 			currentTime = 0f;
 			hasIngredient = true;
+
+			// Prevent the chef from moving if lockChef is true
+			if(lockChef)
+			{
+				System.out.println(getClass().getSimpleName() + " requires CHEF " + (activeChef.getID() + 1) + "'s attention");
+				connectedChef = activeChef;
+				connectedChef.setMovementEnabled(false);
+			}
 		}
 	}
 
@@ -123,6 +143,12 @@ public class InteractableBase {
 		if(isPreparing())
 		{
 			currentTime += timeElapsed;
+		}
+		else if(lockChef && connectedChef != null)
+		{
+			System.out.println(getClass().getSimpleName() + " has freed CHEF " + (connectedChef.getID() + 1));
+			connectedChef.setMovementEnabled(true);
+			connectedChef = null;
 		}
 	}
 
@@ -147,6 +173,6 @@ public class InteractableBase {
 
 	public float getPreparationTime() { return preparationTime; }
 
-	public boolean isPreparing() { return (hasIngredient && !isIngredientStation && currentTime <= preparationTime); }
+	public boolean isPreparing() { return (hasIngredient && !isIngredientStation && currentTime < preparationTime); }
 	
 }

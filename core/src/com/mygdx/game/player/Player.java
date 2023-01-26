@@ -25,7 +25,9 @@ public class Player {
 	private Sprite sprite;
 	// The LinkedList is used as an implementation of a stack
 	private LinkedList<IngredientName> carryStack;
-	
+	// Determines if the player is able to move
+	private boolean movementEnabled;
+
 
 	//==========================================================\\
 	//                      CONSTRUCTOR                         \\
@@ -37,7 +39,9 @@ public class Player {
 		this.posX = startX;
 		this.posY = startY;
 		this.sprite = new Sprite(new Texture(texture));
+		sprite.setCenter(sprite.getWidth() / 2f, sprite.getHeight() / 2f);
 		this.carryStack = new LinkedList<>();
+		this.movementEnabled = true;
 	}
 	
 	
@@ -46,11 +50,13 @@ public class Player {
 	//==========================================================\\
 	
 	public void handleMovement() {
-		// Check for user movement input
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) {moveY(1f);}
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) {moveY(-1f);}
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {moveX(-1f);}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {moveX(1f);}
+		if(movementEnabled) {
+			// Check for user movement input
+			if(Gdx.input.isKeyPressed(Input.Keys.W)) {moveY(1f);}
+			if(Gdx.input.isKeyPressed(Input.Keys.S)) {moveY(-1f);}
+			if(Gdx.input.isKeyPressed(Input.Keys.A)) {moveX(-1f);}
+			if(Gdx.input.isKeyPressed(Input.Keys.D)) {moveX(1f);}
+		}
 	}
 	
 	public void moveX(float multiplier) {
@@ -83,6 +89,20 @@ public class Player {
 
 		return carryStack.get(carryStack.size() - 1);
 	}
+
+	// Returns the given index of the stack
+	public IngredientName peekAtDepth(int depth)
+	{
+		try
+		{
+			IngredientName ingredient = carryStack.get(carryStack.size() - depth);
+			return ingredient;
+		}
+		catch(Exception e)
+		{
+			return IngredientName.NULL_INGREDIENT;
+		}
+	}
 	
 	// Removes the top element of the carry stack and returns it
 	public IngredientName popIngredient()
@@ -100,7 +120,7 @@ public class Player {
 	
 	
 	//==========================================================\\
-	//                         GETTERS                          \\
+	//                    GETTERS & SETTERS                     \\
 	//==========================================================\\
 	
 	public int getID() { return id; }
@@ -110,5 +130,10 @@ public class Player {
 	public float getYPos() { return posY; }
 	
 	public Sprite getSprite() { return sprite; }
+
+	public void setMovementEnabled(boolean movementEnabled) {
+		this.movementEnabled = movementEnabled;
+		System.out.println("CHEF " + (getID() + 1) + " MOVEMENT SET TO " + movementEnabled);
+	}
 	
 }

@@ -101,7 +101,7 @@ public final class InteractEngine {
 		float xPos = activeChef.getXPos();
 		float yPos = activeChef.getYPos();
 
-		System.out.println("\nINTERACTION ATTEMPTED\n");
+		System.out.println("\n==============================\nINTERACTION ATTEMPTED");
 		for(InteractableBase interactable : interactables)
 		{
 			boolean interacted = interactable.tryInteraction(xPos, yPos, interactRange);
@@ -109,6 +109,6 @@ public final class InteractEngine {
 			// Prevent the player from interacting with multiple interactables at once
 			if(interacted) break;
 		}
-		System.out.println("\nINTERACTION ENDED");
+		System.out.println("INTERACTION ENDED");
 	}
 }
