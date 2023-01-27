@@ -21,7 +21,9 @@ import java.util.LinkedList;
  *
  */
 public final class PlayerEngine {
-	
+
+	static SpriteBatch batch;
+
 	static Player[] chefs;
 	static Player activeChef;
 
@@ -30,8 +32,10 @@ public final class PlayerEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise()
+	public static void initialise(SpriteBatch gameBatch)
 	{
+		batch = gameBatch;
+
 		chefs = new Player[3];
 		chefs[0] = new Player(0,  25,  25, "temp_chef_1.png");
 		chefs[1] = new Player(1,  75,  75, "temp_chef_2.png");
@@ -44,7 +48,7 @@ public final class PlayerEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update(SpriteBatch batch) 
+	public static void update()
 	{
 		for(Player chef : chefs) {
 			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos());
@@ -52,7 +56,7 @@ public final class PlayerEngine {
 			// Render the top three ingredients of the Chef's carry stack
 			for(int i=2; i>-1; i--)
 			{
-				Sprite ingredientSprite = new Sprite(IngredientTextures.getTexture(chef.peekAtDepth(3 - i)));
+				Sprite ingredientSprite = new Sprite(IngredientTextures.getTexture(chef.getIngredientStack().peekAtDepth(3 - i)));
 				float size = 30f;
 
 				ingredientSprite.setSize(size, size);

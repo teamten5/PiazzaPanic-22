@@ -3,9 +3,14 @@ package com.mygdx.game.interact;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.interact.cooking_stations.BakingStation;
 import com.mygdx.game.interact.cooking_stations.CookingStation;
 import com.mygdx.game.interact.cooking_stations.CuttingStation;
+import com.mygdx.game.interact.ingredient_stations.BunStation;
 import com.mygdx.game.interact.ingredient_stations.LettuceStation;
+import com.mygdx.game.interact.ingredient_stations.PattyStation;
+import com.mygdx.game.interact.special_stations.Bin;
+import com.mygdx.game.interact.special_stations.Counter;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -19,6 +24,8 @@ import com.mygdx.game.player.PlayerEngine;
  */
 
 public final class InteractEngine {
+
+	static SpriteBatch batch;
 
 	// An array of interactable objects on the screen
 	static InteractableBase[] interactables;
@@ -35,17 +42,30 @@ public final class InteractEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise()
+	public static void initialise(SpriteBatch gameBatch)
 	{
+		batch = gameBatch;
+
 		interactables = new InteractableBase[] {
 
-			new LettuceStation( 50, 200),
+			new LettuceStation(70, 210),
+			new BunStation(70, 280),
+			new PattyStation(70, 350),
 
-			new CuttingStation(200, 200),
-			new CuttingStation(350, 200),
+			new CookingStation(280, 350),
+			new CookingStation(350, 350),
 
-			new CookingStation(200, 400),
-			new CookingStation(350, 400)
+			new CuttingStation(280, 210),
+			new CuttingStation(350, 210),
+
+			new BakingStation(280, 70),
+			new BakingStation(350, 70),
+
+			new Counter(560, 350),
+			new Counter(560, 280),
+			new Counter(560, 210),
+
+			new Bin(560, 70)
 
 		};
 
@@ -60,7 +80,7 @@ public final class InteractEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update(SpriteBatch batch) 
+	public static void update()
 	{
 		for(InteractableBase interactable : interactables) {
 			// Render the interactable and the ingredient on it

@@ -8,13 +8,13 @@ import com.mygdx.game.interact.InteractableBase;
  *
  * An ingredient station that gives lettuce to the player.
  */
-public class LettuceStation extends InteractableBase {
+public class PattyStation extends InteractableBase {
 
     //==========================================================\\
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
 
-    public LettuceStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_lettuce.png", IngredientName.LETTUCE_UNCUT);
+    public PattyStation(float xPos, float yPos) {
+        super(xPos, yPos, "station_patty.png", IngredientName.PATTY_RAW);
     }
 }

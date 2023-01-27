@@ -9,11 +9,11 @@ import com.mygdx.game.interact.InteractableBase;
  *
  * Station for cooking, inherits properties from the InteractableBase class
  */
-public class CookingStation extends InteractableBase {
+public class BakingStation extends InteractableBase {
 
     static IngredientMap ingredientMap = new IngredientMap() {{
 
-        put(IngredientName.PATTY_RAW, IngredientName.PATTY_COOKED);
+        put(IngredientName.BUNS_UNTOASTED, IngredientName.BUNS_TOASTED);
 
     }};
 
@@ -22,9 +22,9 @@ public class CookingStation extends InteractableBase {
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
 
-    public CookingStation(float xPos, float yPos) {
+    public BakingStation(float xPos, float yPos) {
 
-        super(xPos, yPos, "station_cooking.png", ingredientMap, 8.0f, false);
+        super(xPos, yPos, "station_baking.png", ingredientMap, 8.0f, false);
 
     }
 }

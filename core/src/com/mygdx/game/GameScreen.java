@@ -28,14 +28,13 @@ public class GameScreen extends InputAdapter implements Screen {
 	//==========================================================\\
 	@Override
 	public void show() {
-				
-		PlayerEngine.initialise();
-		InteractEngine.initialise();
-				
 		stage = new Stage();
 		// Create processor to handle user input
 		Gdx.input.setInputProcessor(stage);
 		batch = new SpriteBatch();
+
+		PlayerEngine.initialise(batch);
+		InteractEngine.initialise(batch);
 	}
 
 	
@@ -52,8 +51,8 @@ public class GameScreen extends InputAdapter implements Screen {
 		stage.draw();
 				
 		// Update the render
-		PlayerEngine.update(batch);
-		InteractEngine.update(batch);
+		PlayerEngine.update();
+		InteractEngine.update();
 		
 		// End the process
 		batch.end();

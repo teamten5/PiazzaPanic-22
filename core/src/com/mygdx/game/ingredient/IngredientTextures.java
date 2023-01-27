@@ -19,6 +19,10 @@ public final class IngredientTextures {
         // Other ingredients
         put(IngredientName.LETTUCE_UNCUT, new Texture("ingredient_lettuce_uncut.png"));
         put(IngredientName.LETTUCE_CUT, new Texture("ingredient_lettuce_cut.png"));
+        put(IngredientName.PATTY_RAW, new Texture("ingredient_patty_raw.png"));
+        put(IngredientName.PATTY_COOKED, new Texture("ingredient_patty_cooked.png"));
+        put(IngredientName.BUNS_UNTOASTED, new Texture("ingredient_bun_untoasted.png"));
+        put(IngredientName.BUNS_TOASTED, new Texture("ingredient_bun_toasted.png"));
     }};
 
 

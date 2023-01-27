@@ -21,7 +21,7 @@ public class InteractableBase {
 	private float yPos;
 	private Texture texture;
 
-	private Texture indicatorArrow = new Texture("indicator_arrow.png");
+	public Texture indicatorArrow = new Texture("indicator_arrow.png");
 
 	// Ingredient Information
 	private IngredientMap ingredientMap;
@@ -71,6 +71,17 @@ public class InteractableBase {
 		this.outputIngredient = outputIngredient;
 		this.hasIngredient = true;
 	}
+
+	/*
+	 Special Station Constructor takes a texture only, as they override the handleInteraction method,
+	 making other parameters unnecessary.
+	 */
+	public InteractableBase(float xPos, float yPos, String texture)
+	{
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.texture = new Texture(texture);
+	}
 	
 	
 	//==========================================================\\
@@ -94,31 +105,31 @@ public class InteractableBase {
 	}
 
 	// We need to determine what action to take based on the interactable's variables
-	private void handleInteraction()
+	public void handleInteraction()
 	{
 		Player activeChef = PlayerEngine.getActiveChef();
 
-		System.out.println("Chef has ingredient " + activeChef.peekIngredient());
+		System.out.println("Chef has ingredient " + activeChef.getIngredientStack().peek());
 		
 		// INGREDIENT STATION : give the ingredient to the chef
 		if(isIngredientStation)
 		{
-			activeChef.pushIngredient(outputIngredient);
+			activeChef.getIngredientStack().push(outputIngredient);
 		}
 		// COOKING STATION : is an ingredient already being prepared?
 		else if(hasIngredient)
 		{
 			if(currentTime >= preparationTime)
 			{
-				activeChef.pushIngredient(outputIngredient);
+				activeChef.getIngredientStack().push(outputIngredient);
 				hasIngredient = false;
 			}
 		}
 		// COOKING STATION : can the station take the chef's top ingredient?
-		else if(ingredientMap.takesIngredient(activeChef.peekIngredient()))
+		else if(ingredientMap.takesIngredient(activeChef.getIngredientStack().peek()))
 		{
-			inputIngredient = activeChef.peekIngredient();
-			outputIngredient = ingredientMap.getOutputIngredient(activeChef.popIngredient());
+			inputIngredient = activeChef.getIngredientStack().peek();
+			outputIngredient = ingredientMap.getOutputIngredient(activeChef.getIngredientStack().pop());
 			currentTime = 0f;
 			hasIngredient = true;
 
@@ -174,5 +185,5 @@ public class InteractableBase {
 	public float getPreparationTime() { return preparationTime; }
 
 	public boolean isPreparing() { return (hasIngredient && !isIngredientStation && currentTime < preparationTime); }
-	
+
 }
