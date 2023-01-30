@@ -23,5 +23,8 @@ public enum IngredientName {
     PATTY_COOKED,
     PATTY_RAW,
     TOMATO_CUT,
-    TOMATO_UNCUT
+    TOMATO_UNCUT,
+
+    // Assembled Foods
+    BURGER
 }

@@ -1,14 +1,12 @@
 package com.mygdx.game.interact.special_stations;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game._convenience.IngredientStack;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.player.PlayerEngine;
-import sun.awt.image.ImageWatched;
 
-import java.util.LinkedList;
 
 /**
  * @author Thomas McCarthy
@@ -55,10 +53,10 @@ public class Counter extends InteractableBase {
     //==========================================================\\
 
     @Override
-    public Texture getIngredientTexture()
+    public Sprite getIngredientSprite()
     {
-        if(storedIngredient == null)    { return super.indicatorArrow; }
-        else                            { return IngredientTextures.getTexture(storedIngredient); }
+        if(storedIngredient == null)    { return new Sprite(super.indicatorArrow); }
+        else                            { return new Sprite(IngredientTextures.getTexture(storedIngredient)); }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.ingredient.IngredientMap;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
@@ -21,7 +22,7 @@ public class InteractableBase {
 	private float yPos;
 	private Texture texture;
 
-	public Texture indicatorArrow = new Texture("indicator_arrow.png");
+	protected Texture indicatorArrow = new Texture("indicator_arrow.png");
 
 	// Ingredient Information
 	private IngredientMap ingredientMap;
@@ -174,10 +175,10 @@ public class InteractableBase {
 
 	public Texture getTexture() { return texture; }
 
-	public Texture getIngredientTexture() {
-		if(!hasIngredient) 						{ return indicatorArrow; }
-		else if(currentTime >= preparationTime) { return IngredientTextures.getTexture(outputIngredient); }
-		else 									{ return IngredientTextures.getTexture(inputIngredient); }
+	public Sprite getIngredientSprite() {
+		if(!hasIngredient) 						{ return new Sprite(indicatorArrow); }
+		else if(currentTime >= preparationTime) { return new Sprite(IngredientTextures.getTexture(outputIngredient)); }
+		else 									{ return new Sprite(IngredientTextures.getTexture(inputIngredient)); }
 	}
 
 	public float getCurrentTime() { return currentTime; }

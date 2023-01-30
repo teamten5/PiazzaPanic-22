@@ -23,6 +23,9 @@ public final class IngredientTextures {
         put(IngredientName.PATTY_COOKED, new Texture("ingredient_patty_cooked.png"));
         put(IngredientName.BUNS_UNTOASTED, new Texture("ingredient_bun_untoasted.png"));
         put(IngredientName.BUNS_TOASTED, new Texture("ingredient_bun_toasted.png"));
+
+        // Assembled foods
+        put(IngredientName.BURGER, new Texture("ingredient_burger.png"));
     }};
 
 

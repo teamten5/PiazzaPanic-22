@@ -2,6 +2,7 @@ package com.mygdx.game.interact;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.interact.cooking_stations.BakingStation;
 import com.mygdx.game.interact.cooking_stations.CookingStation;
@@ -11,6 +12,7 @@ import com.mygdx.game.interact.ingredient_stations.LettuceStation;
 import com.mygdx.game.interact.ingredient_stations.PattyStation;
 import com.mygdx.game.interact.special_stations.Bin;
 import com.mygdx.game.interact.special_stations.Counter;
+import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -65,6 +67,8 @@ public final class InteractEngine {
 			new Counter(560, 280),
 			new Counter(560, 210),
 
+			new BurgerStation(420, 70),
+
 			new Bin(560, 70)
 
 		};
@@ -85,7 +89,9 @@ public final class InteractEngine {
 		for(InteractableBase interactable : interactables) {
 			// Render the interactable and the ingredient on it
 			batch.draw(interactable.getTexture(), interactable.getXPos(), interactable.getYPos());
-			batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos());
+			Sprite ingredientSprite = interactable.getIngredientSprite();
+			ingredientSprite.setPosition(interactable.getXPos(), interactable.getYPos());
+			ingredientSprite.draw(batch);
 
 			// Increment the interactable's timer by the time elapsed between now and the last frame render
 			interactable.incrementTime(Gdx.graphics.getDeltaTime());
