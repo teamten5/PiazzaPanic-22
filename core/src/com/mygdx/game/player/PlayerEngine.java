@@ -36,10 +36,11 @@ public final class PlayerEngine {
 	{
 		batch = gameBatch;
 
-		chefs = new Player[3];
-		chefs[0] = new Player(0,  25,  25, "temp_chef_1.png");
-		chefs[1] = new Player(1,  75,  75, "temp_chef_2.png");
-		chefs[2] = new Player(2, 125, 125, "temp_chef_3.png");
+		chefs = new Player[2];
+		chefs[0] = new Player(0,  175,  350, "temp_chef_1.png");
+		chefs[1] = new Player(1,  455,  350, "temp_chef_2.png");
+		// chefs[2] = new Player(2, 125, 125, "temp_chef_3.png");
+
 		activeChef = chefs[0];
 	}
 	
@@ -85,9 +86,9 @@ public final class PlayerEngine {
 		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
 			activeChef = chefs[1];
 		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+		/* else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
 			activeChef = chefs[2]; 
-		}
+		} */
 
 		// Check for interaction input
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E))

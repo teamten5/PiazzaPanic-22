@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.customer.CustomerEngine;
 import com.mygdx.game.interact.InteractEngine;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -51,7 +50,9 @@ public class GameScreen extends InputAdapter implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		batch = new SpriteBatch();
 
+		// Initialise Engine scripts
 		PlayerEngine.initialise(batch);
+		CustomerEngine.initialise(batch);
 		InteractEngine.initialise(batch);
 	}
 
@@ -73,7 +74,8 @@ public class GameScreen extends InputAdapter implements Screen {
 		// Update the render
 		PlayerEngine.update();
 		InteractEngine.update();
-		
+		CustomerEngine.update();
+
 		// End the process
 		batch.end();
 	}

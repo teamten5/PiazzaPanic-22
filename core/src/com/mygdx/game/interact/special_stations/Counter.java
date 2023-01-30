@@ -15,7 +15,7 @@ import com.mygdx.game.player.PlayerEngine;
  */
 public class Counter extends InteractableBase {
 
-    IngredientName storedIngredient;
+    protected IngredientName storedIngredient;
 
 
     //==========================================================\\
@@ -38,7 +38,11 @@ public class Counter extends InteractableBase {
     {
         if(storedIngredient == null)
         {
-            storedIngredient = PlayerEngine.getActiveChef().getIngredientStack().pop();
+            IngredientName ingredient = PlayerEngine.getActiveChef().getIngredientStack().peek();
+            if(!ingredient.equals(IngredientName.NULL_INGREDIENT))
+            {
+                storedIngredient = PlayerEngine.getActiveChef().getIngredientStack().pop();
+            }
         }
         else
         {

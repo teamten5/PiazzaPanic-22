@@ -10,10 +10,13 @@ import com.mygdx.game.interact.cooking_stations.CuttingStation;
 import com.mygdx.game.interact.ingredient_stations.*;
 import com.mygdx.game.interact.special_stations.Bin;
 import com.mygdx.game.interact.special_stations.Counter;
+import com.mygdx.game.interact.special_stations.CustomerCounter;
 import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
 import com.mygdx.game.interact.special_stations.assembly_stations.SaladStation;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
+
+import java.util.LinkedList;
 
 /**
  * 
@@ -30,6 +33,7 @@ public final class InteractEngine {
 
 	// An array of interactable objects on the screen
 	static InteractableBase[] interactables;
+	static LinkedList<CustomerCounter> customerCounters;
 
 	// Determines how far away the player must be to interact with a station
 	static float interactRange;
@@ -49,29 +53,37 @@ public final class InteractEngine {
 
 		interactables = new InteractableBase[] {
 
-			new OnionStation(70, 70),
-			new TomatoStation(70, 140),
-			new LettuceStation(70, 210),
-			new BunStation(70, 280),
-			new PattyStation(70, 350),
+			new CustomerCounter(70, 140),
+			new CustomerCounter(70, 210),
+			new CustomerCounter(70, 280),
 
-			new CookingStation(280, 350),
-			new CookingStation(350, 350),
+			new Counter(70, 350),
+			new Counter(70, 70),
+			new Counter(420, 420),
+			new Counter(420, 0),
+			new Counter(490, 420),
+			new Counter(490, 0),
 
-			new CuttingStation(280, 210),
-			new CuttingStation(350, 210),
+			new CookingStation(140, 420),
+			new CookingStation(280, 420),
+			new BakingStation(210, 420),
+			new BakingStation(350, 420),
+			new CuttingStation(140, 0),
+			new CuttingStation(210, 0),
+			new CuttingStation(280, 0),
+			new CuttingStation(350, 0),
 
-			new BakingStation(280, 70),
-			new BakingStation(350, 70),
+			new BurgerStation(210, 210),
+			new SaladStation(280, 210),
 
-			new Counter(560, 350),
-			new Counter(560, 280),
-			new Counter(560, 210),
+			new PattyStation(350, 210),
+			new BunStation(420, 210),
+			new LettuceStation(560, 210),
+			new TomatoStation(560, 280),
+			new OnionStation(560, 140),
 
-			new BurgerStation(420, 70),
-			new SaladStation(210, 70),
-
-			new Bin(560, 70)
+			new Bin(560, 420),
+			new Bin(560, 0)
 
 		};
 
