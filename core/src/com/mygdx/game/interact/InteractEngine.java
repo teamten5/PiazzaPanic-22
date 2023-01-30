@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.interact.cooking_stations.BakingStation;
 import com.mygdx.game.interact.cooking_stations.CookingStation;
 import com.mygdx.game.interact.cooking_stations.CuttingStation;
-import com.mygdx.game.interact.ingredient_stations.BunStation;
-import com.mygdx.game.interact.ingredient_stations.LettuceStation;
-import com.mygdx.game.interact.ingredient_stations.PattyStation;
+import com.mygdx.game.interact.ingredient_stations.*;
 import com.mygdx.game.interact.special_stations.Bin;
 import com.mygdx.game.interact.special_stations.Counter;
 import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
+import com.mygdx.game.interact.special_stations.assembly_stations.SaladStation;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -50,6 +49,8 @@ public final class InteractEngine {
 
 		interactables = new InteractableBase[] {
 
+			new OnionStation(70, 70),
+			new TomatoStation(70, 140),
 			new LettuceStation(70, 210),
 			new BunStation(70, 280),
 			new PattyStation(70, 350),
@@ -68,6 +69,7 @@ public final class InteractEngine {
 			new Counter(560, 210),
 
 			new BurgerStation(420, 70),
+			new SaladStation(210, 70),
 
 			new Bin(560, 70)
 

@@ -26,5 +26,6 @@ public enum IngredientName {
     TOMATO_UNCUT,
 
     // Assembled Foods
-    BURGER
+    BURGER,
+    SALAD
 }

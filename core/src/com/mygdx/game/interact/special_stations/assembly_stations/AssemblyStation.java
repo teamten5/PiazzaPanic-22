@@ -1,14 +1,17 @@
 package com.mygdx.game.interact.special_stations.assembly_stations;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.player.PlayerEngine;
 
-import java.util.HashMap;
 
+/**
+ * @author Thomas McCarthy
+ *
+ * A type of special station used for assembling the completed foods.
+ */
 public class AssemblyStation extends InteractableBase {
 
     protected IngredientName[] recipe;

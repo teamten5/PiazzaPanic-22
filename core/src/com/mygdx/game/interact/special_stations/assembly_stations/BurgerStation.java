@@ -2,6 +2,11 @@ package com.mygdx.game.interact.special_stations.assembly_stations;
 
 import com.mygdx.game.ingredient.IngredientName;
 
+/**
+ * @author Thomas McCarthy
+ *
+ * Assembly station for a Burger
+ */
 public class BurgerStation extends AssemblyStation {
 
     // Burger recipe

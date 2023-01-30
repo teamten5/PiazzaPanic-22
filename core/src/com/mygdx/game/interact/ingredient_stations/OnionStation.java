@@ -6,15 +6,15 @@ import com.mygdx.game.interact.InteractableBase;
 /**
  * @author Thomas McCarthy
  *
- * An ingredient station that gives a patty to the player.
+ * An ingredient station that gives tomato to the player
  */
-public class PattyStation extends InteractableBase {
+public class OnionStation extends InteractableBase {
 
     //==========================================================\\
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
 
-    public PattyStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_patty.png", IngredientName.PATTY_RAW);
+    public OnionStation(float xPos, float yPos) {
+        super(xPos, yPos, "station_onion.png", IngredientName.ONION_UNCUT);
     }
 }

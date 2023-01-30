@@ -2,13 +2,15 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PiazzaPanic extends Game {
 	
-	SpriteBatch batch;
-	Texture img;
+	Viewport viewport;
+	OrthographicCamera camera;
+	final static float WORLD_WIDTH = 1000;
+	final static float WORLD_HEIGHT = 500;
 	
 	// Screens
 	Screen gameScreen;
