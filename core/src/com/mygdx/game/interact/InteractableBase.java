@@ -2,11 +2,14 @@ package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.ingredient.IngredientMap;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
+
+import java.awt.*;
 
 /**
  * 
@@ -20,7 +23,8 @@ public class InteractableBase {
 
 	private float xPos;
 	private float yPos;
-	private Texture texture;
+	private Rectangle collisionRect;
+	private Sprite sprite;
 
 	protected Texture indicatorArrow = new Texture("indicator_arrow.png");
 
@@ -54,12 +58,13 @@ public class InteractableBase {
 		this.isIngredientStation = false;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.texture = new Texture(texture);
+		this.sprite = new Sprite(new Texture(texture));
 		this.ingredientMap = ingredientMap;
 		this.preparationTime = preparationTime;
 		this.hasIngredient = false;
 		this.lockChef = lockChef;
 		this.connectedChef = null;
+		setUpCollision();
 	}
 	
 	// Ingredient Station Constructor takes a texture, an output ingredient, and no preparation time
@@ -68,9 +73,10 @@ public class InteractableBase {
 		this.isIngredientStation = true;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.texture = new Texture(texture);
+		this.sprite = new Sprite(new Texture(texture));
 		this.outputIngredient = outputIngredient;
 		this.hasIngredient = true;
+		setUpCollision();
 	}
 
 	/*
@@ -81,7 +87,15 @@ public class InteractableBase {
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.texture = new Texture(texture);
+		this.sprite = new Sprite(new Texture(texture));
+		setUpCollision();
+	}
+
+	public void setUpCollision()
+	{
+		sprite.setCenter(xPos + sprite.getTexture().getWidth(), yPos + sprite.getTexture().getHeight());
+		sprite.setPosition(xPos, yPos);
+		collisionRect = new Rectangle(xPos, yPos, this.sprite.getTexture().getWidth(), this.sprite.getTexture().getHeight());
 	}
 	
 	
@@ -98,7 +112,6 @@ public class InteractableBase {
 		// If chef is within range, handle the appropriate interaction
 		if(xDist <= interactRange && yDist <= interactRange)
 		{
-			handleInteraction();
 			return true;
 		}
 
@@ -173,7 +186,7 @@ public class InteractableBase {
 
 	public float getYPos() { return yPos; }
 
-	public Texture getTexture() { return texture; }
+	public Sprite getSprite() { return sprite; }
 
 	public Sprite getIngredientSprite() {
 		if(!hasIngredient) 						{ return new Sprite(indicatorArrow); }
@@ -186,5 +199,7 @@ public class InteractableBase {
 	public float getPreparationTime() { return preparationTime; }
 
 	public boolean isPreparing() { return (hasIngredient && !isIngredientStation && currentTime < preparationTime); }
+
+	public Rectangle getCollisionRect() { return collisionRect; }
 
 }

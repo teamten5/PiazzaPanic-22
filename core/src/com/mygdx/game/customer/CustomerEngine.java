@@ -33,10 +33,6 @@ public final class CustomerEngine {
     static Texture customerTexture;
 
 
-    static boolean first = true;
-
-
-
     //==========================================================\\
     //                      INITIALISER                         \\
     //==========================================================\\

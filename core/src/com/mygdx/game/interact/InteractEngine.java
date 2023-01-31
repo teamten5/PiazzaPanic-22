@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.interact.cooking_stations.BakingStation;
 import com.mygdx.game.interact.cooking_stations.CookingStation;
 import com.mygdx.game.interact.cooking_stations.CuttingStation;
@@ -87,10 +88,17 @@ public final class InteractEngine {
 
 		};
 
-		interactRange = 50f;
+		interactRange = 85f;
 
 		sliderBackground = new Texture("slider_background.png");
 		sliderFill = new Texture("slider_fill.png");
+
+		Rectangle[] collisionRects = new Rectangle[interactables.length];
+		for(int i=0; i<interactables.length; i++)
+		{
+			collisionRects[i] = interactables[i].getCollisionRect();
+		}
+		PlayerEngine.setColliders(collisionRects);
 	}
 	
 	
@@ -102,7 +110,8 @@ public final class InteractEngine {
 	{
 		for(InteractableBase interactable : interactables) {
 			// Render the interactable and the ingredient on it
-			batch.draw(interactable.getTexture(), interactable.getXPos(), interactable.getYPos());
+			interactable.getSprite().draw(batch);
+
 			Sprite ingredientSprite = interactable.getIngredientSprite();
 			ingredientSprite.setPosition(interactable.getXPos(), interactable.getYPos());
 			ingredientSprite.draw(batch);
@@ -141,14 +150,32 @@ public final class InteractEngine {
 		float xPos = activeChef.getXPos();
 		float yPos = activeChef.getYPos();
 
+
 		System.out.println("\n==============================\nINTERACTION ATTEMPTED");
+
+		float minDistance = Float.MAX_VALUE;
+		InteractableBase closestInteractable = null;
 		for(InteractableBase interactable : interactables)
 		{
-			boolean interacted = interactable.tryInteraction(xPos, yPos, interactRange);
+			boolean valid = interactable.tryInteraction(xPos, yPos, interactRange);
 
-			// Prevent the player from interacting with multiple interactables at once
-			if(interacted) break;
+			if(valid)
+			{
+				float xDist = interactable.getXPos() - PlayerEngine.getActiveChef().getXPos();
+				float yDist = interactable.getYPos() - PlayerEngine.getActiveChef().getYPos();
+				float distance = (float)Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
+				if(distance < minDistance)
+				{
+					minDistance = distance;
+					closestInteractable = interactable;
+				}
+			}
 		}
+		if(closestInteractable != null)
+		{
+			closestInteractable.handleInteraction();
+		}
+
 		System.out.println("INTERACTION ENDED");
 	}
 }

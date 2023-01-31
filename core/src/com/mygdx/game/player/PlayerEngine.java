@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractEngine;
@@ -26,6 +27,7 @@ public final class PlayerEngine {
 
 	static Player[] chefs;
 	static Player activeChef;
+	static Rectangle[] interactableColliders;
 
 	
 	//==========================================================\\
@@ -42,6 +44,8 @@ public final class PlayerEngine {
 		// chefs[2] = new Player(2, 125, 125, "temp_chef_3.png");
 
 		activeChef = chefs[0];
+
+		interactableColliders = new Rectangle[0];
 	}
 	
 	
@@ -73,7 +77,7 @@ public final class PlayerEngine {
 			}
 		}
 		
-		activeChef.handleMovement();
+		activeChef.handleMovement(interactableColliders);
 		
 		// Chef Quick-Switch with 'Q'
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
@@ -99,9 +103,11 @@ public final class PlayerEngine {
 	
 	
 	//==========================================================\\
-	//                         GETTERS                          \\
+	//                    GETTERS & SETTERS                     \\
 	//==========================================================\\
 	
 	public static Player getActiveChef() { return activeChef; }
-	
+
+	public static void setColliders(Rectangle[] colliders) { interactableColliders = colliders; }
+
 }
