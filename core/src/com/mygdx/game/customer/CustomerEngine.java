@@ -60,7 +60,7 @@ public final class CustomerEngine {
         timer = 0f;
 
         maxCustomers = 1;
-        numberOfCustomers = 1;
+        numberOfCustomers = 5;
     }
 
 

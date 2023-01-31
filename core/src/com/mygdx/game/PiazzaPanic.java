@@ -17,6 +17,7 @@ public class PiazzaPanic extends Game {
 
 	public void startGame()
 	{
+		System.out.println("GAME STARTED");
 		gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
 	}
