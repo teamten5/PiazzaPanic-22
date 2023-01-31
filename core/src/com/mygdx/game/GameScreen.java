@@ -3,9 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,6 +35,20 @@ public class GameScreen extends InputAdapter implements Screen {
 	final static float WORLD_WIDTH = 1600;
 	final static float WORLD_HEIGHT = 1200;
 
+	// A timer to track how long the screen has been running
+	static float masterTimer;
+	private Label timerLabel;
+
+	// A reference to the main game file
+	private PiazzaPanic main = null;
+
+
+	public GameScreen(PiazzaPanic main)
+	{
+		super();
+		this.main = main;
+	}
+
 	
 	//==========================================================\\
 	//                         START                            \\
@@ -54,6 +72,18 @@ public class GameScreen extends InputAdapter implements Screen {
 		PlayerEngine.initialise(batch);
 		CustomerEngine.initialise(batch);
 		InteractEngine.initialise(batch);
+
+		masterTimer = 0f;
+
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont();
+		labelStyle.font = font;
+		labelStyle.fontColor = Color.BLACK;
+
+		timerLabel = new Label("0s", labelStyle);
+		timerLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+		timerLabel.setAlignment(Align.left);
+		stage.addActor(timerLabel);
 	}
 
 	
@@ -78,6 +108,16 @@ public class GameScreen extends InputAdapter implements Screen {
 
 		// End the process
 		batch.end();
+
+		// Increment the timer and update UI
+		masterTimer += Gdx.graphics.getDeltaTime();
+		timerLabel.setText((int) masterTimer);
+
+		// Check for game over state
+		if(CustomerEngine.getCustomersRemaining() == 0 && main != null)
+		{
+			main.endGame("SCENARIO COMPLETED IN\n" + String.valueOf((int)masterTimer) + " seconds");
+		}
 	}
 	
 	

@@ -1,23 +1,37 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PiazzaPanic extends Game {
 	
-	Viewport viewport;
-	OrthographicCamera camera;
-	final static float WORLD_WIDTH = 1000;
-	final static float WORLD_HEIGHT = 500;
-	
 	// Screens
-	Screen gameScreen;
+	GameScreen gameScreen;
+	EndScreen endScreen;
+	MenuScreen menuScreen;
 	
 	@Override
 	public void create () {
-		gameScreen = new GameScreen();
+		menuScreen = new MenuScreen(this);
+		setScreen(menuScreen);
+	}
+
+	public void startGame()
+	{
+		gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
+	}
+
+	public void endGame(String displayDetails)
+	{
+		System.out.println("GAME ENDED");
+		endScreen = new EndScreen(this, displayDetails);
+		setScreen(endScreen);
+	}
+
+	public void goToMenu()
+	{
+		System.out.println("RETURNED TO MAIN MENU");
+		menuScreen = new MenuScreen(this);
+		setScreen(menuScreen);
 	}
 }

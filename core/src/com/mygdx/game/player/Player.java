@@ -73,7 +73,6 @@ public class Player {
 			{
 				if(c.overlaps(collisionRect))
 				{
-					System.out.println("COLLIDED");
 					posX = previousPosX;
 					posY = previousPosY;
 					collisionRect.setPosition(posX, posY);

@@ -4,6 +4,7 @@ package com.mygdx.game.customer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.GameScreen;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 
@@ -30,6 +31,10 @@ public final class CustomerEngine {
     static float maxTimeGap;
     static float timer;
 
+
+    // This will need to be changed when the customer count can be altered. For endless mode this can be set to -1
+    static int numberOfCustomers;
+
     static Texture customerTexture;
 
 
@@ -50,10 +55,12 @@ public final class CustomerEngine {
         customerTexture = new Texture("customer.png");
         customerCounters = new LinkedList<>();
         customers = new LinkedList<>();
-        maxCustomers = 1;
         minTimeGap = 2f;
         maxTimeGap = 10f;
         timer = 0f;
+
+        maxCustomers = 1;
+        numberOfCustomers = 1;
     }
 
 
@@ -70,9 +77,10 @@ public final class CustomerEngine {
             batch.draw(customerTexture, c.getXPos(), c.getYPos());
         }
 
-        if(timer <= 0 && customers.size() < maxCustomers)
+        if(timer <= 0 && customers.size() < maxCustomers && numberOfCustomers != 0)
         {
-            Customer customer = new Customer(customerCounters.get(0), recipes[0]);
+            int random = (int)(Math.random() * recipes.length);
+            Customer customer = new Customer(customerCounters.get(0), recipes[random]);
             customers.add(customer);
             timer = minTimeGap + ((float)Math.random() * (maxTimeGap - minTimeGap));
         }
@@ -80,6 +88,10 @@ public final class CustomerEngine {
         timer -= Gdx.graphics.getDeltaTime();
     }
 
+
+    //==========================================================\\
+    //                    GETTERS & SETTERS                     \\
+    //==========================================================\\
 
     public static void addCustomerCounter(CustomerCounter counter)
     {
@@ -90,6 +102,12 @@ public final class CustomerEngine {
     public static void removeCustomer(Customer customer)
     {
         customers.remove(customer);
+        numberOfCustomers--;
+    }
+
+    public static int getCustomersRemaining()
+    {
+        return numberOfCustomers;
     }
 
 }
