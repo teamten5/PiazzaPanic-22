@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game._convenience.IngredientStack;
-import com.mygdx.game.ingredient.IngredientName;
-
-import java.util.LinkedList;
 
 /**
  * 

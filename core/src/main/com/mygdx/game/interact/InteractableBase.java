@@ -3,13 +3,11 @@ package com.mygdx.game.interact;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.ingredient.IngredientMap;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
-
-import java.awt.*;
+import com.mygdx.game.ingredient.IngredientMap;
 
 /**
  * 

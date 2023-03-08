@@ -4,7 +4,6 @@ package com.mygdx.game.customer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.GameScreen;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 

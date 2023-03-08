@@ -1,5 +1,8 @@
 package com.mygdx.game.ingredient;
 
+import com.badlogic.gdx.graphics.Texture;
+import java.util.HashMap;
+
 /**
  * @author Thomas McCarthy
  *

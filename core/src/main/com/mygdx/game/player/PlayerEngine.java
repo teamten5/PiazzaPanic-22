@@ -2,15 +2,11 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractEngine;
-
-import java.util.LinkedList;
 
 /**
  * 
@@ -61,7 +57,8 @@ public final class PlayerEngine {
 			// Render the top three ingredients of the Chef's carry stack
 			for(int i=2; i>-1; i--)
 			{
-				Sprite ingredientSprite = new Sprite(IngredientTextures.getTexture(chef.getIngredientStack().peekAtDepth(3 - i)));
+				Sprite ingredientSprite = new Sprite(
+					IngredientTextures.getTexture(chef.getIngredientStack().peekAtDepth(3 - i)));
 				float size = 30f;
 
 				ingredientSprite.setSize(size, size);

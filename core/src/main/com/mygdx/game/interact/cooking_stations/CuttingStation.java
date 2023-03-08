@@ -1,8 +1,8 @@
 package com.mygdx.game.interact.cooking_stations;
 
-import com.mygdx.game.ingredient.IngredientMap;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
+import com.mygdx.game.ingredient.IngredientMap;
 
 /**
  * @author Thomas McCarthy

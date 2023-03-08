@@ -5,17 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.player.Player;
+import com.mygdx.game.player.PlayerEngine;
 import com.mygdx.game.interact.cooking_stations.BakingStation;
 import com.mygdx.game.interact.cooking_stations.CookingStation;
 import com.mygdx.game.interact.cooking_stations.CuttingStation;
-import com.mygdx.game.interact.ingredient_stations.*;
+import com.mygdx.game.interact.ingredient_stations.BunStation;
+import com.mygdx.game.interact.ingredient_stations.LettuceStation;
+import com.mygdx.game.interact.ingredient_stations.OnionStation;
+import com.mygdx.game.interact.ingredient_stations.PattyStation;
+import com.mygdx.game.interact.ingredient_stations.TomatoStation;
 import com.mygdx.game.interact.special_stations.Bin;
 import com.mygdx.game.interact.special_stations.Counter;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
 import com.mygdx.game.interact.special_stations.assembly_stations.SaladStation;
-import com.mygdx.game.player.Player;
-import com.mygdx.game.player.PlayerEngine;
 
 import java.util.LinkedList;
 

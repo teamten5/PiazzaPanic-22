@@ -6,7 +6,6 @@ import com.mygdx.game.customer.Customer;
 import com.mygdx.game.customer.CustomerEngine;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.ingredient.IngredientTextures;
-import com.mygdx.game.player.PlayerEngine;
 
 /**
  * @author Thomas McCarthy

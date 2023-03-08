@@ -9,8 +9,9 @@ import java.util.LinkedList;
  *
  * An implementation of an IngredientName stack.
  */
-public class IngredientStack {
 
+
+public class IngredientStack {
     private LinkedList<IngredientName> stack;
     private int maxSize;
 
