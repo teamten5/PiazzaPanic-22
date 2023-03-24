@@ -1,5 +1,6 @@
 package com.mygdx.game._convenience;
 
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
 
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 
 
 public class IngredientStack {
-    private LinkedList<IngredientName> stack;
+    private LinkedList<Ingredient> stack;
     private int maxSize;
 
 
@@ -23,14 +24,14 @@ public class IngredientStack {
     // Implementation of an unlimited size stack
     public IngredientStack()
     {
-        stack = new LinkedList<IngredientName>();
+        stack = new LinkedList<Ingredient>();
         maxSize = -1;
     }
 
     // Implementation of a stack with a maximum size
     public IngredientStack(int maxSize)
     {
-        stack = new LinkedList<IngredientName>();
+        stack = new LinkedList<Ingredient>();
         maxSize = maxSize;
     }
 
@@ -40,7 +41,7 @@ public class IngredientStack {
     //==========================================================\\
 
     // Adds a new ingredient to the top of the stack
-    public boolean push(IngredientName ingredient)
+    public boolean push(Ingredient ingredient)
     {
         if(maxSize == -1 || stack.size() < maxSize)
         {
@@ -51,20 +52,20 @@ public class IngredientStack {
     }
 
     // Returns the top element of the stack, but doesn't remove it
-    public IngredientName peek()
+    public Ingredient peek()
     {
         if(stack.size() > 0)
         {
             return stack.get(stack.size() - 1);
         }
-        return IngredientName.NULL_INGREDIENT;
+        return null;
     }
 
     // Removes and returns the top element of the stack
-    public IngredientName pop()
+    public Ingredient pop()
     {
-        IngredientName ingredient = peek();
-        if(ingredient != IngredientName.NULL_INGREDIENT)
+        Ingredient ingredient = peek();
+        if(ingredient != null)
         {
             stack.removeLast();
         }
@@ -73,16 +74,16 @@ public class IngredientStack {
     }
 
     // Returns the element at a certain depth in the stack
-    public IngredientName peekAtDepth(int depth)
+    public Ingredient peekAtDepth(int depth)
     {
         try
         {
-            IngredientName ingredient = stack.get(stack.size() - depth);
+            Ingredient ingredient = stack.get(stack.size() - depth);
             return ingredient;
         }
         catch(Exception e)
         {
-            return IngredientName.NULL_INGREDIENT;
+            return null;
         }
     }
 

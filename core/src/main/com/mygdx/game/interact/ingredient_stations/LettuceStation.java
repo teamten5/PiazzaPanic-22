@@ -15,6 +15,6 @@ public class LettuceStation extends InteractableBase {
     //==========================================================\\
 
     public LettuceStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_lettuce.png", IngredientName.LETTUCE_UNCUT);
+        super(xPos, yPos, "station_lettuce.png", ingredientHashMap.get("lettuce-uncut"));
     }
 }

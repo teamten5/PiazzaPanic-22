@@ -1,13 +1,16 @@
 package com.mygdx.game.interact;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.ingredient.IngredientName;
-import com.mygdx.game.ingredient.IngredientTextures;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
 import com.mygdx.game.ingredient.IngredientMap;
+import java.util.HashMap;
 
 /**
  * 
@@ -19,6 +22,13 @@ import com.mygdx.game.ingredient.IngredientMap;
 
 public class InteractableBase {
 
+	// temp
+	public static HashMap<String, Ingredient> ingredientHashMap = temploadjson();
+	private static HashMap<String, Ingredient> temploadjson() {
+		JsonReader jsonReader = new JsonReader();
+		JsonValue jsonRoot = jsonReader.parse(Gdx.files.internal("data/base.json"));
+		return Ingredient.loadFromJson(jsonRoot.get("ingredients"));
+	}
 	private float xPos;
 	private float yPos;
 	private Rectangle collisionRect;
@@ -28,8 +38,8 @@ public class InteractableBase {
 
 	// Ingredient Information
 	private IngredientMap ingredientMap;
-	private IngredientName inputIngredient;
-	private IngredientName outputIngredient;
+	private Ingredient inputIngredient;
+	private Ingredient outputIngredient;
 	private boolean hasIngredient;
 
 	// Station Information
@@ -66,7 +76,7 @@ public class InteractableBase {
 	}
 	
 	// Ingredient Station Constructor takes a texture, an output ingredient, and no preparation time
-	public InteractableBase(float xPos, float yPos, String texture, IngredientName outputIngredient)
+	public InteractableBase(float xPos, float yPos, String texture, Ingredient outputIngredient)
 	{
 		this.isIngredientStation = true;
 		this.xPos = xPos;
@@ -186,10 +196,10 @@ public class InteractableBase {
 
 	public Sprite getSprite() { return sprite; }
 
-	public Sprite getIngredientSprite() {
-		if(!hasIngredient) 						{ return new Sprite(indicatorArrow); }
-		else if(currentTime >= preparationTime) { return new Sprite(IngredientTextures.getTexture(outputIngredient)); }
-		else 									{ return new Sprite(IngredientTextures.getTexture(inputIngredient)); }
+	public Texture getIngredientTexture() {
+		if(!hasIngredient) 						{ return indicatorArrow; }
+		else if(currentTime >= preparationTime) { return outputIngredient.texture; }
+		else 									{ return inputIngredient.texture; }
 	}
 
 	public float getCurrentTime() { return currentTime; }

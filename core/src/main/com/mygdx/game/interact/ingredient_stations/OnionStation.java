@@ -15,6 +15,6 @@ public class OnionStation extends InteractableBase {
     //==========================================================\\
 
     public OnionStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_onion.png", IngredientName.ONION_UNCUT);
+        super(xPos, yPos, "station_onion.png", ingredientHashMap.get("onion-uncut"));
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game.ingredient;
 
+import com.mygdx.game.Ingredient;
 import java.util.HashMap;
 
 /**
@@ -11,16 +12,16 @@ import java.util.HashMap;
  * It is essentially a renaming/refactoring of HashMap<IngredientName, IngredientName>
  */
 
-public class IngredientMap extends HashMap<IngredientName, IngredientName> {
+public class IngredientMap extends HashMap<Ingredient, Ingredient> {
 
-    public boolean takesIngredient(IngredientName ingredientName)
+    public boolean takesIngredient(Ingredient ingredient)
     {
-        return super.containsKey(ingredientName);
+        return super.containsKey(ingredient);
     }
 
-    public IngredientName getOutputIngredient(IngredientName ingredientName)
+    public Ingredient getOutputIngredient(Ingredient ingredient)
     {
-        return super.get(ingredientName);
+        return super.get(ingredient);
     }
 
 }

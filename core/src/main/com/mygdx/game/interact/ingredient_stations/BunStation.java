@@ -15,6 +15,6 @@ public class BunStation extends InteractableBase {
     //==========================================================\\
 
     public BunStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_bun.png", IngredientName.BUNS_UNTOASTED);
+        super(xPos, yPos, "station_bun.png", ingredientHashMap.get("buns-untoasted"));
     }
 }

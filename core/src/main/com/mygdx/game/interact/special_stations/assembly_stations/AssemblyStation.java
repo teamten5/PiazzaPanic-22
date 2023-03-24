@@ -1,8 +1,7 @@
 package com.mygdx.game.interact.special_stations.assembly_stations;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.game.ingredient.IngredientName;
-import com.mygdx.game.ingredient.IngredientTextures;
+import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -14,8 +13,8 @@ import com.mygdx.game.player.PlayerEngine;
  */
 public class AssemblyStation extends InteractableBase {
 
-    protected IngredientName[] recipe;
-    protected IngredientName outputIngredient;
+    protected Ingredient[] recipe;
+    protected Ingredient outputIngredient;
     protected int assemblyIndex;
     boolean isAssembled;
 
@@ -27,7 +26,7 @@ public class AssemblyStation extends InteractableBase {
     public AssemblyStation(float xPos, float yPos, String texture) {
         super(xPos, yPos, texture);
 
-        this.outputIngredient = IngredientName.NULL_INGREDIENT;
+        this.outputIngredient = null;
         this.recipe = null;
 
         assemblyIndex = 0;
@@ -42,7 +41,7 @@ public class AssemblyStation extends InteractableBase {
     @Override
     public void handleInteraction()
     {
-        IngredientName chefIngredient = PlayerEngine.getActiveChef().getIngredientStack().peek();
+        Ingredient chefIngredient = PlayerEngine.getActiveChef().getIngredientStack().peek();
 
         if(isAssembled)
         {
@@ -71,21 +70,18 @@ public class AssemblyStation extends InteractableBase {
     //==========================================================\\
 
     @Override
-    public Sprite getIngredientSprite()
+    public Texture getIngredientTexture()
     {
         if(isAssembled)
         {
-            return new Sprite(IngredientTextures.getTexture(outputIngredient));
+            return outputIngredient.texture;
         }
         else {
-            Sprite sprite = new Sprite(IngredientTextures.getTexture(recipe[assemblyIndex]));
-            sprite.setColor(60f, 60f, 60f, 0.25f);
-            sprite.setScale(0.8f, 0.8f);
-            return sprite;
+            return recipe[assemblyIndex].texture;
         }
     }
 
-    public void setRecipe(IngredientName[] recipe, IngredientName outputIngredient)
+    public void setRecipe(Ingredient[] recipe, Ingredient outputIngredient)
     {
         this.recipe = recipe;
         this.outputIngredient = outputIngredient;

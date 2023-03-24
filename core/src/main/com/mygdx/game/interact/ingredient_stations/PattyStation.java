@@ -15,6 +15,6 @@ public class PattyStation extends InteractableBase {
     //==========================================================\\
 
     public PattyStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_patty.png", IngredientName.PATTY_RAW);
+        super(xPos, yPos, "station_patty.png", ingredientHashMap.get("patty-raw"));
     }
 }

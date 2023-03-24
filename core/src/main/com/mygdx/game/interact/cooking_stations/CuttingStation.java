@@ -13,9 +13,9 @@ public class CuttingStation extends InteractableBase {
 
     static IngredientMap ingredientMap = new IngredientMap() {{
 
-        put(IngredientName.LETTUCE_UNCUT, IngredientName.LETTUCE_CUT);
-        put(IngredientName.TOMATO_UNCUT, IngredientName.TOMATO_CUT);
-        put(IngredientName.ONION_UNCUT, IngredientName.ONION_CUT);
+        put(ingredientHashMap.get("lettuce-uncut"), ingredientHashMap.get("lettuce-cut"));
+        put(ingredientHashMap.get("tomato-uncut"), ingredientHashMap.get("tomato-cut"));
+        put(ingredientHashMap.get("onion-uncut"), ingredientHashMap.get("onion-cut"));
 
     }};
 

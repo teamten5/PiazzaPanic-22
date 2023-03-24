@@ -13,7 +13,7 @@ public class CookingStation extends InteractableBase {
 
     static IngredientMap ingredientMap = new IngredientMap() {{
 
-        put(IngredientName.PATTY_RAW, IngredientName.PATTY_COOKED);
+        put(ingredientHashMap.get("patty-raw"), ingredientHashMap.get("patty-cooked"));
 
     }};
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.interact.special_stations.assembly_stations;
 
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
 
 /**
@@ -10,13 +11,13 @@ import com.mygdx.game.ingredient.IngredientName;
 public class SaladStation extends AssemblyStation {
 
     // Salad recipe
-    IngredientName[] recipe = new IngredientName[] {
-            IngredientName.LETTUCE_CUT,
-            IngredientName.ONION_CUT,
-            IngredientName.TOMATO_CUT
+    Ingredient[] recipe = new Ingredient[] {
+            ingredientHashMap.get("lettuce-cut"),
+            ingredientHashMap.get("onion-cut"),
+            ingredientHashMap.get("tomato-cut")
     };
 
-    IngredientName outputIngredient = IngredientName.SALAD;
+    Ingredient outputIngredient = ingredientHashMap.get("salad");
 
     public SaladStation(float xPos, float yPos) {
 

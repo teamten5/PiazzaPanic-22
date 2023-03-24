@@ -1,0 +1,16 @@
+{
+    "ingredients": {
+        "buns-toasted":  {"texture": "ingredient_bun_toasted.png"},
+        "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png"},
+        "lettuce-cut":  {"texture": "ingredient_lettuce_cut.png"},
+        "lettuce-uncut":  {"texture": "ingredient_lettuce_uncut.png"},
+        "onion-cut":  {"texture": "ingredient_onion_cut.png"},
+        "onion-uncut":  {"texture": "ingredient_onion_cut.png"},
+        "patty-cooked":  {"texture": "ingredient_patty_cooked.png"},
+        "patty-raw":  {"texture": "ingredient_patty_raw.png"},
+        "tomato-cut":  {"texture": "ingredient_tomato_cut.png"},
+        "tomato-uncut":  {"texture": "ingredient_tomato_uncut.png"},
+        "burger":  {"texture": "ingredient_burger.png"},
+        "salad":  {"texture": "ingredient_salad.png"}
+    }
+}

@@ -1,6 +1,7 @@
 package com.mygdx.game.customer;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 
@@ -21,13 +22,13 @@ public class Customer {
     boolean orderComplete = false;
 
     CustomerCounter counter;
-    IngredientName requiredIngredient;
+    Ingredient requiredIngredient;
 
 
     //==========================================================\\
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
-    public Customer(CustomerCounter counter, IngredientName requiredIngredient)
+    public Customer(CustomerCounter counter, Ingredient requiredIngredient)
     {
         this.counter = counter;
         this.requiredIngredient = requiredIngredient;

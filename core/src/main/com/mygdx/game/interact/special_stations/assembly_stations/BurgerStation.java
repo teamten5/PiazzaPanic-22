@@ -1,5 +1,6 @@
 package com.mygdx.game.interact.special_stations.assembly_stations;
 
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
 
 /**
@@ -10,13 +11,13 @@ import com.mygdx.game.ingredient.IngredientName;
 public class BurgerStation extends AssemblyStation {
 
     // Burger recipe
-    IngredientName[] recipe = new IngredientName[] {
-        IngredientName.BUNS_TOASTED,
-        IngredientName.PATTY_COOKED,
-        IngredientName.BUNS_TOASTED
+    Ingredient[] recipe = new Ingredient[] {
+          ingredientHashMap.get("buns-toasted"),
+          ingredientHashMap.get("patty-cooked"),
+          ingredientHashMap.get("buns-toasted")
     };
 
-    IngredientName outputIngredient = IngredientName.BURGER;
+    Ingredient outputIngredient = ingredientHashMap.get("burger");
 
     public BurgerStation(float xPos, float yPos) {
 

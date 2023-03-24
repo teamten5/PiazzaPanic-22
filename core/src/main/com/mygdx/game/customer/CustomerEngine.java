@@ -4,7 +4,9 @@ package com.mygdx.game.customer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
+import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 
 import java.util.LinkedList;
@@ -22,7 +24,7 @@ public final class CustomerEngine {
 
     static SpriteBatch batch;
 
-    static IngredientName[] recipes;
+    static Ingredient[] recipes;
     static LinkedList<CustomerCounter> customerCounters;
     static LinkedList<Customer> customers;
     static int maxCustomers;
@@ -46,9 +48,9 @@ public final class CustomerEngine {
         batch = gameBatch;
 
         // Recipes is the array of items a customer can order
-        recipes = new IngredientName[] {
-                IngredientName.BURGER,
-                IngredientName.SALAD
+        recipes = new Ingredient[] {
+              InteractableBase.ingredientHashMap.get("burger"),
+              InteractableBase.ingredientHashMap.get("salad")
         };
 
         customerTexture = new Texture("customer.png");

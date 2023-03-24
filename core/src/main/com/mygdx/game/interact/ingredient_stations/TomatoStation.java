@@ -15,6 +15,6 @@ public class TomatoStation extends InteractableBase {
     //==========================================================\\
 
     public TomatoStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_tomato.png", IngredientName.TOMATO_UNCUT);
+        super(xPos, yPos, "station_tomato.png", ingredientHashMap.get("tomato-uncut"));
     }
 }

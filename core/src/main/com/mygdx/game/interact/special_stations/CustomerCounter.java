@@ -1,11 +1,9 @@
 package com.mygdx.game.interact.special_stations;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.customer.Customer;
 import com.mygdx.game.customer.CustomerEngine;
-import com.mygdx.game.ingredient.IngredientName;
-import com.mygdx.game.ingredient.IngredientTextures;
 
 /**
  * @author Thomas McCarthy
@@ -15,7 +13,7 @@ import com.mygdx.game.ingredient.IngredientTextures;
  */
 public class CustomerCounter extends Counter {
 
-    IngredientName requiredIngredient;
+    Ingredient requiredIngredient;
     Customer customer;
     Texture blank = new Texture("_blank.png");
 
@@ -56,22 +54,17 @@ public class CustomerCounter extends Counter {
     //==========================================================\\
 
     @Override
-    public Sprite getIngredientSprite()
+    public Texture getIngredientTexture()
     {
         if(customer == null)
         {
-            return new Sprite(blank);
-        }
-        else
-        {
-            Sprite sprite = new Sprite(IngredientTextures.getTexture(requiredIngredient));
-            sprite.setColor(60f, 60f, 60f, 0.25f);
-            sprite.setScale(0.8f, 0.8f);
-            return sprite;
+            return blank;
+        } else {
+            return requiredIngredient.texture;
         }
     }
 
-    public void placeOrder(Customer customer, IngredientName requiredIngredient)
+    public void placeOrder(Customer customer, Ingredient requiredIngredient)
     {
         this.customer = customer;
         this.requiredIngredient = requiredIngredient;

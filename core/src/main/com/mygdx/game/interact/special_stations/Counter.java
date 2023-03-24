@@ -1,8 +1,8 @@
 package com.mygdx.game.interact.special_stations;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.ingredient.IngredientName;
-import com.mygdx.game.ingredient.IngredientTextures;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -14,7 +14,7 @@ import com.mygdx.game.player.PlayerEngine;
  */
 public class Counter extends InteractableBase {
 
-    protected IngredientName storedIngredient;
+    protected Ingredient storedIngredient;
 
 
     //==========================================================\\
@@ -37,8 +37,8 @@ public class Counter extends InteractableBase {
     {
         if(storedIngredient == null)
         {
-            IngredientName ingredient = PlayerEngine.getActiveChef().getIngredientStack().peek();
-            if(!ingredient.equals(IngredientName.NULL_INGREDIENT))
+            Ingredient ingredient = PlayerEngine.getActiveChef().getIngredientStack().peek();
+            if(ingredient == null)
             {
                 storedIngredient = PlayerEngine.getActiveChef().getIngredientStack().pop();
             }
@@ -56,10 +56,10 @@ public class Counter extends InteractableBase {
     //==========================================================\\
 
     @Override
-    public Sprite getIngredientSprite()
+    public Texture getIngredientTexture()
     {
-        if(storedIngredient == null)    { return new Sprite(super.indicatorArrow); }
-        else                            { return new Sprite(IngredientTextures.getTexture(storedIngredient)); }
+        if(storedIngredient == null)    { return super.indicatorArrow; }
+        else                            { return storedIngredient.texture; }
     }
 
 }

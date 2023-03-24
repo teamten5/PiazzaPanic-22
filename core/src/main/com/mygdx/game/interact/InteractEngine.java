@@ -22,6 +22,7 @@ import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
 import com.mygdx.game.interact.special_stations.assembly_stations.SaladStation;
 
 import java.util.LinkedList;
+import org.w3c.dom.Text;
 
 /**
  * 
@@ -116,9 +117,8 @@ public final class InteractEngine {
 			// Render the interactable and the ingredient on it
 			interactable.getSprite().draw(batch);
 
-			Sprite ingredientSprite = interactable.getIngredientSprite();
-			ingredientSprite.setPosition(interactable.getXPos(), interactable.getYPos());
-			ingredientSprite.draw(batch);
+			Texture ingredientTexture = interactable.getIngredientTexture();
+			batch.draw(ingredientTexture, interactable.getXPos(), interactable.getYPos());
 
 			// Increment the interactable's timer by the time elapsed between now and the last frame render
 			interactable.incrementTime(Gdx.graphics.getDeltaTime());

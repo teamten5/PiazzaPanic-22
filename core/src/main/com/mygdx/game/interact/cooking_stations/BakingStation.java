@@ -13,7 +13,7 @@ public class BakingStation extends InteractableBase {
 
     static IngredientMap ingredientMap = new IngredientMap() {{
 
-        put(IngredientName.BUNS_UNTOASTED, IngredientName.BUNS_TOASTED);
+        put(ingredientHashMap.get("buns-untoasted"), ingredientHashMap.get("buns-toasted"));
 
     }};
 
