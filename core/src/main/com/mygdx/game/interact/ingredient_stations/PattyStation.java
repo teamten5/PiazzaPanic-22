@@ -1,6 +1,5 @@
 package com.mygdx.game.interact.ingredient_stations;
 
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 
 /**
@@ -15,6 +14,6 @@ public class PattyStation extends InteractableBase {
     //==========================================================\\
 
     public PattyStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_patty.png", ingredientHashMap.get("patty-raw"));
+        super(xPos, yPos, "textures/station_patty.png", ingredientHashMap.get("patty-raw"));
     }
 }

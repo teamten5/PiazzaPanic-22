@@ -97,8 +97,8 @@ public class MenuScreen extends InputAdapter implements Screen {
         batch.begin();
         stage.draw();
 
-        batch.draw(new Texture("logo_1.png"), 0, 0);
-        Texture gameLogo = new Texture("game_logo.png");
+        batch.draw(new Texture("textures/logo_1.png"), 0, 0);
+        Texture gameLogo = new Texture("textures/game_logo.png");
         batch.draw(gameLogo, (stage.getWidth() - gameLogo.getWidth()) / 2, (stage.getHeight() / 2) - 75f);
 
         batch.end();

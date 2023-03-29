@@ -1,6 +1,5 @@
 package com.mygdx.game.interact.cooking_stations;
 
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.ingredient.IngredientMap;
 
@@ -24,7 +23,7 @@ public class BakingStation extends InteractableBase {
 
     public BakingStation(float xPos, float yPos) {
 
-        super(xPos, yPos, "station_baking.png", ingredientMap, 8.0f, false);
+        super(xPos, yPos, "textures/station_baking.png", ingredientMap, 8.0f, false);
 
     }
 }

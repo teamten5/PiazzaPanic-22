@@ -1,7 +1,6 @@
 package com.mygdx.game.interact.special_stations.assembly_stations;
 
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.ingredient.IngredientName;
 
 /**
  * @author Thomas McCarthy
@@ -21,7 +20,7 @@ public class SaladStation extends AssemblyStation {
 
     public SaladStation(float xPos, float yPos) {
 
-        super(xPos, yPos, "station_assembly_salad.png");
+        super(xPos, yPos, "textures/station_assembly_salad.png");
         setRecipe(recipe, outputIngredient);
 
     }

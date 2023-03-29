@@ -1,6 +1,5 @@
 package com.mygdx.game.interact.ingredient_stations;
 
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 
 /**
@@ -15,6 +14,6 @@ public class BunStation extends InteractableBase {
     //==========================================================\\
 
     public BunStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_bun.png", ingredientHashMap.get("buns-untoasted"));
+        super(xPos, yPos, "textures/station_bun.png", ingredientHashMap.get("buns-untoasted"));
     }
 }

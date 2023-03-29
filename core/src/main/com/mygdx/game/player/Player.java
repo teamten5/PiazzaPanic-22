@@ -17,8 +17,8 @@ import com.mygdx.game._convenience.IngredientStack;
 public class Player {
 	
 	// player speed is a hard-coded value, so that it is the same for multiple players
-	private float speed = 150.0f;
-	private int id;
+	private final float speed = 3.5f;
+	private final int id;
 	private float posX;
 	private float posY;
 	private float previousPosX;
@@ -27,7 +27,7 @@ public class Player {
 	private Sprite sprite;
 	// The LinkedList is used as an implementation of a stack
 	private IngredientStack carryStack;
-	// Determines if the player is able to move
+	// Determines if the player can move
 	private boolean movementEnabled;
 
 
@@ -46,7 +46,7 @@ public class Player {
 
 		previousPosX = startX;
 		previousPosY = startY;
-		collisionRect = new Rectangle(posX, posY, sprite.getTexture().getWidth() * 0.75f, sprite.getTexture().getHeight() * 0.75f);
+		collisionRect = new Rectangle(posX, posY, 0.8f, 0.8f);
 	}
 	
 	

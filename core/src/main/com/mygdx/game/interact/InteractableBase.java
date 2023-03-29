@@ -3,6 +3,7 @@ package com.mygdx.game.interact;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -32,9 +33,9 @@ public class InteractableBase {
 	private float xPos;
 	private float yPos;
 	private Rectangle collisionRect;
-	private Sprite sprite;
+	final public Texture texture;
 
-	protected Texture indicatorArrow = new Texture("indicator_arrow.png");
+	protected Texture indicatorArrow = new Texture("textures/indicator_arrow.png");
 
 	// Ingredient Information
 	private IngredientMap ingredientMap;
@@ -66,7 +67,7 @@ public class InteractableBase {
 		this.isIngredientStation = false;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.sprite = new Sprite(new Texture(texture));
+		this.texture = new Texture(texture);
 		this.ingredientMap = ingredientMap;
 		this.preparationTime = preparationTime;
 		this.hasIngredient = false;
@@ -81,7 +82,7 @@ public class InteractableBase {
 		this.isIngredientStation = true;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.sprite = new Sprite(new Texture(texture));
+		this.texture = new Texture(texture);
 		this.outputIngredient = outputIngredient;
 		this.hasIngredient = true;
 		setUpCollision();
@@ -95,15 +96,13 @@ public class InteractableBase {
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.sprite = new Sprite(new Texture(texture));
+		this.texture = new Texture(texture);
 		setUpCollision();
 	}
 
 	public void setUpCollision()
 	{
-		sprite.setCenter(xPos + sprite.getTexture().getWidth(), yPos + sprite.getTexture().getHeight());
-		sprite.setPosition(xPos, yPos);
-		collisionRect = new Rectangle(xPos, yPos, this.sprite.getTexture().getWidth(), this.sprite.getTexture().getHeight());
+		collisionRect = new Rectangle(xPos, yPos, 1, 1);
 	}
 	
 	
@@ -185,6 +184,14 @@ public class InteractableBase {
 		}
 	}
 
+	//==========================================================\\
+	//                         RENDER                           \\
+	//==========================================================\\
+
+	public void render(SpriteBatch batch) {
+		batch.draw(texture, xPos, yPos, 1, 1);
+	}
+
 
 	//==========================================================\\
 	//                         GETTERS                          \\
@@ -193,8 +200,6 @@ public class InteractableBase {
 	public float getXPos() { return xPos; }
 
 	public float getYPos() { return yPos; }
-
-	public Sprite getSprite() { return sprite; }
 
 	public Texture getIngredientTexture() {
 		if(!hasIngredient) 						{ return indicatorArrow; }

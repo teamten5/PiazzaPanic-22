@@ -2,7 +2,6 @@ package com.mygdx.game.interact.special_stations;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.player.PlayerEngine;
 
@@ -23,7 +22,7 @@ public class Counter extends InteractableBase {
 
     public Counter(float xPos, float yPos)
     {
-        super(xPos, yPos, "counter.png");
+        super(xPos, yPos, "textures/counter.png");
         storedIngredient = null;
     }
 

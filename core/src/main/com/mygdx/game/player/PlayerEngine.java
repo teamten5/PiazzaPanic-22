@@ -19,8 +19,6 @@ import com.mygdx.game.interact.InteractEngine;
  */
 public final class PlayerEngine {
 
-	static SpriteBatch batch;
-
 	static Player[] chefs;
 	static Player activeChef;
 	static Rectangle[] interactableColliders;
@@ -30,13 +28,12 @@ public final class PlayerEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise(SpriteBatch gameBatch)
+	public static void initialise()
 	{
-		batch = gameBatch;
 
 		chefs = new Player[2];
-		chefs[0] = new Player(0,  175,  350, "temp_chef_1.png");
-		chefs[1] = new Player(1,  455,  350, "temp_chef_2.png");
+		chefs[0] = new Player(0,  2,  5, "textures/temp_chef_1.png");
+		chefs[1] = new Player(1,  6,  5, "textures/temp_chef_2.png");
 		// chefs[2] = new Player(2, 125, 125, "temp_chef_3.png");
 
 		activeChef = chefs[0];
@@ -49,32 +46,17 @@ public final class PlayerEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update()
-	{
+	public static void render(SpriteBatch batch) {
 		for(Player chef : chefs) {
-			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos());
-
-			// Render the top three ingredients of the Chef's carry stack
-			for(int i=2; i>-1; i--)
-			{
-				Ingredient ingredient = chef.getIngredientStack().peekAtDepth(3 - i);
-				if (ingredient == null) {
-					System.out.println("null");
-					continue;
-				}
-				Texture ingredientTexture = ingredient.texture;
-				/*
-				ingredientSprite.setSize(size, size);
-				ingredientSprite.setCenter(ingredientSprite.getWidth() / 2f, ingredientSprite.getHeight() / 2f);
-
-				ingredientSprite.setAlpha(1 - ((2 - i) * 0.45f));
-
-				 */
-				float size = 30f;
-				float xOffset = ((i - 1) * -35f) + (chef.getSprite().getWidth() / 2) - (size / 2f);
-				batch.draw(ingredientTexture, chef.getXPos() + xOffset, chef.getYPos() + 70f);
+			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos(), 0.8f, 0.8f * 1.5f);
+			Ingredient ingredient = chef.getIngredientStack().peek();
+			if (ingredient != null) {
+				batch.draw(ingredient.texture, chef.getXPos(), chef.getYPos() + 1.1f, 0.7f, 0.7f);
 			}
 		}
+	}
+
+	public static void update(float delta) {
 		
 		activeChef.handleMovement(interactableColliders);
 		

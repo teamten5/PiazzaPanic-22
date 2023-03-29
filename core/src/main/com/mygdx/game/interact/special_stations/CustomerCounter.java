@@ -15,7 +15,7 @@ public class CustomerCounter extends Counter {
 
     Ingredient requiredIngredient;
     Customer customer;
-    Texture blank = new Texture("_blank.png");
+    Texture blank = new Texture("textures/_blank.png");
 
 
     //==========================================================\\

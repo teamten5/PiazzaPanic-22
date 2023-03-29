@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 import com.mygdx.game.interact.special_stations.CustomerCounter;
 
@@ -21,8 +20,6 @@ import java.util.LinkedList;
  *
  */
 public final class CustomerEngine {
-
-    static SpriteBatch batch;
 
     static Ingredient[] recipes;
     static LinkedList<CustomerCounter> customerCounters;
@@ -43,9 +40,8 @@ public final class CustomerEngine {
     //                      INITIALISER                         \\
     //==========================================================\\
 
-    public static void initialise(SpriteBatch gameBatch)
+    public static void initialise()
     {
-        batch = gameBatch;
 
         // Recipes is the array of items a customer can order
         recipes = new Ingredient[] {
@@ -53,7 +49,7 @@ public final class CustomerEngine {
               InteractableBase.ingredientHashMap.get("salad")
         };
 
-        customerTexture = new Texture("customer.png");
+        customerTexture = new Texture("textures/customer.png");
         customerCounters = new LinkedList<>();
         customers = new LinkedList<>();
         minTimeGap = 2f;
@@ -69,13 +65,12 @@ public final class CustomerEngine {
     //                         UPDATE                           \\
     //==========================================================\\
 
-    public static void update()
+    public static void update(float delta)
     {
         // Render the customers
         for(Customer c : customers)
         {
             c.update();
-            batch.draw(customerTexture, c.getXPos(), c.getYPos());
         }
 
         if(timer <= 0 && customers.size() < maxCustomers && numberOfCustomers != 0)
@@ -86,7 +81,14 @@ public final class CustomerEngine {
             timer = minTimeGap + ((float)Math.random() * (maxTimeGap - minTimeGap));
         }
 
-        timer -= Gdx.graphics.getDeltaTime();
+        timer -= delta;
+    }
+
+    public static void render(SpriteBatch batch) {
+        for(Customer c : customers)
+        {
+            batch.draw(customerTexture, c.getXPos(), c.getYPos(), 1, 1);
+        }
     }
 
 

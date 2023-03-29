@@ -1,6 +1,5 @@
 package com.mygdx.game.interact.ingredient_stations;
 
-import com.mygdx.game.ingredient.IngredientName;
 import com.mygdx.game.interact.InteractableBase;
 
 /**
@@ -15,6 +14,6 @@ public class TomatoStation extends InteractableBase {
     //==========================================================\\
 
     public TomatoStation(float xPos, float yPos) {
-        super(xPos, yPos, "station_tomato.png", ingredientHashMap.get("tomato-uncut"));
+        super(xPos, yPos, "textures/station_tomato.png", ingredientHashMap.get("tomato-uncut"));
     }
 }

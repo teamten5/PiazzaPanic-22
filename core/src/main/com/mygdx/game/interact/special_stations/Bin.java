@@ -17,7 +17,7 @@ public class Bin extends InteractableBase {
 
     public Bin(float xPos, float yPos)
     {
-        super(xPos, yPos, "bin.png");
+        super(xPos, yPos, "textures/bin.png");
     }
 
 

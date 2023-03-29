@@ -33,9 +33,7 @@ import org.w3c.dom.Text;
  *
  */
 
-public final class InteractEngine {
-
-	static SpriteBatch batch;
+public class InteractEngine {
 
 	// An array of interactable objects on the screen
 	static InteractableBase[] interactables;
@@ -53,50 +51,49 @@ public final class InteractEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise(SpriteBatch gameBatch)
+	public static void initialise()
 	{
-		batch = gameBatch;
 
 		interactables = new InteractableBase[] {
 
-			new CustomerCounter(70, 140),
-			new CustomerCounter(70, 210),
-			new CustomerCounter(70, 280),
+			new CustomerCounter(1, 2),
+			new CustomerCounter(1, 3),
+			new CustomerCounter(1, 4),
 
-			new Counter(70, 350),
-			new Counter(70, 70),
-			new Counter(420, 420),
-			new Counter(420, 0),
-			new Counter(490, 420),
-			new Counter(490, 0),
+			new Counter(1, 5),
+			new Counter(1, 1),
+			new Counter(6, 6),
+			new Counter(6, 0),
+			new Counter(7, 6),
+			new Counter(7, 0),
 
-			new CookingStation(140, 420),
-			new CookingStation(280, 420),
-			new BakingStation(210, 420),
-			new BakingStation(350, 420),
-			new CuttingStation(140, 0),
-			new CuttingStation(210, 0),
-			new CuttingStation(280, 0),
-			new CuttingStation(350, 0),
+			new CookingStation(2, 6),
+			new CookingStation(4, 6),
+			new BakingStation(3, 6),
+			new BakingStation(5, 6),
+			new CuttingStation(2, 0),
+			new CuttingStation(3, 0),
+			new CuttingStation(4, 0),
+			new CuttingStation(5, 0),
 
-			new BurgerStation(210, 210),
-			new SaladStation(280, 210),
+			new BurgerStation(3, 3),
+			new SaladStation(4, 3),
 
-			new PattyStation(350, 210),
-			new BunStation(420, 210),
-			new LettuceStation(560, 210),
-			new TomatoStation(560, 280),
-			new OnionStation(560, 140),
+			new PattyStation(5, 3),
+			new BunStation(6, 3),
+			new LettuceStation(8, 3),
+			new TomatoStation(8, 4),
+			new OnionStation(8, 2),
 
-			new Bin(560, 420),
-			new Bin(560, 0)
+			new Bin(8, 6),
+			new Bin(8, 0)
 
 		};
 
 		interactRange = 85f;
 
-		sliderBackground = new Texture("slider_background.png");
-		sliderFill = new Texture("slider_fill.png");
+		sliderBackground = new Texture("textures/slider_background.png");
+		sliderFill = new Texture("textures/slider_fill.png");
 
 		Rectangle[] collisionRects = new Rectangle[interactables.length];
 		for(int i=0; i<interactables.length; i++)
@@ -111,28 +108,27 @@ public final class InteractEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update()
+	public static void update(float delta)
 	{
 		for(InteractableBase interactable : interactables) {
-			// Render the interactable and the ingredient on it
-			interactable.getSprite().draw(batch);
-
-			Texture ingredientTexture = interactable.getIngredientTexture();
-			batch.draw(ingredientTexture, interactable.getXPos(), interactable.getYPos());
-
 			// Increment the interactable's timer by the time elapsed between now and the last frame render
-			interactable.incrementTime(Gdx.graphics.getDeltaTime());
-
-			// Render a progress slider above the element if it is currently preparing
-			if(interactable.isPreparing())
-			{
-				int progressWidth = (int)(interactable.getCurrentTime() / interactable.getPreparationTime() * 65);
-				batch.draw(sliderBackground, interactable.getXPos(), interactable.getYPos() + 70, 70, 20);
-				batch.draw(sliderFill, interactable.getXPos(), interactable.getYPos() + 72.5f, progressWidth, 15);
-			}
+			interactable.incrementTime(delta);
 		}
 	}
 
+	public static void render(SpriteBatch batch) {
+		for(InteractableBase interactable : interactables) {
+			interactable.render(batch);
+			batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
+			// Render a progress slider above the element if it is currently preparing
+			if(interactable.isPreparing())
+			{
+				float progressWidth = (float) (interactable.getCurrentTime() / interactable.getPreparationTime() * 0.65);
+				batch.draw(sliderBackground, interactable.getXPos(), interactable.getYPos() + 0.7f, 0.7f, 0.2f);
+				batch.draw(sliderFill, interactable.getXPos(), interactable.getYPos() + 0.725f, progressWidth, 0.15f);
+			}
+		}
+	}
 
 	//==========================================================\\
 	//                   INTERACTION CHECK                      \\
