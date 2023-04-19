@@ -7,6 +7,11 @@ import java.util.HashMap;
 public class Ingredient {
     final public Texture texture;
 
+    public boolean equals(Object obj) {
+
+        return (this == obj);
+    }
+
     public Ingredient(Texture texture) {
         this.texture = texture;
     }
