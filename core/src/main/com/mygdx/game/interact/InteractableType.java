@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InteractableType {
-    protected float xSize;
-    protected float ySize;
+    public float xSize;
+    public float ySize;
     final protected Texture texture;
 
     public InteractableType(float xSize, float ySize, Texture texture) {
@@ -34,4 +34,5 @@ public class InteractableType {
         }
         return InteractableTypeHashMap;
     }
+
 }

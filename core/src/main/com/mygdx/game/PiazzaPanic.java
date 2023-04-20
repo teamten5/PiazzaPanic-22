@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.interact.Action;
 import com.mygdx.game.interact.Combination;
 import com.mygdx.game.interact.InteractableType;
+import com.mygdx.game.levels.LevelType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ public class PiazzaPanic extends Game {
 	HashMap<String, InteractableType> interactableTypeHashMap;
 	HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap;
 	HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap;
+	HashMap<String, LevelType> levelTypeHashMap;
 	
 	@Override
 	public void create () {
@@ -53,8 +55,12 @@ public class PiazzaPanic extends Game {
 	private void loadJson() {
 		JsonReader jsonReader = new JsonReader();
 		JsonValue jsonRoot = jsonReader.parse(Gdx.files.internal("data/base.json"));
-		ingredientHashMap = Ingredient.loadFromJson(jsonRoot.get("ingredients"));
-		interactableTypeHashMap = InteractableType.loadFromJson(jsonRoot.get("interactables"));
+		ingredientHashMap = Ingredient.loadFromJson(
+			jsonRoot.get("ingredients")
+		);
+		interactableTypeHashMap = InteractableType.loadFromJson(
+			jsonRoot.get("interactables")
+		);
 		combinationsHashmap = Combination.loadFromJson(
 			jsonRoot.get("combinations"),
 			jsonRoot.get("interactables"),
@@ -62,7 +68,15 @@ public class PiazzaPanic extends Game {
 			ingredientHashMap,
 			interactableTypeHashMap
 		);
-		actionHashmap = Action.	loadFromJson(jsonRoot.get("actions"), ingredientHashMap, interactableTypeHashMap);
-
+		actionHashmap = Action.	loadFromJson(
+			jsonRoot.get("actions"),
+			ingredientHashMap,
+			interactableTypeHashMap);
+		levelTypeHashMap = LevelType.loadFromJson(
+			jsonRoot.get("levels"),
+			interactableTypeHashMap,
+			combinationsHashmap,
+			actionHashmap
+		);
 	}
 }

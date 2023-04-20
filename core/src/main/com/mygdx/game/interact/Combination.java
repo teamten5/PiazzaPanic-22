@@ -80,7 +80,6 @@ public class Combination {
                               ));
                     }
                 } else if (Objects.equals(jsonModifier.name, "pantry-of")) {
-                    System.out.println("potato");
                     addCombinationToHashmap(combinationsHashmap,
                           new Combination(
                                 interactableTypeHashMap.get(jsonInteractable.name),

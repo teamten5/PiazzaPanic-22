@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InteractableInLevel {
-    protected float xPos;
-    protected float yPos;
+    public float xPos;
+    public float yPos;
     protected InteractableType type;
     protected ArrayList<Combination> combinations;
     protected HashMap<Ingredient, Action> actions;
