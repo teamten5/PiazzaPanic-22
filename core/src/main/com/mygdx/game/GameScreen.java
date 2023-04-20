@@ -68,7 +68,7 @@ public class GameScreen extends InputAdapter implements Screen {
 		shapeRenderer = new ShapeRenderer();
 
 		// Initialise Engine scripts
-		PlayerEngine.initialise();
+		PlayerEngine.initialise(currentLevel);
 		CustomerEngine.initialise(ingredientHashMap);
 		InteractEngine.initialise(interactableTypeHashMap, combinationsHashmap, actionHashmap);
 

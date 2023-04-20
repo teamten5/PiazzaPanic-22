@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.interact.Interactable;
 import com.mygdx.game.interact.InteractableInLevel;
 import com.mygdx.game.player.Player;
@@ -16,11 +17,16 @@ public class Level {
 
     public final LevelType type;
 
-    private ArrayList<Player> players;
+    public ArrayList<Player> players;
     private Interactable[] interactables;
     private ArrayDeque<Integer> unactiveChefs;
     public Level(LevelType type) {
         this.type = type;
+
+        players = new ArrayList<>(Arrays.asList(
+              new Player(0,  -1,  -1, "textures/temp_chef_1.png"),
+              new Player(1,  -2,  -2, "textures/temp_chef_2.png")
+        ));
 
         interactables = Arrays.stream(type.interactables).map(InteractableInLevel::initialise).toArray(Interactable[]::new);
     }
@@ -35,7 +41,13 @@ public class Level {
             interactable.renderBottom(batch);
             batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
         }
-        PlayerEngine.render(batch);
+        for(Player player : players) {
+            batch.draw(player.getSprite(), player.getXPos(), player.getYPos(), 0.8f, 0.8f * 1.5f);
+            Ingredient ingredient = player.getCurrentIngredient();
+            if (ingredient != null) {
+                batch.draw(ingredient.texture, player.getXPos(), player.getYPos() + 1.1f, 0.7f, 0.7f);
+            }
+        }
         for (Interactable interactable: interactables) {
             interactable.renderTop(batch);
         }
