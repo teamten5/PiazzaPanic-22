@@ -1,16 +1,144 @@
 {
     "ingredients": {
-        "buns-toasted":  {"texture": "ingredient_bun_toasted.png"},
-        "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png"},
-        "lettuce-cut":  {"texture": "ingredient_lettuce_cut.png"},
-        "lettuce-uncut":  {"texture": "ingredient_lettuce_uncut.png"},
-        "onion-cut":  {"texture": "ingredient_onion_cut.png"},
-        "onion-uncut":  {"texture": "ingredient_onion_cut.png"},
-        "patty-cooked":  {"texture": "ingredient_patty_cooked.png"},
-        "patty-raw":  {"texture": "ingredient_patty_raw.png"},
-        "tomato-cut":  {"texture": "ingredient_tomato_cut.png"},
-        "tomato-uncut":  {"texture": "ingredient_tomato_uncut.png"},
-        "burger":  {"texture": "ingredient_burger.png"},
-        "salad":  {"texture": "ingredient_salad.png"}
+        "buns-toasted":  {"texture": "ingredient_bun_toasted.png", "modifiers":  {"place-on":  ["counter"]}},
+        "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png", "modifiers":  {"place-on":  ["counter"]}},
+        "lettuce-cut":  {"texture": "ingredient_lettuce_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "lettuce-uncut":  {"texture": "ingredient_lettuce_uncut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-cut":  {"texture": "ingredient_onion_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-uncut":  {"texture": "ingredient_onion_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "patty-cooked":  {"texture": "ingredient_patty_cooked.png", "modifiers":  {"place-on":  ["counter"]}},
+        "patty-raw":  {"texture": "ingredient_patty_raw.png", "modifiers":  {"place-on":  ["counter"]}},
+        "tomato-cut":  {"texture": "ingredient_tomato_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "tomato-uncut":  {"texture": "ingredient_tomato_uncut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "burger":  {"texture": "ingredient_burger.png", "modifiers":  {"place-on":  ["counter"]}},
+        "salad-lettuce-tomato":  {"texture": "ingredient_salad.png", "modifiers":  {"place-on":  ["counter"]}},
+        "salad-lettuce-tomato-onion":  {"texture": "ingredient_salad.png", "modifiers":  {"place-on":  ["counter"]}}
+    },
+    "interactables": {
+        "counter": {
+            "texture": "counter.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "customer-counter": {
+            "texture": "indicator_arrow.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"customer-table": true}
+        },
+        "bin": {
+            "texture": "indicator_arrow.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"bin": true}
+        },
+        "bun-pantry": {
+            "texture": "station_bun.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "buns-untoasted"}
+        },
+        "lettuce-pantry": {
+            "texture": "pantry-lettuce.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "lettuce-uncut"}
+        },
+        "onion-pantry": {
+            "texture": "station_onion.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "onion-uncut"}
+        },
+        "patty-pantry": {
+            "texture": "station_patty.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "patty-raw"}
+        },
+        "tomato-pantry": {
+            "texture": "pantry-tomato.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "tomato-uncut"}
+        },
+        "baking-station": {
+            "texture": "station_baking.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "hob-station": {
+            "texture": "station_cooking.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "cutting-station": {
+            "texture": "station_cutting.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        }
+    },
+    "combinations": {
+        "salad1": {
+            "interactable-start": "lettuce-cut",
+            "player-start": "tomato-cut",
+            "interactable-end": "salad-lettuce-tomato",
+            "player-end": null,
+            "modifiers": {"start-swappable":  true, "plated-versions": true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad2": {
+            "interactable-start": "salad-lettuce-tomato",
+            "player-start": "onion-cut",
+            "interactable-end": "salad-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"start-swappable": true},
+            "allowed-stations": [
+                "counter"
+            ]
+        }
+    },
+    "actions": {
+        "toast-buns": {
+            "start": "buns-untoasted",
+            "end": "buns-toasted",
+            "time": 8000,
+            "chef-required": false,
+            "stations": ["baking-station"]
+        },
+        "cook-patty": {
+            "start": "patty-raw",
+            "end": "patty-cooked",
+            "time": 8000,
+            "chef-required": false,
+            "stations": ["hob-station"]
+        },
+        "cut-lettuce": {
+            "start": "uncut_lettuce",
+            "end": "cut_lettuce",
+            "time": 4000,
+            "chef-required": true,
+            "stations": ["cutting-station"]
+        },
+        "cut-tomato": {
+            "start": "uncut-tomato",
+            "end": "cut-tomato",
+            "time": 4000,
+            "chef-required": true,
+            "stations": ["cutting-station"]
+        },
+        "cut-onion": {
+            "start": "uncut-onion",
+            "end": "cut-onion",
+            "time": 4000,
+            "chef-required": true,
+            "stations": ["cutting-station"]
+        }
     }
 }

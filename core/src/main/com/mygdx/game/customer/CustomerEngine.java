@@ -1,13 +1,12 @@
 package com.mygdx.game.customer;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.interact.InteractableBase;
-import com.mygdx.game.interact.special_stations.CustomerCounter;
+import com.mygdx.game.interact.Interactable;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -22,7 +21,7 @@ import java.util.LinkedList;
 public final class CustomerEngine {
 
     static Ingredient[] recipes;
-    static LinkedList<CustomerCounter> customerCounters;
+    static LinkedList<Interactable> customerCounters;
     static LinkedList<Customer> customers;
     static int maxCustomers;
     static float minTimeGap;
@@ -40,13 +39,13 @@ public final class CustomerEngine {
     //                      INITIALISER                         \\
     //==========================================================\\
 
-    public static void initialise()
+    public static void initialise(HashMap<String, Ingredient> ingredientHashMap)
     {
 
         // Recipes is the array of items a customer can order
         recipes = new Ingredient[] {
-              InteractableBase.ingredientHashMap.get("burger"),
-              InteractableBase.ingredientHashMap.get("salad")
+              ingredientHashMap.get("burger"),
+              ingredientHashMap.get("salad")
         };
 
         customerTexture = new Texture("textures/customer.png");
@@ -76,9 +75,9 @@ public final class CustomerEngine {
         if(timer <= 0 && customers.size() < maxCustomers && numberOfCustomers != 0)
         {
             int random = (int)(Math.random() * recipes.length);
-            Customer customer = new Customer(customerCounters.get(0), recipes[random]);
-            customers.add(customer);
-            timer = minTimeGap + ((float)Math.random() * (maxTimeGap - minTimeGap));
+            //Customer customer = new Customer(customerCounters.get(0), recipes[random]);
+            //customers.add(customer);
+            //timer = minTimeGap + ((float)Math.random() * (maxTimeGap - minTimeGap));
         }
 
         timer -= delta;
@@ -96,7 +95,7 @@ public final class CustomerEngine {
     //                    GETTERS & SETTERS                     \\
     //==========================================================\\
 
-    public static void addCustomerCounter(CustomerCounter counter)
+    public static void addCustomerCounter(Interactable counter)
     {
         customerCounters.add(counter);
     }

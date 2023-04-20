@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game._convenience.IngredientStack;
 
 /**
@@ -26,7 +27,7 @@ public class Player {
 	private Rectangle collisionRect;
 	private Sprite sprite;
 	// The LinkedList is used as an implementation of a stack
-	private IngredientStack carryStack;
+	public Ingredient carrying;
 	// Determines if the player can move
 	private boolean movementEnabled;
 
@@ -41,7 +42,7 @@ public class Player {
 		this.posX = startX;
 		this.posY = startY;
 		this.sprite = new Sprite(new Texture(texture));
-		this.carryStack = new IngredientStack();
+		this.carrying = null;
 		this.movementEnabled = true;
 
 		previousPosX = startX;
@@ -101,7 +102,7 @@ public class Player {
 	
 	public Sprite getSprite() { return sprite; }
 
-	public IngredientStack getIngredientStack() { return carryStack; }
+	public Ingredient getCurrentIngredient() { return carrying; }
 
 	public void setMovementEnabled(boolean movementEnabled) {
 		this.movementEnabled = movementEnabled;

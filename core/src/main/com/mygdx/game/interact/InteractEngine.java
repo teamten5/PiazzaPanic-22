@@ -1,28 +1,16 @@
 package com.mygdx.game.interact;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Ingredient;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
-import com.mygdx.game.interact.cooking_stations.BakingStation;
-import com.mygdx.game.interact.cooking_stations.CookingStation;
-import com.mygdx.game.interact.cooking_stations.CuttingStation;
-import com.mygdx.game.interact.ingredient_stations.BunStation;
-import com.mygdx.game.interact.ingredient_stations.LettuceStation;
-import com.mygdx.game.interact.ingredient_stations.OnionStation;
-import com.mygdx.game.interact.ingredient_stations.PattyStation;
-import com.mygdx.game.interact.ingredient_stations.TomatoStation;
-import com.mygdx.game.interact.special_stations.Bin;
-import com.mygdx.game.interact.special_stations.Counter;
-import com.mygdx.game.interact.special_stations.CustomerCounter;
-import com.mygdx.game.interact.special_stations.assembly_stations.BurgerStation;
-import com.mygdx.game.interact.special_stations.assembly_stations.SaladStation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
-import org.w3c.dom.Text;
 
 /**
  * 
@@ -36,8 +24,7 @@ import org.w3c.dom.Text;
 public class InteractEngine {
 
 	// An array of interactable objects on the screen
-	static InteractableBase[] interactables;
-	static LinkedList<CustomerCounter> customerCounters;
+	static Interactable[] interactables;
 
 	// Determines how far away the player must be to interact with a station
 	static float interactRange;
@@ -51,44 +38,58 @@ public class InteractEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise()
+	public static void initialise(HashMap<String, InteractableType> interactableTypeHashMap,
+		HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap,
+		HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap)
 	{
 
-		interactables = new InteractableBase[] {
+		InteractableType counter = interactableTypeHashMap.get("counter");
+		InteractableType customerCounter = interactableTypeHashMap.get("customer-counter");
+		InteractableType bin = interactableTypeHashMap.get("bin");
+		InteractableType bunPantry = interactableTypeHashMap.get("bun-pantry");
+		InteractableType lettucePantry = interactableTypeHashMap.get("lettuce-pantry");
+		InteractableType onionPantry = interactableTypeHashMap.get("onion-pantry");
+		InteractableType pattyPantry = interactableTypeHashMap.get("patty-pantry");
+		InteractableType tomatoPantry = interactableTypeHashMap.get("tomato-pantry");
+		InteractableType bakingStation = interactableTypeHashMap.get("baking-station");
+		InteractableType hobStation = interactableTypeHashMap.get("hob-station");
+		InteractableType cuttingStation = interactableTypeHashMap.get("cutting-station");
 
-			new CustomerCounter(1, 2),
-			new CustomerCounter(1, 3),
-			new CustomerCounter(1, 4),
+		InteractableInLevel[] interactableInLevels = new InteractableInLevel[] {
+			customerCounter.instantiate(1, 2, combinationsHashmap.get(customerCounter), actionHashmap.get(customerCounter)),
+			customerCounter.instantiate(1, 3, combinationsHashmap.get(customerCounter), actionHashmap.get(customerCounter)),
+			customerCounter.instantiate(1, 4, combinationsHashmap.get(customerCounter), actionHashmap.get(customerCounter)),
 
-			new Counter(1, 5),
-			new Counter(1, 1),
-			new Counter(6, 6),
-			new Counter(6, 0),
-			new Counter(7, 6),
-			new Counter(7, 0),
+			counter.instantiate(1, 5, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(1, 1, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(6, 6, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(6, 0, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(7, 6, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(7, 0, combinationsHashmap.get(counter), actionHashmap.get(counter)),
 
-			new CookingStation(2, 6),
-			new CookingStation(4, 6),
-			new BakingStation(3, 6),
-			new BakingStation(5, 6),
-			new CuttingStation(2, 0),
-			new CuttingStation(3, 0),
-			new CuttingStation(4, 0),
-			new CuttingStation(5, 0),
+			hobStation.instantiate(2, 6, combinationsHashmap.get(hobStation), actionHashmap.get(hobStation)),
+			hobStation.instantiate(4, 6, combinationsHashmap.get(hobStation), actionHashmap.get(hobStation)),
+			bakingStation.instantiate(3, 6, combinationsHashmap.get(bakingStation), actionHashmap.get(bakingStation)),
+			bakingStation.instantiate(5, 6, combinationsHashmap.get(bakingStation), actionHashmap.get(bakingStation)),
+			cuttingStation.instantiate(2, 0, combinationsHashmap.get(cuttingStation), actionHashmap.get(cuttingStation)),
+			cuttingStation.instantiate(3, 0, combinationsHashmap.get(cuttingStation), actionHashmap.get(cuttingStation)),
+			cuttingStation.instantiate(4, 0, combinationsHashmap.get(cuttingStation), actionHashmap.get(cuttingStation)),
+			cuttingStation.instantiate(5, 0, combinationsHashmap.get(cuttingStation), actionHashmap.get(cuttingStation)),
 
-			new BurgerStation(3, 3),
-			new SaladStation(4, 3),
+			counter.instantiate(3, 3, combinationsHashmap.get(counter), actionHashmap.get(counter)),
+			counter.instantiate(4, 3, combinationsHashmap.get(counter), actionHashmap.get(counter)),
 
-			new PattyStation(5, 3),
-			new BunStation(6, 3),
-			new LettuceStation(8, 3),
-			new TomatoStation(8, 4),
-			new OnionStation(8, 2),
+			pattyPantry.instantiate(5, 3, combinationsHashmap.get(pattyPantry), actionHashmap.get(pattyPantry)),
+			bunPantry.instantiate(6, 3, combinationsHashmap.get(bunPantry), actionHashmap.get(bunPantry)),
+			lettucePantry.instantiate(8, 3, combinationsHashmap.get(lettucePantry), actionHashmap.get(lettucePantry)),
+			tomatoPantry.instantiate(8, 4, combinationsHashmap.get(tomatoPantry), actionHashmap.get(tomatoPantry)),
+			onionPantry.instantiate(8, 2, combinationsHashmap.get(onionPantry), actionHashmap.get(onionPantry)),
 
-			new Bin(8, 6),
-			new Bin(8, 0)
-
+			bin.instantiate(8, 6, combinationsHashmap.get(bin), actionHashmap.get(bin)),
+			bin.instantiate(8, 0, combinationsHashmap.get(bin), actionHashmap.get(bin)),
 		};
+
+		interactables = Arrays.stream(interactableInLevels).map(InteractableInLevel::initialise).toArray(Interactable[]::new);
 
 		interactRange = 85f;
 
@@ -110,14 +111,14 @@ public class InteractEngine {
 
 	public static void update(float delta)
 	{
-		for(InteractableBase interactable : interactables) {
+		for(Interactable interactable : interactables) {
 			// Increment the interactable's timer by the time elapsed between now and the last frame render
 			interactable.incrementTime(delta);
 		}
 	}
 
 	public static void render(SpriteBatch batch) {
-		for(InteractableBase interactable : interactables) {
+		for(Interactable interactable : interactables) {
 			interactable.render(batch);
 			batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
 			// Render a progress slider above the element if it is currently preparing
@@ -154,8 +155,8 @@ public class InteractEngine {
 		System.out.println("\n==============================\nINTERACTION ATTEMPTED");
 
 		float minDistance = Float.MAX_VALUE;
-		InteractableBase closestInteractable = null;
-		for(InteractableBase interactable : interactables)
+		Interactable closestInteractable = null;
+		for(Interactable interactable : interactables)
 		{
 			boolean valid = interactable.tryInteraction(xPos, yPos, interactRange);
 

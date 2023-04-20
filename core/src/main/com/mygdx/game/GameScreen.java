@@ -11,8 +11,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.customer.CustomerEngine;
+import com.mygdx.game.interact.Action;
+import com.mygdx.game.interact.Combination;
 import com.mygdx.game.interact.InteractEngine;
+import com.mygdx.game.interact.InteractableType;
 import com.mygdx.game.player.PlayerEngine;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 
@@ -37,7 +42,12 @@ public class GameScreen extends InputAdapter implements Screen {
 	private final PiazzaPanic main;
 
 
-	public GameScreen(PiazzaPanic main)
+	public GameScreen(
+		PiazzaPanic main,
+		HashMap<String, Ingredient> ingredientHashMap,
+		HashMap<String, InteractableType> interactableTypeHashMap,
+		HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap,
+		HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap)
 	{
 		this.main = main;
 
@@ -49,8 +59,8 @@ public class GameScreen extends InputAdapter implements Screen {
 
 		// Initialise Engine scripts
 		PlayerEngine.initialise();
-		CustomerEngine.initialise();
-		InteractEngine.initialise();
+		CustomerEngine.initialise(ingredientHashMap);
+		InteractEngine.initialise(interactableTypeHashMap, combinationsHashmap, actionHashmap);
 
 		masterTimer = 0f;
 

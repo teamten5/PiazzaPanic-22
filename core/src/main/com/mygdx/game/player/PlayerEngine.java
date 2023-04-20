@@ -2,7 +2,6 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
@@ -49,7 +48,7 @@ public final class PlayerEngine {
 	public static void render(SpriteBatch batch) {
 		for(Player chef : chefs) {
 			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos(), 0.8f, 0.8f * 1.5f);
-			Ingredient ingredient = chef.getIngredientStack().peek();
+			Ingredient ingredient = chef.getCurrentIngredient();
 			if (ingredient != null) {
 				batch.draw(ingredient.texture, chef.getXPos(), chef.getYPos() + 1.1f, 0.7f, 0.7f);
 			}

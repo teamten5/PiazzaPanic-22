@@ -2,7 +2,7 @@ package com.mygdx.game.customer;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.interact.special_stations.CustomerCounter;
+import com.mygdx.game.interact.Interactable;
 
 /**
  * @author Thomas McCarthy
@@ -20,14 +20,14 @@ public class Customer {
     boolean atCounter = false;
     boolean orderComplete = false;
 
-    CustomerCounter counter;
+    Interactable counter;
     Ingredient requiredIngredient;
 
 
     //==========================================================\\
     //                      CONSTRUCTOR                         \\
     //==========================================================\\
-    public Customer(CustomerCounter counter, Ingredient requiredIngredient)
+    public Customer(Interactable counter, Ingredient requiredIngredient)
     {
         this.counter = counter;
         this.requiredIngredient = requiredIngredient;
@@ -58,7 +58,7 @@ public class Customer {
             posX += (speed * Gdx.graphics.getDeltaTime());
             if(getDistanceFromCounter() <= counterOffset)
             {
-                counter.placeOrder(this, requiredIngredient);
+                // counter.placeOrder(this, requiredIngredient);
                 atCounter = true;
             }
         }
