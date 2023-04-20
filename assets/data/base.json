@@ -2,17 +2,17 @@
     "ingredients": {
         "buns-toasted":  {"texture": "ingredient_bun_toasted.png", "modifiers":  {"place-on":  ["counter"]}},
         "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png", "modifiers":  {"place-on":  ["counter"]}},
-        "lettuce-cut":  {"texture": "ingredient_lettuce_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "lettuce-uncut":  {"texture": "ingredient_lettuce_uncut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-cut":  {"texture": "ingredient_onion_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-uncut":  {"texture": "ingredient_onion_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "patty-cooked":  {"texture": "ingredient_patty_cooked.png", "modifiers":  {"place-on":  ["counter"]}},
         "patty-raw":  {"texture": "ingredient_patty_raw.png", "modifiers":  {"place-on":  ["counter"]}},
-        "tomato-cut":  {"texture": "ingredient_tomato_cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "tomato-uncut":  {"texture": "ingredient_tomato_uncut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "burger":  {"texture": "ingredient_burger.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato":  {"texture": "ingredient_salad.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato-onion":  {"texture": "ingredient_salad.png", "modifiers":  {"place-on":  ["counter"]}}
+        "salad-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
+        "salad-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
     },
     "interactables": {
         "counter": {
@@ -40,13 +40,13 @@
             "modifiers": {"pantry-of": "buns-untoasted"}
         },
         "lettuce-pantry": {
-            "texture": "pantry-lettuce.png",
+            "texture": "counter-pantry-lettuce.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "lettuce-uncut"}
         },
         "onion-pantry": {
-            "texture": "station_onion.png",
+            "texture": "counter-pantry-onion.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "onion-uncut"}
@@ -58,7 +58,7 @@
             "modifiers": {"pantry-of": "patty-raw"}
         },
         "tomato-pantry": {
-            "texture": "pantry-tomato.png",
+            "texture": "counter-pantry-tomato.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "tomato-uncut"}
