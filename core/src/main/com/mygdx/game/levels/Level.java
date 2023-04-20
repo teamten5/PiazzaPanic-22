@@ -33,6 +33,7 @@ public class Level {
     public void render(PolygonSpriteBatch batch) {
         for (Interactable interactable: interactables) {
             interactable.renderBottom(batch);
+            batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
         }
         PlayerEngine.render(batch);
         for (Interactable interactable: interactables) {

@@ -112,7 +112,6 @@ public class InteractEngine {
 
 	public static void render(PolygonSpriteBatch batch) {
 		for(Interactable interactable : interactables) {
-			batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
 			// Render a progress slider above the element if it is currently preparing
 			if(interactable.isPreparing())
 			{
