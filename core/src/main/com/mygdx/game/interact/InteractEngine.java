@@ -1,6 +1,7 @@
 package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
@@ -109,17 +110,8 @@ public class InteractEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update(float delta)
-	{
+	public static void render(PolygonSpriteBatch batch) {
 		for(Interactable interactable : interactables) {
-			// Increment the interactable's timer by the time elapsed between now and the last frame render
-			interactable.incrementTime(delta);
-		}
-	}
-
-	public static void render(SpriteBatch batch) {
-		for(Interactable interactable : interactables) {
-			interactable.render(batch);
 			batch.draw(interactable.getIngredientTexture(), interactable.getXPos(), interactable.getYPos(), 1, 1);
 			// Render a progress slider above the element if it is currently preparing
 			if(interactable.isPreparing())

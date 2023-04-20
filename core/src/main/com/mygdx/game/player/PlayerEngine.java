@@ -2,6 +2,7 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
@@ -45,7 +46,7 @@ public final class PlayerEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void render(SpriteBatch batch) {
+	public static void render(PolygonSpriteBatch batch) {
 		for(Player chef : chefs) {
 			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos(), 0.8f, 0.8f * 1.5f);
 			Ingredient ingredient = chef.getCurrentIngredient();

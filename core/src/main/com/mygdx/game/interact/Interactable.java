@@ -1,6 +1,8 @@
 package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
@@ -91,7 +93,7 @@ public class Interactable {
 	//==========================================================\\
 
 	// Increments the counter for the station if required
-	public void incrementTime(float timeElapsed)
+	public void update(float timeElapsed)
 	{
 		actionProgress += timeElapsed;
 	}
@@ -100,8 +102,14 @@ public class Interactable {
 	//                         RENDER                           \\
 	//==========================================================\\
 
-	public void render(SpriteBatch batch) {
-		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos, 1, 1);
+	public void renderBottom(PolygonSpriteBatch batch) {
+		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos - 10f/22f, 1, 1, 0, 10, 32, 22, false, false);
+
+	}
+
+	public void renderTop(PolygonSpriteBatch batch) {
+		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos + 12f/22f, 1, 10f/22f, 0, 0, 32, 10, false, false);
+
 	}
 
 

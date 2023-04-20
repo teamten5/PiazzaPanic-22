@@ -2,6 +2,7 @@ package com.mygdx.game.customer;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.interact.Interactable;
@@ -83,7 +84,7 @@ public final class CustomerEngine {
         timer -= delta;
     }
 
-    public static void render(SpriteBatch batch) {
+    public static void render(PolygonSpriteBatch batch) {
         for(Customer c : customers)
         {
             batch.draw(customerTexture, c.getXPos(), c.getYPos(), 1, 1);
