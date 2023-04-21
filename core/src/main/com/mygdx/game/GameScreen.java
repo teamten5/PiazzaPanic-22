@@ -115,7 +115,6 @@ public class GameScreen extends InputAdapter implements Screen {
 
 
 		batch.begin();
-		PlayerEngine.update(delta);
 		CustomerEngine.update(delta);
 
 		currentLevel.render(batch);

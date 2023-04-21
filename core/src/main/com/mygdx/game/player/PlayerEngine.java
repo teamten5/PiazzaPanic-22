@@ -43,31 +43,6 @@ public final class PlayerEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void update(float delta) {
-		
-		activeChef.handleMovement(interactableColliders);
-		
-		// Chef Quick-Switch with 'Q'
-		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-			activeChef = chefs[(activeChef.getID() + 1) % chefs.length];
-		}
-		// Chef switch with numbers 1-3
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			activeChef = chefs[0];
-		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-			activeChef = chefs[1];
-		}
-		/* else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-			activeChef = chefs[2]; 
-		} */
-
-		// Check for interaction input
-		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
-		{
-			InteractEngine.interact();
-		}
-	}
 	
 	
 	//==========================================================\\

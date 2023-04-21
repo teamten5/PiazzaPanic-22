@@ -1,21 +1,11 @@
 package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
-
-/**
- * 
- * @author Thomas McCarthy
- * 
- * The base script for interactable objects
- *
- */
 
 public class Interactable {
 
@@ -24,7 +14,7 @@ public class Interactable {
 	protected Texture indicatorArrow = new Texture("textures/indicator_arrow.png");
 	// Ingredient Information
 
-	final private InteractableInLevel instanceOf;
+	final public InteractableInLevel instanceOf;
 
 
 	private Ingredient currentIngredient = null;
@@ -48,33 +38,15 @@ public class Interactable {
 	//                      INTERACTION                         \\
 	//==========================================================\\
 
-	// The active chef can only engage with an interactable if they are within the right range
-	public boolean tryInteraction(float chefXPos, float chefYPos, final float interactRange)
-	{
-		float xDist = Math.abs(chefXPos - instanceOf.xPos);
-		float yDist = Math.abs(chefYPos - instanceOf.yPos);
-
-		// If chef is within range, handle the appropriate interaction
-		return xDist <= interactRange && yDist <= interactRange;
-	}
-
 	// We need to determine what action to take based on the interactable's variables
-	public void handleInteraction()
-	{
-		Player activeChef = PlayerEngine.getActiveChef();
-
-		System.out.println("Chef has ingredient " + activeChef.getCurrentIngredient());
+	public void handleInteraction(Player player) {
 
 		for (Combination combination: instanceOf.combinations) {
-			System.out.println(activeChef.carrying == combination.startingChefCarrying);
-			System.out.println(activeChef.carrying);
-			System.out.println(combination.startingChefCarrying);
 			if (
-				activeChef.carrying == combination.startingChefCarrying &&
+				player.carrying == combination.startingChefCarrying &&
 				currentIngredient == combination.startingOnStation
 			) {
-				System.out.println(combination.endingChefCarrying);
-				activeChef.carrying = combination.endingChefCarrying;
+				player.carrying = combination.endingChefCarrying;
 				currentIngredient = combination.endingOnStation;
 
 				currentAction = instanceOf.actions.get(currentIngredient);
@@ -103,12 +75,12 @@ public class Interactable {
 	//==========================================================\\
 
 	public void renderBottom(PolygonSpriteBatch batch) {
-		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos - 10f/22f, 1, 1, 0, 10, 32, 22, false, false);
+		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos, 1, 1, 0, 10, 32, 22, false, false);
 
 	}
 
 	public void renderTop(PolygonSpriteBatch batch) {
-		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos + 12f/22f, 1, 10f/22f, 0, 0, 32, 10, false, false);
+		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos + 1, 1, 10f/22f, 0, 0, 32, 10, false, false);
 
 	}
 

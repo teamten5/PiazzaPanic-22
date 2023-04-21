@@ -9,6 +9,8 @@ import com.mygdx.game.interact.Interactable;
 import com.mygdx.game.interact.InteractableInLevel;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerEngine;
+import com.mygdx.game.player.controllers.NullController;
+import com.mygdx.game.player.controllers.PlayerController;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +26,8 @@ public class Level {
         this.type = type;
 
         players = new ArrayList<>(Arrays.asList(
-              new Player(0,  -1,  -1, "textures/temp_chef_1.png"),
-              new Player(1,  -2,  -2, "textures/temp_chef_2.png")
+              new Player(new PlayerController(),  -1,  -2, "textures/temp_chef_1.png", this),
+              new Player(new NullController(),  -2,  -2, "textures/temp_chef_2.png", this)
         ));
 
         interactables = Arrays.stream(type.interactables).map(InteractableInLevel::initialise).toArray(Interactable[]::new);
@@ -33,6 +35,9 @@ public class Level {
     public void update(float delta) {
         for (Interactable interactable: interactables) {
             interactable.update(delta);
+        }
+        for (Player player: players) {
+            player.update(delta);
         }
     }
 
@@ -59,5 +64,14 @@ public class Level {
                 shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
             }
         }
+    }
+    public Interactable interactableAt(float x, float y) {
+        for (Interactable interactable : interactables) {
+            if ((interactable.instanceOf.xPos <= x && x <= interactable.instanceOf.xPos + interactable.instanceOf.type.xSize) && interactable.instanceOf.yPos <= y
+                  && y <= interactable.instanceOf.yPos + interactable.instanceOf.type.ySize) {
+                return interactable;
+            }
+        }
+        return null;
     }
 }

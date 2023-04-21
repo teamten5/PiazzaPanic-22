@@ -136,38 +136,4 @@ public class InteractEngine {
 		is pressed.
 		See PlayerEngine > update() for more.
 	 */
-	public static void interact()
-	{
-		Player activeChef = PlayerEngine.getActiveChef();
-		float xPos = activeChef.getXPos();
-		float yPos = activeChef.getYPos();
-
-
-		System.out.println("\n==============================\nINTERACTION ATTEMPTED");
-
-		float minDistance = Float.MAX_VALUE;
-		Interactable closestInteractable = null;
-		for(Interactable interactable : interactables)
-		{
-			boolean valid = interactable.tryInteraction(xPos, yPos, interactRange);
-
-			if(valid)
-			{
-				float xDist = interactable.getXPos() - PlayerEngine.getActiveChef().getXPos();
-				float yDist = interactable.getYPos() - PlayerEngine.getActiveChef().getYPos();
-				float distance = (float)Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
-				if(distance < minDistance)
-				{
-					minDistance = distance;
-					closestInteractable = interactable;
-				}
-			}
-		}
-		if(closestInteractable != null)
-		{
-			closestInteractable.handleInteraction();
-		}
-
-		System.out.println("INTERACTION ENDED");
-	}
 }

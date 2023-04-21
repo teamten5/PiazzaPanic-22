@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game._convenience.IngredientStack;
+import com.mygdx.game.interact.Interactable;
+import com.mygdx.game.levels.Level;
+import com.mygdx.game.player.controllers.Controller;
 
 /**
  * 
@@ -16,85 +19,80 @@ import com.mygdx.game._convenience.IngredientStack;
  *
  */
 public class Player {
-	
-	// player speed is a hard-coded value, so that it is the same for multiple players
-	private final float speed = 3.5f;
-	private final int id;
+
+
 	private float posX;
 	private float posY;
-	private float previousPosX;
-	private float previousPosY;
-	private Rectangle collisionRect;
+	private float sizeX;
+	private float sizeY;
 	private Sprite sprite;
 	// The LinkedList is used as an implementation of a stack
 	public Ingredient carrying;
 	// Determines if the player can move
 	private boolean movementEnabled;
 
+	private Controller controller;
+
+	private Level level;
+
 
 	//==========================================================\\
 	//                      CONSTRUCTOR                         \\
 	//==========================================================\\
 	
-	public Player(int id, int startX, int startY, String texture)
+	public Player(Controller controller, int startX, int startY, String texture, Level level)
 	{
-		this.id = id;
+		this.level = level;
+		this.controller = controller;
 		this.posX = startX;
 		this.posY = startY;
+		sizeX = 0.7f;
+		sizeY = 0.4f;
 		this.sprite = new Sprite(new Texture(texture));
 		this.carrying = null;
 		this.movementEnabled = true;
-
-		previousPosX = startX;
-		previousPosY = startY;
-		collisionRect = new Rectangle(posX, posY, 0.8f, 0.8f);
 	}
 	
 	
 	//==========================================================\\
-	//                    PLAYER MOVEMENT                       \\
+	//                        CONTROLS                          \\
 	//==========================================================\\
-	
-	public void handleMovement(Rectangle[] colliders) {
-		sprite.setCenter(getXPos() + sprite.getTexture().getWidth() / 2f, getYPos() + sprite.getTexture().getHeight() / 2f);
 
-		if(movementEnabled) {
-			// Check for user movement input
-			if(Gdx.input.isKeyPressed(Input.Keys.W)) {moveY(1f);}
-			if(Gdx.input.isKeyPressed(Input.Keys.S)) {moveY(-1f);}
-			if(Gdx.input.isKeyPressed(Input.Keys.A)) {moveX(-1f);}
-			if(Gdx.input.isKeyPressed(Input.Keys.D)) {moveX(1f);}
+	public void update(float delta) {
+		controller.update(delta);
+		float newx = posX + controller.x;
+		float newy = posY + controller.y;
 
-			collisionRect.setPosition(posX, posY);
-
-			for(Rectangle c : colliders)
-			{
-				if(c.overlaps(collisionRect))
-				{
-					posX = previousPosX;
-					posY = previousPosY;
-					collisionRect.setPosition(posX, posY);
-				}
+		if (isPositionValid(newx, newy)) {
+			posX = newx;
+			posY = newy;
+		} else if (isPositionValid(posX, newy)) {
+			posY = newy;
+		} else if (isPositionValid(newx, posY)) {
+			posX = newx;
+		}
+		if (controller.doCombination) {
+			Interactable closestStation = level.interactableAt(posX + controller.facing_x + sizeX / 2, posY + controller.facing_y + sizeY / 2);
+			if (closestStation != null) {
+				closestStation.handleInteraction(this);
 			}
 		}
 	}
-	
-	public void moveX(float multiplier) {
-		previousPosX = posX;
-		posX += Gdx.graphics.getDeltaTime() * multiplier * speed;
+
+	Boolean isPositionValid(float x, float y) {
+		boolean bl = false, br = false, tl = false, tr = false;
+		for (Rectangle rect: level.type.chefValidAreas) {
+			if (rect.contains(x,y)) {bl = true;}
+			if (rect.contains(x + sizeX,y)) {br = true;}
+			if (rect.contains(x,y + sizeY)) {tl = true;}
+			if (rect.contains(x + sizeX,y + sizeY)) {tr = true;}
+		}
+		return bl && br && tl && tr;
 	}
-	
-	public void moveY(float multiplier) {
-		previousPosY = posY;
-		posY += Gdx.graphics.getDeltaTime() * multiplier * speed;
-	}
-	
 	
 	//==========================================================\\
 	//                    GETTERS & SETTERS                     \\
 	//==========================================================\\
-	
-	public int getID() { return id; }
 	
 	public float getXPos() { return posX; }
 	
@@ -106,7 +104,7 @@ public class Player {
 
 	public void setMovementEnabled(boolean movementEnabled) {
 		this.movementEnabled = movementEnabled;
-		System.out.println("CHEF " + (getID() + 1) + " MOVEMENT SET TO " + movementEnabled);
+		System.out.println("CHEF " + " MOVEMENT SET TO " + movementEnabled);
 	}
 	
 }
