@@ -2,11 +2,12 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.interact.InteractEngine;
+import com.mygdx.game.levels.Level;
 
 /**
  * 
@@ -28,16 +29,12 @@ public final class PlayerEngine {
 	//                      INITIALISER                         \\
 	//==========================================================\\
 
-	public static void initialise()
+	public static void initialise(Level level)
 	{
 
-		chefs = new Player[2];
-		chefs[0] = new Player(0,  2,  5, "textures/temp_chef_1.png");
-		chefs[1] = new Player(1,  6,  5, "textures/temp_chef_2.png");
-		// chefs[2] = new Player(2, 125, 125, "temp_chef_3.png");
 
+		chefs = level.players.toArray(new Player[0]);
 		activeChef = chefs[0];
-
 		interactableColliders = new Rectangle[0];
 	}
 	
@@ -46,41 +43,6 @@ public final class PlayerEngine {
 	//                         UPDATE                           \\
 	//==========================================================\\
 
-	public static void render(SpriteBatch batch) {
-		for(Player chef : chefs) {
-			batch.draw(chef.getSprite(), chef.getXPos(), chef.getYPos(), 0.8f, 0.8f * 1.5f);
-			Ingredient ingredient = chef.getIngredientStack().peek();
-			if (ingredient != null) {
-				batch.draw(ingredient.texture, chef.getXPos(), chef.getYPos() + 1.1f, 0.7f, 0.7f);
-			}
-		}
-	}
-
-	public static void update(float delta) {
-		
-		activeChef.handleMovement(interactableColliders);
-		
-		// Chef Quick-Switch with 'Q'
-		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-			activeChef = chefs[(activeChef.getID() + 1) % chefs.length];
-		}
-		// Chef switch with numbers 1-3
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			activeChef = chefs[0];
-		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-			activeChef = chefs[1];
-		}
-		/* else if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-			activeChef = chefs[2]; 
-		} */
-
-		// Check for interaction input
-		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
-		{
-			InteractEngine.interact();
-		}
-	}
 	
 	
 	//==========================================================\\
