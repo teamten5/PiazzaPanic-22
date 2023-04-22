@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.PlayerEngine;
 
 public class Interactable {
 

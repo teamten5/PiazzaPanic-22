@@ -8,19 +8,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.customer.CustomerEngine;
 import com.mygdx.game.interact.Action;
 import com.mygdx.game.interact.Combination;
-import com.mygdx.game.interact.InteractEngine;
 import com.mygdx.game.interact.InteractableType;
 import com.mygdx.game.levels.Level;
-import com.mygdx.game.player.PlayerEngine;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -68,9 +64,7 @@ public class GameScreen extends InputAdapter implements Screen {
 		shapeRenderer = new ShapeRenderer();
 
 		// Initialise Engine scripts
-		PlayerEngine.initialise(currentLevel);
 		CustomerEngine.initialise(ingredientHashMap);
-		InteractEngine.initialise(interactableTypeHashMap, combinationsHashmap, actionHashmap);
 
 		masterTimer = 0f;
 
@@ -118,7 +112,6 @@ public class GameScreen extends InputAdapter implements Screen {
 		CustomerEngine.update(delta);
 
 		currentLevel.render(batch);
-		InteractEngine.render(batch);
 		CustomerEngine.render(batch);
 
 		// End the process

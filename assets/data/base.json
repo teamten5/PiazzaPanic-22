@@ -157,7 +157,13 @@
                     {"x": 0,    "y": 0,     "dx": 1,    "dy": 6},
                     {"x": 0,    "y": 4,     "dx": 8,    "dy": 3}
                 ]
-            }
+            },
+            "order-profiles": [
+                {""}
+            ]
         }
+    },
+    "people": {
+        "cus1": {"texture": "customer.png"}
     }
 }

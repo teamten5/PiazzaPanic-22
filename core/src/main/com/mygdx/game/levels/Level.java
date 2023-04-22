@@ -1,14 +1,12 @@
 package com.mygdx.game.levels;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.interact.Interactable;
 import com.mygdx.game.interact.InteractableInLevel;
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.PlayerEngine;
 import com.mygdx.game.player.controllers.NullController;
 import com.mygdx.game.player.controllers.PlayerController;
 import java.util.ArrayDeque;
