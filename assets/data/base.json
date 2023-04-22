@@ -150,7 +150,8 @@
                     {"type": "tomato-pantry",       "x": 4, "y": 2},
                     {"type": "counter",             "x": 2, "y": 0},
                     {"type": "counter",             "x": 3, "y": 0},
-                    {"type": "counter",             "x": 4, "y": 0}
+                    {"type": "counter",             "x": 4, "y": 0},
+                    {"type": "cutting-station",     "x": 5, "y": 0}
                 ],
                 "valid-areas": [
                     {"x": 0,    "y": 0,     "dx": 8,    "dy": 3},
@@ -159,7 +160,7 @@
                 ]
             },
             "order-profiles": [
-                {""}
+                {"": ""}
             ]
         }
     },

@@ -75,12 +75,16 @@ public class Interactable {
 
 	public void renderBottom(PolygonSpriteBatch batch) {
 		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos, 1, 1, 0, 10, 32, 22, false, false);
-
+		if (currentIngredient != null) {
+			batch.draw(currentIngredient.texture, instanceOf.xPos + 13f/32f, instanceOf.yPos + 13f/22f, 0.5f, 9f/22f, 0, 8, 16, 8, false, false);
+		}
 	}
 
 	public void renderTop(PolygonSpriteBatch batch) {
 		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos + 1, 1, 10f/22f, 0, 0, 32, 10, false, false);
-
+		if (currentIngredient != null) {
+			batch.draw(currentIngredient.texture, instanceOf.xPos + 13f/32f, instanceOf.yPos + 1, 0.5f, 7f/22f, 0, 0, 16, 8, false, false);
+		}
 	}
 
 
