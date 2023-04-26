@@ -57,7 +57,15 @@ public class GameScreen extends InputAdapter implements Screen {
 
 		// Set up camera
 		camera = new OrthographicCamera();
-		viewport = new GameViewport(15, 15, camera,32, 22, 2);
+		viewport = new GameViewport(
+			15,
+			15,
+			camera,
+			Config.unitWidthInPixels,
+			Config.unitHeightInPixels,
+			Config.scaling
+		);
+
 		// Create processor to handle user input
 		batch = new PolygonSpriteBatch();
 
