@@ -15,24 +15,40 @@ public class PlayerController extends Controller {
         doCombination = false;
         doAction = false;
         swapChef = false;
-        if (Gdx.input.isKeyPressed(Keys.W)) {
+        boolean up = Gdx.input.isKeyPressed(Keys.W);
+        boolean down = Gdx.input.isKeyPressed(Keys.S);
+        boolean left = Gdx.input.isKeyPressed(Keys.A);
+        boolean right = Gdx.input.isKeyPressed(Keys.D);
+        if (up) {
             y = y + 3.14f * delta;
             facing_y = 0.5f;
+            if (!(right || left)) {
+                facing_x = 0f;
+            }
         }
 
-        if (Gdx.input.isKeyPressed(Keys.S)) {
+        if (down) {
             y = y - 3.14f * delta;
             facing_y = -0.5f;
+            if (!(right || left)) {
+                facing_x = 0f;
+            }
         }
 
-        if (Gdx.input.isKeyPressed(Keys.D)) {
+        if (right) {
             x = x + 3.14f * delta;
             facing_x = 0.8f;
+            if (!(up || down)) {
+                facing_y = 0f;
+            }
         }
 
-        if (Gdx.input.isKeyPressed(Keys.A)) {
+        if (left) {
             x = x - 3.14f * delta;
             facing_x = -0.8f;
+            if (!(up || down)) {
+                facing_y = 0f;
+            }
         }
 
         if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && !combinationJustDone) {

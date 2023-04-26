@@ -1,12 +1,9 @@
 package com.mygdx.game.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game._convenience.IngredientStack;
 import com.mygdx.game.interact.Interactable;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.player.controllers.Controller;
@@ -74,7 +71,13 @@ public class Player {
 		if (controller.doCombination) {
 			Interactable closestStation = level.interactableAt(posX + controller.facing_x + sizeX / 2, posY + controller.facing_y + sizeY / 2);
 			if (closestStation != null) {
-				closestStation.handleInteraction(this);
+				closestStation.handleCombination(this);
+			}
+		}
+		if (controller.doAction) {
+			Interactable closestStation = level.interactableAt(posX + controller.facing_x + sizeX / 2, posY + controller.facing_y + sizeY / 2);
+			if (closestStation != null) {
+				closestStation.doAction(this);
 			}
 		}
 	}

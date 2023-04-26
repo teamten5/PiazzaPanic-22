@@ -2,7 +2,6 @@ package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Ingredient;
 import com.mygdx.game.player.Player;
 
@@ -18,8 +17,8 @@ public class Interactable {
 
 	private Ingredient currentIngredient = null;
 	private Action currentAction = null;
-	private int actionProgress = 0;
-	private boolean chefDoingAction = false;
+	private float actionProgress = 0;
+	private Player playerDoingAction = null;
 
 	
 	//==========================================================\\
@@ -31,14 +30,13 @@ public class Interactable {
 	{
 		this.instanceOf = instanceOf;
 	}
-	
-	
+
 	//==========================================================\\
 	//                      INTERACTION                         \\
 	//==========================================================\\
 
 	// We need to determine what action to take based on the interactable's variables
-	public void handleInteraction(Player player) {
+	public void handleCombination(Player player) {
 
 		for (Combination combination: instanceOf.combinations) {
 			if (
@@ -57,16 +55,28 @@ public class Interactable {
 			}
 		}
 	}
+	public void doAction(Player player) {
+		playerDoingAction = player;
+	}
 
 
 	//==========================================================\\
-	//                         TIMER                            \\
+	//                        UPDATE                            \\
 	//==========================================================\\
 
 	// Increments the counter for the station if required
 	public void update(float timeElapsed)
 	{
-		actionProgress += timeElapsed;
+
+		if (currentAction != null && !(currentAction.chefRequired && playerDoingAction == null)) {
+			actionProgress += timeElapsed;
+			if (actionProgress > currentAction.timeToComplete) {
+				currentIngredient = currentAction.output;
+				currentAction = null;
+
+			}
+		}
+		playerDoingAction = null;
 	}
 
 	//==========================================================\\
@@ -103,17 +113,4 @@ public class Interactable {
 			return currentIngredient.texture;
 		}
 	}
-
-	public int getCurrentTime() { return actionProgress; }
-
-	public float getPreparationTime() { return currentAction.timeToComplete; }
-
-	public boolean isPreparing() {
-		return currentAction != null;
-	}
-
-	public Rectangle getCollisionRect() {
-		return new Rectangle(instanceOf.xPos, instanceOf.yPos, instanceOf.type.xSize, instanceOf.type.ySize);
-	}
-
 }

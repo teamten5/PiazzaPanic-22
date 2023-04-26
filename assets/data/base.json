@@ -120,23 +120,23 @@
             "stations": ["hob-station"]
         },
         "cut-lettuce": {
-            "start": "uncut_lettuce",
-            "end": "cut_lettuce",
-            "time": 4000,
+            "start": "lettuce-uncut",
+            "end": "lettuce-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         },
         "cut-tomato": {
-            "start": "uncut-tomato",
-            "end": "cut-tomato",
-            "time": 4000,
+            "start": "tomato-uncut",
+            "end": "tomato-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         },
         "cut-onion": {
-            "start": "uncut-onion",
-            "end": "cut-onion",
-            "time": 4000,
+            "start": "onion-uncut",
+            "end": "onion-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         }
