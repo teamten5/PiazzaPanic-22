@@ -1,7 +1,12 @@
 sourceCompatibility = 1.8
+dependencies {
+    implementation 'org.jetbrains:annotations:23.0.0'
+    testImplementation 'junit:junit:4.13.1'
+}
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/main/" ]
 sourceSets.test.java.srcDirs = [ "src/test/" ]
+sourceSets.test.resources.srcDirs = ["./assets"]
 
 eclipse.project.name = appName + "-core"

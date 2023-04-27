@@ -1,6 +1,8 @@
 sourceCompatibility = 1.8
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = [ "src/main/" ]
+sourceSets.test.java.srcDirs = [ "src/test/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
+sourceSets.test.resources.srcDirs = ["../assets"]
 
 project.ext.mainClassName = "com.mygdx.game.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
@@ -40,7 +42,6 @@ task dist(type: Jar) {
     }
     with jar
 }
-
 
 dist.dependsOn classes
 
