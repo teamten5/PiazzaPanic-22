@@ -1,17 +1,76 @@
 {
-    "ingredients": {
+    "_old": {
+        "_item": [
+            {"type": "allignment-test",        "x": 7, "y": 1},
+            {"type": "allignment-test2",        "x": 8, "y": 1}
+        ],
         "buns-toasted":  {"texture": "ingredient_bun_toasted.png", "modifiers":  {"place-on":  ["counter"]}},
         "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png", "modifiers":  {"place-on":  ["counter"]}},
-        "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "patty-cooked":  {"texture": "ingredient_patty_cooked.png", "modifiers":  {"place-on":  ["counter"]}},
         "patty-raw":  {"texture": "ingredient_patty_raw.png", "modifiers":  {"place-on":  ["counter"]}},
-        "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "burger":  {"texture": "ingredient_burger.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
+        "bun-pantry": {
+            "texture": "station_bun.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "buns-untoasted"}
+        },
+        "patty-pantry": {
+            "texture": "station_patty.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "patty-raw"}
+        },
+        "baking-station": {
+            "texture": "station_baking.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "hob-station": {
+            "texture": "station_cooking.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "toast-buns": {
+            "start": "buns-untoasted",
+            "end": "buns-toasted",
+            "time": 8000,
+            "chef-required": false,
+            "stations": ["baking-station"]
+        },
+        "cook-patty": {
+            "start": "patty-raw",
+            "end": "patty-cooked",
+            "time": 8000,
+            "chef-required": false,
+            "stations": ["hob-station"]
+        },
+        "test": {
+            "start": null,
+            "end": "salad-lettuce-tomato-onion",
+            "time": 0,
+            "chef-required": false,
+            "stations": ["cutting-station", "counter"]
+        }
+    },
+    "ingredients": {
+        "plate": {"texture": "utensil-plate.png", "modifiers": {"plate": true, "place-on": ["counter", "cutting-station"]}},
+
+        "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-lettuce"}},
+        "plated-lettuce": {"texture": "plated-lettuce-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+
+        "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-onion"}},
+        "plated-onion": {"texture": "ingredient-onion-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+
+        "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-tomato"}},
+        "plated-tomato": {"texture": "plated-tomato.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+
+        "plated-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
         "salad-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
     },
     "interactables": {
@@ -33,12 +92,6 @@
             "y-size": 1,
             "modifiers": {"bin": true}
         },
-        "bun-pantry": {
-            "texture": "station_bun.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"pantry-of": "buns-untoasted"}
-        },
         "lettuce-pantry": {
             "texture": "counter-pantry-lettuce.png",
             "x-size": 1,
@@ -51,34 +104,34 @@
             "y-size": 1,
             "modifiers": {"pantry-of": "onion-uncut"}
         },
-        "patty-pantry": {
-            "texture": "station_patty.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"pantry-of": "patty-raw"}
-        },
         "tomato-pantry": {
             "texture": "counter-pantry-tomato.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "tomato-uncut"}
         },
-        "baking-station": {
-            "texture": "station_baking.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {}
-        },
-        "hob-station": {
-            "texture": "station_cooking.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {}
-        },
         "cutting-station": {
             "texture": "station_cutting.png",
             "x-size": 1,
             "y-size": 1,
+            "modifiers": {}
+        },
+        "plate-pantry": {
+            "texture": "utensil-plate.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "plate"}
+        },
+        "allignment-test": {
+            "texture": "allignment-test.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "allignment-test2": {
+            "texture": "allignment-test.png",
+            "x-size": 2,
+            "y-size": 2,
             "modifiers": {}
         }
     },
@@ -105,20 +158,6 @@
         }
     },
     "actions": {
-        "toast-buns": {
-            "start": "buns-untoasted",
-            "end": "buns-toasted",
-            "time": 8000,
-            "chef-required": false,
-            "stations": ["baking-station"]
-        },
-        "cook-patty": {
-            "start": "patty-raw",
-            "end": "patty-cooked",
-            "time": 8000,
-            "chef-required": false,
-            "stations": ["hob-station"]
-        },
         "cut-lettuce": {
             "start": "lettuce-uncut",
             "end": "lettuce-cut",
@@ -151,10 +190,11 @@
                     {"type": "counter",             "x": 2, "y": 0},
                     {"type": "counter",             "x": 3, "y": 0},
                     {"type": "counter",             "x": 4, "y": 0},
-                    {"type": "cutting-station",     "x": 5, "y": 0}
+                    {"type": "cutting-station",     "x": 5, "y": 0},
+                    {"type": "plate-pantry",        "x": 6, "y": 8}
                 ],
                 "valid-areas": [
-                    {"x": 0,    "y": 0,     "dx": 8,    "dy": 3},
+                    {"x": 0,    "y": 0,     "dx": 13,    "dy": 7},
                     {"x": 0,    "y": 0,     "dx": 1,    "dy": 6},
                     {"x": 0,    "y": 4,     "dx": 8,    "dy": 3}
                 ]
