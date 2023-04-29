@@ -199,8 +199,36 @@
                     {"x": 0,    "y": 4,     "dx": 8,    "dy": 3}
                 ]
             },
-            "order-profiles": [
-                {"": ""}
+            "level-difficulties": [
+                {
+                    "name": "Easy",
+                    "starting-orders": [
+                        "salad-lettuce-tomato"
+                    ],
+                    "starting-max-group-size": 2,
+                    "starting-min-group-size": 1,
+                    "customers": 8
+
+                }, {
+                    "name": "Normal",
+                    "starting-orders": [
+                        "plated-lettuce",
+                        "salad-lettuce-tomato"
+                    ],
+                    "starting-max-group-size": 1,
+                    "starting-min-group-size": 2,
+                    "customers": 10
+                }, {
+                    "name": "Hard",
+                    "starting-orders": [
+                        "plated-lettuce",
+                        "salad-lettuce-tomato",
+                        "salad-lettuce-tomato-onion"
+                    ],
+                    "starting-max-group-size": 1,
+                    "starting-min-group-size": 2,
+                    "customers": 12
+                }
             ]
         }
     },

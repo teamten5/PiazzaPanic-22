@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InteractableType {
-    final public float xSize;
-    final public float ySize;
+    final public float xSize; // height in world units
+    final public float ySize; // width in world units
     final public Texture texture;
     final public int texStartX; // Where the texture starts in pixels (its own) away from left side
     final public int texStartY; // Where the texture starts in pixels (its own) away from bottom side
