@@ -4,9 +4,13 @@ public class Config {
     public static int unitHeightInPixels = 22;
     public static int unitWidthInPixels = 32;
 
-    public static int defaultTexIngredientStartY = 13;
     public static int defaultTexIngredientStartX = 8;
-    public static int loggingLevel = 3;
+    public static int defaultTexIngredientStartY = 13;
+    public static int defaultTexStartX = 0;
+    public static int defaultTexStartY = 0;
+
+    public static boolean defaultInteractableCollisions = true;
+    public static int loggingLevel = 2;
     // currently only changed on startup
 
     //

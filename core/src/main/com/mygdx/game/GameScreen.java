@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.customer.CustomerEngine;
 import com.mygdx.game.interact.Action;
 import com.mygdx.game.interact.Combination;
 import com.mygdx.game.interact.InteractableType;
@@ -71,9 +70,6 @@ public class GameScreen extends InputAdapter implements Screen {
 
 		shapeRenderer = new ShapeRenderer();
 
-		// Initialise Engine scripts
-		CustomerEngine.initialise(ingredientHashMap);
-
 		masterTimer = 0f;
 
 		Label.LabelStyle labelStyle = new Label.LabelStyle();
@@ -117,10 +113,8 @@ public class GameScreen extends InputAdapter implements Screen {
 
 
 		batch.begin();
-		CustomerEngine.update(delta);
 
 		currentLevel.render(batch);
-		CustomerEngine.render(batch);
 
 		// End the process
 		batch.end();
@@ -133,12 +127,6 @@ public class GameScreen extends InputAdapter implements Screen {
 		// Increment the timer and update UI
 		masterTimer += Gdx.graphics.getDeltaTime();
 		timerLabel.setText((int) masterTimer);
-
-		// Check for game over state
-		if(CustomerEngine.getCustomersRemaining() == 0 && main != null)
-		{
-			main.endGame("SCENARIO COMPLETED IN\n" + (int) masterTimer + " seconds");
-		}
 	}
 	
 	

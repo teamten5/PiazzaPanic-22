@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.interact.InteractableType;
@@ -33,6 +34,7 @@ public class Ingredient {
             ingredientsHashmap.put(jsonIngredient.name, ingredient);
         }
 
+        Gdx.app.log("JSON/Ingredient", "Created " + ingredientsHashmap.size() + " Ingredients");
         return ingredientsHashmap;
     }
 
@@ -59,6 +61,9 @@ public class Ingredient {
                         if (jsonModifier.asBoolean()) {
                             _plates.add(ingredient);
                         }
+                        break;
+                    default:
+                        Gdx.app.log("JSON/Ingredient", "Unknown modifier: " + jsonModifier.name + " on " + jsonIngredient.name);
                         break;
                 }
             }

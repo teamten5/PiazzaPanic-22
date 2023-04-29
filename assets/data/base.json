@@ -88,6 +88,12 @@
             "y-size": 1,
             "modifiers": {"customer-table": true}
         },
+        "chair": {
+            "texture": "chair.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"collision": false, "modify-texture-origin": {"x": 8, "y": 3}}
+        },
         "bin": {
             "texture": "indicator_arrow.png",
             "x-size": 1,
@@ -247,9 +253,10 @@
                     "starting-orders": [
                         "salad-lettuce-tomato"
                     ],
-                    "starting-max-group-size": 2,
                     "starting-min-group-size": 1,
-                    "customers": 8
+                    "starting-max-group-size": 2,
+                    "customers": 8,
+                    "days": 1
 
                 }, {
                     "name": "Normal",
@@ -257,9 +264,10 @@
                         "plated-lettuce",
                         "salad-lettuce-tomato"
                     ],
-                    "starting-max-group-size": 1,
-                    "starting-min-group-size": 2,
-                    "customers": 10
+                    "starting-min-group-size": 1,
+                    "starting-max-group-size": 2,
+                    "starting-customers": 10,
+                    "days": 1
                 }, {
                     "name": "Hard",
                     "starting-orders": [
@@ -267,9 +275,10 @@
                         "salad-lettuce-tomato",
                         "salad-lettuce-tomato-onion"
                     ],
-                    "starting-max-group-size": 1,
-                    "starting-min-group-size": 2,
-                    "customers": 12
+                    "starting-min-group-size": 1,
+                    "starting-max-group-size": 2,
+                    "starting-customers": 12,
+                    "days": 1
                 }
             ]
         }

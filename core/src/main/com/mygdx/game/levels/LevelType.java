@@ -102,12 +102,15 @@ public class LevelType {
                   combinationsHashmap.get(currentInteractbaleType),
                   actionHashmap.get(currentInteractbaleType)
             );
-            cutouts.add(new com.badlogic.gdx.math.Rectangle(
-                  interactables[i].xPos - bl_x,
-                  interactables[i].yPos - bl_y,
-                  currentInteractbaleType.xSize,
-                  currentInteractbaleType.ySize
-            ));
+
+            if (interactables[i].type.collision) {
+                cutouts.add(new com.badlogic.gdx.math.Rectangle(
+                      interactables[i].xPos - bl_x,
+                      interactables[i].yPos - bl_y,
+                      currentInteractbaleType.xSize,
+                      currentInteractbaleType.ySize
+                ));
+            }
         }
 
         int map[][] = new int[max_x-min_x+1][max_y-min_y+1];
