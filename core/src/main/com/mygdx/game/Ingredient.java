@@ -1,13 +1,11 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.interact.InteractableType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class Ingredient {
     final public Texture texture;
@@ -15,6 +13,8 @@ public class Ingredient {
     public Ingredient _plated;
     public Ingredient _unplated;
     public List<InteractableType> _placableOn;
+
+    public static List<Ingredient> _plates = new ArrayList<>();
 
     public Ingredient(Texture texture, String name) {
         this.texture = texture;
@@ -24,6 +24,7 @@ public class Ingredient {
 
     static public HashMap<String, Ingredient> loadFromJson1( JsonValue jsonIngredients) {
         HashMap<String, Ingredient> ingredientsHashmap = new HashMap<>();
+
         for (JsonValue jsonIngredient: jsonIngredients) {
             Ingredient ingredient = new Ingredient(
                   new Texture("textures/" + jsonIngredient.getString("texture")),
@@ -41,22 +42,31 @@ public class Ingredient {
           HashMap<String, InteractableType> interactableTypeHashMap
     ) {
         for (JsonValue jsonIngredient: jsonIngredients) {
-            Ingredient current = ingredientsHashmap.get(jsonIngredient.name);
+            Ingredient ingredient = ingredientsHashmap.get(jsonIngredient.name);
             for (JsonValue jsonModifier : jsonIngredient.get("modifiers")) {
                 switch (jsonModifier.name) {
                     case "plated":
-                        current._plated = ingredientsHashmap.get(jsonModifier.asString());
-                        break;
-                    case "unplated":
-                        current._unplated = ingredientsHashmap.get(jsonModifier.asString());
+                        ingredient._plated = ingredientsHashmap.get(jsonModifier.asString());
+                        ingredientsHashmap.get(jsonModifier.asString())._unplated = ingredient;
+
                         break;
                     case "place-on":
                         for (String ingredientName: jsonModifier.asStringArray()) {
-                            current._placableOn.add(interactableTypeHashMap.get(ingredientName));
+                            ingredient._placableOn.add(interactableTypeHashMap.get(ingredientName));
+                        }
+                        break;
+                    case "plate":
+                        if (jsonModifier.asBoolean()) {
+                            _plates.add(ingredient);
                         }
                         break;
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" + _name + '}';
     }
 }

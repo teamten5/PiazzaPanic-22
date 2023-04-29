@@ -6,6 +6,7 @@ public class Config {
 
     public static int defaultTexIngredientStartY = 13;
     public static int defaultTexIngredientStartX = 8;
+    public static int loggingLevel = 3;
     // currently only changed on startup
 
     //

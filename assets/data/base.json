@@ -60,18 +60,20 @@
 
         "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-lettuce"}},
-        "plated-lettuce": {"texture": "plated-lettuce-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+        "plated-lettuce": {"texture": "plated-lettuce-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
 
         "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-onion"}},
-        "plated-onion": {"texture": "ingredient-onion-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+        "plated-onion": {"texture": "plated-onion.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
 
         "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-tomato"}},
-        "plated-tomato": {"texture": "plated-tomato.png", "modifiers": {"place-on": ["counter", "cutting-station"], "unplated": "lettuce-cut"}},
+        "plated-tomato": {"texture": "plated-tomato.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
 
         "plated-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
+        "plated-lettuce-onion":  {"texture": "plated-lettuce-onion.png", "modifiers":  {"place-on":  ["counter"]}},
+        "plated-tomato-onion":  {"texture": "plated-tomato-onion.png", "modifiers":  {"place-on":  ["counter"]}},
+        "plated-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
     },
     "interactables": {
         "counter": {
@@ -137,21 +139,61 @@
     },
     "combinations": {
         "salad1": {
-            "interactable-start": "lettuce-cut",
+            "interactable-start": "plated-lettuce",
             "player-start": "tomato-cut",
-            "interactable-end": "salad-lettuce-tomato",
+            "interactable-end": "plated-lettuce-tomato",
             "player-end": null,
-            "modifiers": {"start-swappable":  true, "plated-versions": true},
+            "modifiers": {"both-swappable":  true, "plated-variants": true},
             "allowed-stations": [
                 "counter"
             ]
         },
         "salad2": {
-            "interactable-start": "salad-lettuce-tomato",
+            "interactable-start": "plated-tomato",
             "player-start": "onion-cut",
-            "interactable-end": "salad-lettuce-tomato-onion",
+            "interactable-end": "plated-tomato-onion",
             "player-end": null,
-            "modifiers": {"start-swappable": true},
+            "modifiers": {"both-swappable": true, "plated-variants":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad3": {
+            "interactable-start": "plated-lettuce",
+            "player-start": "onion-cut",
+            "interactable-end": "plated-lettuce-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "plated-variants":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad4": {
+            "interactable-start": "plated-lettuce-tomato",
+            "player-start": "onion-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad5": {
+            "interactable-start": "plated-tomato-onion",
+            "player-start": "lettuce-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad6": {
+            "interactable-start": "plated-lettuce-onion",
+            "player-start": "tomato-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
             "allowed-stations": [
                 "counter"
             ]
@@ -191,7 +233,7 @@
                     {"type": "counter",             "x": 3, "y": 0},
                     {"type": "counter",             "x": 4, "y": 0},
                     {"type": "cutting-station",     "x": 5, "y": 0},
-                    {"type": "plate-pantry",        "x": 6, "y": 8}
+                    {"type": "plate-pantry",        "x": 6, "y": 1}
                 ],
                 "valid-areas": [
                     {"x": 0,    "y": 0,     "dx": 13,    "dy": 7},

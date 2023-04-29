@@ -1,6 +1,6 @@
 package com.mygdx.game.interact;
 
-import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Ingredient;
 import java.util.ArrayList;
@@ -26,9 +26,20 @@ public class Combination {
         this.resetTime = resetTime;
     }
 
+    @Override
+    public String toString() {
+        return "Combination{" +
+              "interactableType=" + interactableType +
+              ", startingChefCarrying=" + startingChefCarrying +
+              ", startingOnStation=" + startingOnStation +
+              ", endingChefCarrying=" + endingChefCarrying +
+              ", endingOnStation=" + endingOnStation +
+              ", resetTime=" + resetTime +
+              '}';
+    }
+
     static public HashMap<InteractableType, ArrayList<Combination>> loadFromJson(JsonValue jsonCombinations,
           JsonValue jsonInteractables,
-          JsonValue jsonIngredients,
           HashMap<String, Ingredient> ingredientHashMap,
           HashMap<String, InteractableType> interactableTypeHashMap
     ) {
@@ -45,21 +56,119 @@ public class Combination {
                       true
                 ));
 
+                boolean startSwappable = false;
+                boolean bothSwappable = false;
+                boolean platedVariants = false;
+                boolean playerStartPlatedVariants = false;
+
                 for (JsonValue jsonModifier: jsonCombination.get("modifiers")) {
-                    if (Objects.equals(jsonModifier.name, "start-swappable")) {
-                        addCombinationToHashmap(combinationsHashmap, new Combination(
-                              interactableType,
-                              ingredientHashMap.get(jsonCombination.getString("interactable-start")),
-                              ingredientHashMap.get(jsonCombination.getString("player-start")),
-                              ingredientHashMap.get(jsonCombination.getString("player-end")),
-                              ingredientHashMap.get(jsonCombination.getString("interactable-end")),
-                              true
-                        ));
-                    } else if (Objects.equals(jsonModifier.name, "plated-versions")) {
-                        // TODO
-                    } else {
-                        System.out.println("unknown modifier: " + jsonModifier.name);
+                    switch (jsonModifier.name) {
+                        case "start-swappable":
+                            if (!jsonModifier.asBoolean()) {break;}
+
+                            startSwappable = true;
+                            addCombinationToHashmap(combinationsHashmap, new Combination(
+                                  interactableType,
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                                  ingredientHashMap.get(jsonCombination.getString("player-start")),
+                                  ingredientHashMap.get(jsonCombination.getString("player-end")),
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-end")),
+                                  true
+                            ));
+                            break;
+                        case "both-swappable":
+                            if (!jsonModifier.asBoolean()) {break;}
+
+                            bothSwappable = true;
+                            addCombinationToHashmap(combinationsHashmap, new Combination(
+                                  interactableType,
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                                  ingredientHashMap.get(jsonCombination.getString("player-start")),
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-end")),
+                                  ingredientHashMap.get(jsonCombination.getString("player-end")),
+                                  true
+                            ));
+
+                            break;
+                        case "plated-variants":
+                            if (!jsonModifier.asBoolean()) {break;}
+
+                            platedVariants = true;
+                            addCombinationToHashmap(combinationsHashmap, new Combination(
+                                  interactableType,
+                                  ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-start"))._unplated,
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-end")),
+                                  ingredientHashMap.get(jsonCombination.getString("player-end")),
+                                  true
+                            ));
+                            // TODO: if there are multiple plate types it will always used the first one listed
+                            addCombinationToHashmap(combinationsHashmap, new Combination(
+                                  interactableType,
+                                  ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                                  ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                                  Ingredient._plates.get(0),
+                                  ingredientHashMap.get(jsonCombination.getString("player-end")),
+                                  true
+                            ));
+                            break;
+                        case "player-start-plated-variant":
+                            if (!jsonModifier.asBoolean()) {break;}
+
+                            playerStartPlatedVariants = true;
+                            addCombinationToHashmap(combinationsHashmap,
+                                  new Combination(
+                                        interactableType,
+                                        ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                                        ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                                        Ingredient._plates.get(0),
+                                        ingredientHashMap.get(jsonCombination.getString("player-end")),
+                                        true
+                                  ));
+
+                            break;
+                        default:
+                            Gdx.app.log("JSON/Combination", "Unknown modifier: " + jsonModifier.name + " on " + jsonCombination.name);
+                            break;
                     }
+                }
+
+                if (startSwappable && bothSwappable) {
+                    Gdx.app.error("JSON/Combination", "Combination: " + jsonCombination.name + " has both startSwappable and bothSwappable modifiers this probably isn't intended");
+                }
+                if (platedVariants && playerStartPlatedVariants) {
+                    Gdx.app.error("JSON/Combination", "Combination: " + jsonCombination.name + " has both platedVariants and playerStartPlatedVariants modifiers this probably isn't intended");
+                }
+
+                if ((startSwappable || bothSwappable) && platedVariants) {
+                    addCombinationToHashmap(combinationsHashmap, new Combination(
+                          interactableType,
+                          ingredientHashMap.get(jsonCombination.getString("interactable-start"))._unplated,
+                          ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                          ingredientHashMap.get(jsonCombination.getString("player-end")),
+                          ingredientHashMap.get(jsonCombination.getString("interactable-end")),
+                          true
+                    ));
+                    // TODO: if there are multiple plate types it will always used the first one listed
+                    addCombinationToHashmap(combinationsHashmap, new Combination(
+                          interactableType,
+                          ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                          ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                          Ingredient._plates.get(0),
+                          ingredientHashMap.get(jsonCombination.getString("player-end")),
+                          true
+                    ));
+                }
+                if ((startSwappable || bothSwappable) && playerStartPlatedVariants) {
+                    // TODO: if there are multiple plate types it will always used the first one listed
+                    addCombinationToHashmap(combinationsHashmap, new Combination(
+                          interactableType,
+                          ingredientHashMap.get(jsonCombination.getString("interactable-start")),
+                          ingredientHashMap.get(jsonCombination.getString("player-start"))._plated,
+                          Ingredient._plates.get(0),
+                          ingredientHashMap.get(jsonCombination.getString("player-end")),
+                          true
+                    ));
                 }
             }
         }
@@ -114,8 +223,33 @@ public class Combination {
                             null,
                             true
                       ));
+                if (ingredient._plated != null && ingredient._plated._placableOn.contains(interactableType)) {
+                    for (Ingredient plate: Ingredient._plates) {
+                        addCombinationToHashmap(combinationsHashmap,
+                              new Combination(
+                                    interactableType,
+                                    plate,
+                                    ingredient,
+                                    ingredient._plated,
+                                    null,
+                                    true
+                              ));
+                        addCombinationToHashmap(combinationsHashmap,
+                              new Combination(
+                                    interactableType,
+                                    ingredient,
+                                    plate,
+                                    null,
+                                    ingredient._plated,
+                                    true
+                              ));
+                    }
+
+                }
             }
+
         }
+        Gdx.app.log("JSON/Combination", "Created " + combinationsHashmap.values().stream().mapToInt(ArrayList::size).sum() + " combinations");
         return combinationsHashmap;
     }
 
@@ -123,6 +257,7 @@ public class Combination {
           HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap,
           Combination combination
     ) {
+        Gdx.app.debug("JSON/Combination", "Created Combination: " + combination);
         ArrayList<Combination> innerArray = combinationsHashmap.computeIfAbsent(combination.interactableType,
               k -> new ArrayList<>());
         innerArray.add(combination);

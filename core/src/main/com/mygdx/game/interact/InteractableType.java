@@ -56,4 +56,8 @@ public class InteractableType {
         return InteractableTypeHashMap;
     }
 
+    @Override
+    public String toString() {
+        return "InteractableType{}";
+    }
 }

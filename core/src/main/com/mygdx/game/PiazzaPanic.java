@@ -26,6 +26,7 @@ public class PiazzaPanic extends Game {
 	
 	@Override
 	public void create () {
+		Gdx.app.setLogLevel(Config.loggingLevel);
 		loadJson();
 		menuScreen = new MenuScreen(this);
 		setScreen(menuScreen);
@@ -69,7 +70,6 @@ public class PiazzaPanic extends Game {
 		combinationsHashmap = Combination.loadFromJson(
 			jsonRoot.get("combinations"),
 			jsonRoot.get("interactables"),
-			jsonRoot.get("ingredients"),
 			ingredientHashMap,
 			interactableTypeHashMap
 		);
