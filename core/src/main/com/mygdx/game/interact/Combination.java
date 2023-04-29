@@ -94,30 +94,26 @@ public class Combination {
         }
 
         // generate combinations from Ingredient modifiers
-        for (JsonValue jsonIngredient: jsonIngredients) {
-            for (JsonValue jsonModifier: jsonIngredient.get("modifiers")) {
-                if (Objects.equals(jsonModifier.name, "place-on")) {
-                    for (String InteractableName: jsonModifier.asStringArray()) {
-                        addCombinationToHashmap(combinationsHashmap,
-                              new Combination(
-                                    interactableTypeHashMap.get(InteractableName),
-                                    ingredientHashMap.get(jsonIngredient.name),
-                                    null,
-                                    null,
-                                    ingredientHashMap.get(jsonIngredient.name),
-                                    true
-                              ));
-                        addCombinationToHashmap(combinationsHashmap,
-                              new Combination(
-                                    interactableTypeHashMap.get(InteractableName),
-                                    null,
-                                    ingredientHashMap.get(jsonIngredient.name),
-                                    ingredientHashMap.get(jsonIngredient.name),
-                                    null,
-                                    true
-                              ));
-                    }
-                }
+        for (Ingredient ingredient: ingredientHashMap.values()) {
+            for (InteractableType interactableType: ingredient._placableOn) {
+                addCombinationToHashmap(combinationsHashmap,
+                      new Combination(
+                            interactableType,
+                            ingredient,
+                            null,
+                            null,
+                            ingredient,
+                            true
+                      ));
+                addCombinationToHashmap(combinationsHashmap,
+                      new Combination(
+                            interactableType,
+                            null,
+                            ingredient,
+                            ingredient,
+                            null,
+                            true
+                      ));
             }
         }
         return combinationsHashmap;

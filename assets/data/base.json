@@ -114,7 +114,7 @@
             "texture": "station_cutting.png",
             "x-size": 1,
             "y-size": 1,
-            "modifiers": {}
+            "modifiers": {"modify-ingredient-placement": {"x": 13, "y": 13}}
         },
         "plate-pantry": {
             "texture": "utensil-plate.png",

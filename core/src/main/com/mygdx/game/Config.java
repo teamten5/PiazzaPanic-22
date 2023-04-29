@@ -3,6 +3,9 @@ package com.mygdx.game;
 public class Config {
     public static int unitHeightInPixels = 22;
     public static int unitWidthInPixels = 32;
+
+    public static int defaultTexIngredientStartY = 13;
+    public static int defaultTexIngredientStartX = 8;
     // currently only changed on startup
 
     //

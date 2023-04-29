@@ -55,11 +55,16 @@ public class PiazzaPanic extends Game {
 	private void loadJson() {
 		JsonReader jsonReader = new JsonReader();
 		JsonValue jsonRoot = jsonReader.parse(Gdx.files.internal("data/base.json"));
-		ingredientHashMap = Ingredient.loadFromJson(
+		ingredientHashMap = Ingredient.loadFromJson1(
 			jsonRoot.get("ingredients")
 		);
-		interactableTypeHashMap = InteractableType.loadFromJson(
+		interactableTypeHashMap = InteractableType.loadFromJson2(
 			jsonRoot.get("interactables")
+		);
+		Ingredient.loadFromJson3(
+			jsonRoot.get("ingredients"),
+			ingredientHashMap,
+			interactableTypeHashMap
 		);
 		combinationsHashmap = Combination.loadFromJson(
 			jsonRoot.get("combinations"),

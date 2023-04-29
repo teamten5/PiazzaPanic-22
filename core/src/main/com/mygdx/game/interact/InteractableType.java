@@ -2,9 +2,11 @@ package com.mygdx.game.interact;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.Config;
 import com.mygdx.game.Ingredient;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class InteractableType {
     final public float xSize; // height in world units
@@ -33,14 +35,22 @@ public class InteractableType {
         return new InteractableInLevel(this, xPos, yPos, combinations, actions);
     }
 
-    static public HashMap<String, InteractableType> loadFromJson(JsonValue jsonInteractables) {
+    static public HashMap<String, InteractableType> loadFromJson2(JsonValue jsonInteractables) {
         HashMap<String, InteractableType> InteractableTypeHashMap = new HashMap<>();
         for (JsonValue jsonInteractable: jsonInteractables) {
+            int texIngredientStartX = Config.defaultTexIngredientStartX;
+            int texIngredientStartY = Config.defaultTexIngredientStartY;
+            for (JsonValue jsonModifier: jsonInteractable.get("modifiers")) {
+                if (Objects.equals(jsonModifier.name, "modify-ingredient-placement")) {
+                    texIngredientStartX = jsonModifier.getInt("x");
+                    texIngredientStartY = jsonModifier.getInt("y");
+                }
+            }
             InteractableType interactableType = new InteractableType(
                   jsonInteractable.getInt("x-size"),
                   jsonInteractable.getInt("y-size"),
                   new Texture("textures/" + jsonInteractable.getString("texture")),
-                  0, 0, 13, 13);
+                  0, 0, texIngredientStartX, texIngredientStartY);
             InteractableTypeHashMap.put(jsonInteractable.name, interactableType);
         }
         return InteractableTypeHashMap;
