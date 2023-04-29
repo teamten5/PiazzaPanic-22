@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+
 public class Config {
     public static int unitHeightInPixels = 22;
     public static int unitWidthInPixels = 32;
@@ -16,6 +20,17 @@ public class Config {
     //
     // Below should be available in options menu
     //
+
+    // Keybinds
+
+    public static int KBUp = Keys.W;
+    public static int KBDown = Keys.S;
+    public static int KBLeft = Keys.A;
+    public static int KBRight = Keys.D;
+
+    public static int KBDoAction = Keys.SPACE;
+    public static int KBDoCombination = Keys.SHIFT_LEFT;
+    public static int KBSwapChefs = Keys.TAB;
 
     public static int scaling = 2;
     public static int fpsLimit = 60;

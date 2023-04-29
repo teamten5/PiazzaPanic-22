@@ -2,6 +2,7 @@ package com.mygdx.game.player.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.mygdx.game.Config;
 
 public class PlayerController extends Controller {
 
@@ -15,10 +16,10 @@ public class PlayerController extends Controller {
         doCombination = false;
         doAction = false;
         swapChef = false;
-        boolean up = Gdx.input.isKeyPressed(Keys.W);
-        boolean down = Gdx.input.isKeyPressed(Keys.S);
-        boolean left = Gdx.input.isKeyPressed(Keys.A);
-        boolean right = Gdx.input.isKeyPressed(Keys.D);
+        boolean up = Gdx.input.isKeyPressed(Config.KBUp);
+        boolean down = Gdx.input.isKeyPressed(Config.KBDown);
+        boolean left = Gdx.input.isKeyPressed(Config.KBLeft);
+        boolean right = Gdx.input.isKeyPressed(Config.KBRight);
         if (up) {
             y = y + 3.14f * delta;
             facing_y = 0.5f;
@@ -51,21 +52,21 @@ public class PlayerController extends Controller {
             }
         }
 
-        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && !combinationJustDone) {
+        if (Gdx.input.isKeyPressed(Config.KBDoCombination) && !combinationJustDone) {
             doCombination = true;
             combinationJustDone = true;
-        } else if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+        } else if (!Gdx.input.isKeyPressed(Config.KBDoCombination)) {
             combinationJustDone = false;
         }
 
-        if (Gdx.input.isKeyPressed(Keys.TAB) && !chefSwapJustDone) {
+        if (Gdx.input.isKeyPressed(Config.KBSwapChefs) && !chefSwapJustDone) {
             swapChef = true;
             chefSwapJustDone = true;
-        } else if (!Gdx.input.isKeyPressed(Keys.TAB)) {
+        } else if (!Gdx.input.isKeyPressed(Config.KBSwapChefs)) {
             chefSwapJustDone = false;
         }
 
-        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Config.KBDoAction)) {
             doAction = true;
         }
     }
