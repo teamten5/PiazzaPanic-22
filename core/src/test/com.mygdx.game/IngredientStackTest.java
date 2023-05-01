@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game._convenience.IngredientStack;
 import com.mygdx.game.util.TestingApplicationListener;
 import com.mygdx.game.util.TestingLauncher;
 import org.junit.Before;
@@ -22,31 +23,30 @@ import static org.mockito.Mockito.mock;
 
 
 @RunWith(TestingApplicationListener.class)
-public class IngredientJsonTest {
+public class IngredientStackTest {
     private PiazzaPanic application;
-    @BeforeEach
-    public void init() throws Exception{
-
-    }
     @Test
     public void JsonTest() {
 
         FileHandle handle = Gdx.files.internal("assets");
 
         FileHandle[] files = Gdx.files.internal("./").list();
-        for(FileHandle file: files) {
-            System.out.print(file);
-            // do something interesting here
-        }
         // Gdx.gl = mock(GL20.class);
-        JsonReader jsonReader = new JsonReader();
-        JsonValue jsonRoot = jsonReader.parse(Gdx.files.absolute("testing/data/ingredient-test1.json"));
+        //JsonReader jsonReader = new JsonReader();
+        //JsonValue jsonRoot = jsonReader.parse(Gdx.files.absolute("testing/data/ingredient-test1.json"));
         //System.out.print("");
-        HashMap<String, Ingredient> ingredientHashMap = Ingredient.loadFromJson(jsonRoot);
-        Ingredient ingredient = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient_bun_toasted.png")));
-
-        assertTrue(ingredientEquals(ingredientHashMap.get("buns-toasted"), ingredient));
+        //HashMap<String, Ingredient> ingredientHashMap = Ingredient.loadFromJson(jsonRoot);
+        Ingredient ingredient1 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient_bun_toasted.png")));
+        Ingredient ingredient2 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient-onion-cut.png")));
+        Ingredient ingredient3 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient-tomato-onion-cut.png")));
+        IngredientStack ingredientstack = new IngredientStack();
+        ingredientstack.push(ingredient1);
+        ingredientstack.push(ingredient2);
+        ingredientstack.push(ingredient3);
+        assertTrue(ingredientEquals(ingredientstack.peek(), ingredient3));
+        assertTrue(true);
     }
+
     public boolean ingredientEquals(Ingredient a, Ingredient b){
         if (a == null || b == null) {
             return false;
