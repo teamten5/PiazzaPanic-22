@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Objects;
@@ -42,10 +43,12 @@ public class IngredientJsonTest {
         JsonReader jsonReader = new JsonReader();
         JsonValue jsonRoot = jsonReader.parse(Gdx.files.absolute("testing/data/ingredient-test1.json"));
         //System.out.print("");
-        HashMap<String, Ingredient> ingredientHashMap = Ingredient.loadFromJson(jsonRoot);
-        Ingredient ingredient = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient_bun_toasted.png")));
+        Texture testingtexture = new Texture("textures/ingredient_bun_toasted.png");
+        HashMap<String, Ingredient> ingredientHashMap = Ingredient.loadFromJson1(jsonRoot);
+        Ingredient ingredient = new Ingredient(testingtexture, "buns-toasted");
 
         assertTrue(ingredientEquals(ingredientHashMap.get("buns-toasted"), ingredient));
+        assertEquals(ingredientHashMap.get("buns-toasted").toString(),ingredient.toString());
     }
     public boolean ingredientEquals(Ingredient a, Ingredient b){
         if (a == null || b == null) {

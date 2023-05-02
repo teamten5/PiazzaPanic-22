@@ -1,67 +1,25 @@
 {
-    "ingredients": {
+    "_old": {
+        "_item": [
+            {"type": "allignment-test",        "x": 7, "y": 1},
+            {"type": "allignment-test2",        "x": 8, "y": 1}
+        ],
         "buns-toasted":  {"texture": "ingredient_bun_toasted.png", "modifiers":  {"place-on":  ["counter"]}},
         "buns-untoasted":  {"texture": "ingredient_bun_untoasted.png", "modifiers":  {"place-on":  ["counter"]}},
-        "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "patty-cooked":  {"texture": "ingredient_patty_cooked.png", "modifiers":  {"place-on":  ["counter"]}},
         "patty-raw":  {"texture": "ingredient_patty_raw.png", "modifiers":  {"place-on":  ["counter"]}},
-        "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
-        "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
         "burger":  {"texture": "ingredient_burger.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
-        "salad-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
-    },
-    "interactables": {
-        "counter": {
-            "texture": "counter.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {}
-        },
-        "customer-counter": {
-            "texture": "indicator_arrow.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"customer-table": true}
-        },
-        "bin": {
-            "texture": "indicator_arrow.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"bin": true}
-        },
         "bun-pantry": {
             "texture": "station_bun.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "buns-untoasted"}
         },
-        "lettuce-pantry": {
-            "texture": "counter-pantry-lettuce.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"pantry-of": "lettuce-uncut"}
-        },
-        "onion-pantry": {
-            "texture": "counter-pantry-onion.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"pantry-of": "onion-uncut"}
-        },
         "patty-pantry": {
             "texture": "station_patty.png",
             "x-size": 1,
             "y-size": 1,
             "modifiers": {"pantry-of": "patty-raw"}
-        },
-        "tomato-pantry": {
-            "texture": "counter-pantry-tomato.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {"pantry-of": "tomato-uncut"}
         },
         "baking-station": {
             "texture": "station_baking.png",
@@ -75,36 +33,6 @@
             "y-size": 1,
             "modifiers": {}
         },
-        "cutting-station": {
-            "texture": "station_cutting.png",
-            "x-size": 1,
-            "y-size": 1,
-            "modifiers": {}
-        }
-    },
-    "combinations": {
-        "salad1": {
-            "interactable-start": "lettuce-cut",
-            "player-start": "tomato-cut",
-            "interactable-end": "salad-lettuce-tomato",
-            "player-end": null,
-            "modifiers": {"start-swappable":  true, "plated-versions": true},
-            "allowed-stations": [
-                "counter"
-            ]
-        },
-        "salad2": {
-            "interactable-start": "salad-lettuce-tomato",
-            "player-start": "onion-cut",
-            "interactable-end": "salad-lettuce-tomato-onion",
-            "player-end": null,
-            "modifiers": {"start-swappable": true},
-            "allowed-stations": [
-                "counter"
-            ]
-        }
-    },
-    "actions": {
         "toast-buns": {
             "start": "buns-untoasted",
             "end": "buns-toasted",
@@ -119,24 +47,190 @@
             "chef-required": false,
             "stations": ["hob-station"]
         },
+        "test": {
+            "start": null,
+            "end": "salad-lettuce-tomato-onion",
+            "time": 0,
+            "chef-required": false,
+            "stations": ["cutting-station", "counter"]
+        }
+    },
+    "ingredients": {
+        "plate": {"texture": "utensil-plate.png", "modifiers": {"plate": true, "place-on": ["counter", "cutting-station"]}},
+
+        "lettuce-uncut":  {"texture": "ingredient-lettuce-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "lettuce-cut":  {"texture": "ingredient-lettuce-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-lettuce"}},
+        "plated-lettuce": {"texture": "plated-lettuce-cut.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
+
+        "onion-uncut":  {"texture": "ingredient-onion-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "onion-cut":  {"texture": "ingredient-onion-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-onion"}},
+        "plated-onion": {"texture": "plated-onion.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
+
+        "tomato-uncut":  {"texture": "ingredient-tomato-whole.png", "modifiers":  {"place-on":  ["counter", "cutting-station"]}},
+        "tomato-cut":  {"texture": "ingredient-tomato-cut.png", "modifiers":  {"place-on":  ["counter", "cutting-station"], "plated": "plated-tomato"}},
+        "plated-tomato": {"texture": "plated-tomato.png", "modifiers": {"place-on": ["counter", "cutting-station"]}},
+
+        "plated-lettuce-tomato":  {"texture": "plated-lettuce-tomato.png", "modifiers":  {"place-on":  ["counter"]}},
+        "plated-lettuce-onion":  {"texture": "plated-lettuce-onion.png", "modifiers":  {"place-on":  ["counter"]}},
+        "plated-tomato-onion":  {"texture": "plated-tomato-onion.png", "modifiers":  {"place-on":  ["counter"]}},
+        "plated-lettuce-tomato-onion":  {"texture": "meal-salad.png", "modifiers":  {"place-on":  ["counter"]}}
+    },
+    "interactables": {
+        "counter": {
+            "texture": "counter.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "customer-counter": {
+            "texture": "counter.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"customer-table": {
+                "chairs": [
+                    {"dx": -1, "dy": 0,  "type": "chair"},
+                    {"dx": 0,  "dy": 1,  "type": "chair"},
+                    {"dx": 0,  "dy": -1, "type": "chair"},
+                    {"dx": 1,  "dy": 0,  "type": "chair"}
+                ]
+            }}
+        },
+        "chair": {
+            "texture": "chair.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"collision": false, "modify-texture-origin": {"x": 8, "y": 3}}
+        },
+        "bin": {
+            "texture": "indicator_arrow.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"bin": true}
+        },
+        "lettuce-pantry": {
+            "texture": "counter-pantry-lettuce.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "lettuce-uncut"}
+        },
+        "onion-pantry": {
+            "texture": "counter-pantry-onion.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "onion-uncut"}
+        },
+        "tomato-pantry": {
+            "texture": "counter-pantry-tomato.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "tomato-uncut"}
+        },
+        "cutting-station": {
+            "texture": "station_cutting.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"modify-ingredient-placement": {"x": 13, "y": 13}}
+        },
+        "plate-pantry": {
+            "texture": "utensil-plate.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {"pantry-of": "plate"}
+        },
+        "allignment-test": {
+            "texture": "allignment-test.png",
+            "x-size": 1,
+            "y-size": 1,
+            "modifiers": {}
+        },
+        "allignment-test2": {
+            "texture": "allignment-test.png",
+            "x-size": 2,
+            "y-size": 2,
+            "modifiers": {}
+        }
+    },
+    "combinations": {
+        "salad1": {
+            "interactable-start": "plated-lettuce",
+            "player-start": "tomato-cut",
+            "interactable-end": "plated-lettuce-tomato",
+            "player-end": null,
+            "modifiers": {"both-swappable":  true, "plated-variants": true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad2": {
+            "interactable-start": "plated-tomato",
+            "player-start": "onion-cut",
+            "interactable-end": "plated-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "plated-variants":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad3": {
+            "interactable-start": "plated-lettuce",
+            "player-start": "onion-cut",
+            "interactable-end": "plated-lettuce-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "plated-variants":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad4": {
+            "interactable-start": "plated-lettuce-tomato",
+            "player-start": "onion-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad5": {
+            "interactable-start": "plated-tomato-onion",
+            "player-start": "lettuce-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        },
+        "salad6": {
+            "interactable-start": "plated-lettuce-onion",
+            "player-start": "tomato-cut",
+            "interactable-end": "plated-lettuce-tomato-onion",
+            "player-end": null,
+            "modifiers": {"both-swappable": true, "player-start-plated-variant":  true},
+            "allowed-stations": [
+                "counter"
+            ]
+        }
+    },
+    "actions": {
         "cut-lettuce": {
-            "start": "uncut_lettuce",
-            "end": "cut_lettuce",
-            "time": 4000,
+            "start": "lettuce-uncut",
+            "end": "lettuce-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         },
         "cut-tomato": {
-            "start": "uncut-tomato",
-            "end": "cut-tomato",
-            "time": 4000,
+            "start": "tomato-uncut",
+            "end": "tomato-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         },
         "cut-onion": {
-            "start": "uncut-onion",
-            "end": "cut-onion",
-            "time": 4000,
+            "start": "onion-uncut",
+            "end": "onion-cut",
+            "time": 2000,
             "chef-required": true,
             "stations": ["cutting-station"]
         }
@@ -150,14 +244,115 @@
                     {"type": "tomato-pantry",       "x": 4, "y": 2},
                     {"type": "counter",             "x": 2, "y": 0},
                     {"type": "counter",             "x": 3, "y": 0},
-                    {"type": "counter",             "x": 4, "y": 0}
+                    {"type": "counter",             "x": 4, "y": 0},
+                    {"type": "cutting-station",     "x": 5, "y": 0},
+                    {"type": "plate-pantry",        "x": 6, "y": 1},
+                    {"type": "customer-counter",    "x": 3, "y": 5}
                 ],
                 "valid-areas": [
-                    {"x": 0,    "y": 0,     "dx": 8,    "dy": 3},
-                    {"x": 0,    "y": 0,     "dx": 1,    "dy": 6},
+                    {"x": 0,    "y": 0,     "dx": 13,    "dy": 3},
+                    {"x": 0,    "y": 0,     "dx": 1,    "dy": 8},
                     {"x": 0,    "y": 4,     "dx": 8,    "dy": 3}
-                ]
-            }
+                ],
+                "spots": {
+                    "spawn-1": {"x": 0.5, "y": 0.5, "facing-x": 0, "facing-y": -1},
+                    "spawn-2": {"x": 0.5, "y": 1.5, "facing-x": 0, "facing-y": -1},
+                    "spawn-3": {"x": 0.5, "y": 2.5, "facing-x": 0, "facing-y": -1},
+                    "customer-spawn": {"x": 0.2, "y": 6.5, "facing-x": 0, "facing-y": -1},
+                    "customer-queue1": {"x": 0.2, "y": 6, "facing-x": 0, "facing-y": -1},
+                    "customer-queue2": {"x": 0.2, "y": 5.5, "facing-x": 0, "facing-y": -1},
+                    "customer-queue3": {"x": 0.2, "y": 5, "facing-x": 0, "facing-y": -1}
+                }
+            },
+            "chefs": [
+                {"texture": "temp_chef_1.png", "spawn": "spawn-1"},
+                {"texture": "temp_chef_2.png", "spawn": "spawn-2"},
+                {"texture": "temp_chef_3.png", "spawn": "spawn-3"}
+            ],
+            "level-difficulties": [
+                {
+                    "name": "Easy",
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
+                    ],
+                    "starting-min-group-size": 1,
+                    "starting-max-group-size": 2,
+                    "starting-customers": 8,
+                    "days": 1,
+                    "starting-day-length": 20
+
+                }, {
+                    "name": "Normal",
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
+                    ],
+                    "starting-min-group-size": 1,
+                    "starting-max-group-size": 2,
+                    "starting-customers": 10,
+                    "days": 1,
+                    "starting-day-length": 240
+                }, {
+                    "name": "Hard",
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
+                    ],
+                    "starting-min-group-size": 1,
+                    "starting-max-group-size": 2,
+                    "starting-customers": 12,
+                    "days": 1,
+                    "starting-day-length": 60
+                }
+            ]
+        }
+    },
+    "profiles": {
+        "cus1": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 25,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
+        },
+        "cus2": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 5,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
+        },
+        "cus3": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 5,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
         }
     }
 }

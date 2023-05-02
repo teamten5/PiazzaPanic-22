@@ -1,9 +1,10 @@
 package com.mygdx.game.levels;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Ingredient;
+import com.mygdx.game.actors.PlayerType;
+import com.mygdx.game.actors.Spot;
 import com.mygdx.game.interact.Action;
 import com.mygdx.game.interact.Combination;
 import com.mygdx.game.interact.InteractableInLevel;
@@ -11,30 +12,46 @@ import com.mygdx.game.interact.InteractableType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.javatuples.Triplet;
 
 public class LevelType {
-    final InteractableInLevel[] interactables;
+    final List<InteractableInLevel> interactables;
     final public List<Rectangle> chefValidAreas;
     final public int levelSizeX;
     final public int levelSizeY;
 
-    public LevelType(InteractableInLevel[] interactables, List<Rectangle> chefValidAreas,
-          int levelSizeX, int levelSizeY) {
+    final public List<InteractableInLevel> customerTables;
+
+    final public List<Difficulty> difficulties;
+
+    final public List<PlayerType> playerTypes;
+
+    final public String name;
+
+    public LevelType(List<InteractableInLevel> interactables, List<Rectangle> chefValidAreas,
+          int levelSizeX, int levelSizeY, List<InteractableInLevel> customerTables,
+          List<Difficulty> difficulties, List<PlayerType> playerTypes, String name) {
         this.interactables = interactables;
         this.chefValidAreas = chefValidAreas;
         this.levelSizeX = levelSizeX;
         this.levelSizeY = levelSizeY;
+        this.customerTables = customerTables;
+        this.difficulties = difficulties;
+        this.playerTypes = playerTypes;
+        this.name = name;
     }
 
-    public Level instantiate() {
-        return new Level(this);
+    public Level instantiate(int difficulty) {
+        return new Level(this, difficulties.get(difficulty));
     }
 
     public static HashMap<String, LevelType> loadFromJson(
           JsonValue levelsJson,
           HashMap<String, InteractableType> interactableTypeHashMap,
           HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap,
-          HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap
+          HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap,
+          JsonValue profilesJson,
+          HashMap<String, Ingredient> ingredientHashMap
     ) {
         HashMap<String, LevelType> levelTypeHashMap = new HashMap<>();
         for (JsonValue levelJson: levelsJson) {
@@ -43,7 +60,9 @@ public class LevelType {
                         levelJson,
                         interactableTypeHashMap,
                         combinationsHashmap,
-                        actionHashmap
+                        actionHashmap,
+                        profilesJson,
+                        ingredientHashMap
                   ));
         }
         return levelTypeHashMap;
@@ -53,7 +72,9 @@ public class LevelType {
           JsonValue levelJson,
           HashMap<String, InteractableType> interactableTypeHashMap,
           HashMap<InteractableType, ArrayList<Combination>> combinationsHashmap,
-          HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap
+          HashMap<InteractableType, HashMap<Ingredient, Action>> actionHashmap,
+          JsonValue profilesJson,
+          HashMap<String, Ingredient> ingredientHashMap
     ) {
         JsonValue mapJson = levelJson.get("map");
 
@@ -92,24 +113,69 @@ public class LevelType {
         List<com.badlogic.gdx.math.Rectangle> cutouts = new ArrayList<>(); // used when making levels
 
         JsonValue interactablesJson = mapJson.get("interactables");
-        InteractableInLevel[] interactables = new InteractableInLevel[interactablesJson.size];
+        List<InteractableInLevel> interactables = new ArrayList<>(interactablesJson.size);
         for (int i = 0; i < interactablesJson.size; i++) {
             JsonValue currentInteractable = interactablesJson.get(i);
             InteractableType currentInteractbaleType = interactableTypeHashMap.get(currentInteractable.getString("type"));
-            interactables[i] = currentInteractbaleType.instantiate(
+            interactables.add(currentInteractbaleType.instantiate(
                   currentInteractable.getInt("x") + bl_x,
                   currentInteractable.getInt("y") + bl_y,
                   combinationsHashmap.get(currentInteractbaleType),
                   actionHashmap.get(currentInteractbaleType)
-            );
-            cutouts.add(new com.badlogic.gdx.math.Rectangle(
-                  interactables[i].xPos - bl_x,
-                  interactables[i].yPos - bl_y,
-                  currentInteractbaleType.xSize,
-                  currentInteractbaleType.ySize
             ));
+
         }
 
+        // generate chairs
+
+        // TODO check chairs don't overlap with something or are outside the level
+
+
+        List<Spot> eatingSpots = new ArrayList<>();
+        List<InteractableInLevel> customerTables = new ArrayList<>();
+
+        for (int i = 0; i < interactables.size(); i++) {
+            InteractableInLevel interactable = interactables.get(i);
+            if (interactable.type._customerTable.isEmpty()) {
+                continue;
+            }
+
+            customerTables.add(interactable);
+
+            for (Triplet<String, Integer, Integer> chairData : interactable.type._customerTable) {
+                InteractableType currentInteractableType = interactableTypeHashMap.get(
+                      chairData.getValue0());
+                interactables.add(currentInteractableType.instantiate(
+                      interactable.xPos + chairData.getValue1(),
+                      interactable.yPos + chairData.getValue2(),
+                      combinationsHashmap.get(currentInteractableType),
+                      actionHashmap.get(currentInteractableType)
+                ));
+
+                Spot eatingSpot = new Spot(
+                      interactable.xPos + chairData.getValue1(),
+                      interactable.yPos + chairData.getValue2(),
+                      -chairData.getValue1(),
+                      -chairData.getValue2(),
+                      null);
+                eatingSpots.add(eatingSpot);
+                interactable.attachedSpots.add(eatingSpot);
+
+            }
+        }
+
+        // create a list of collision areas with interactables
+        for (InteractableInLevel interactable : interactables) {
+
+            if (interactable.type.collision) {
+                cutouts.add(new Rectangle(
+                      interactable.xPos - bl_x,
+                      interactable.yPos - bl_y,
+                      interactable.type.xSize,
+                      interactable.type.ySize
+                ));
+            }
+        }
         int map[][] = new int[max_x-min_x+1][max_y-min_y+1];
 
         for (com.badlogic.gdx.math.Rectangle rect: validAreaRectangles) {
@@ -157,11 +223,45 @@ public class LevelType {
                 }
             }
         }
+
+        HashMap<String, Spot> spotHashMap = new HashMap<>();
+        for (JsonValue spotJson: mapJson.get("spots")) {
+            Spot spot = new Spot(
+                  spotJson.getFloat("x") + bl_x,
+                  spotJson.getFloat("y") + bl_y,
+                  spotJson.getFloat("facing-x"),
+                  spotJson.getFloat("facing-y"),
+                  spotJson.name);
+            spotHashMap.put(spotJson.name, spot);
+        }
+
+        // difficulties and profiles
+
+        List<Difficulty> difficulties = Difficulty.loadFromJson(
+              levelJson.get("level-difficulties"),
+              profilesJson,
+              ingredientHashMap,
+              spotHashMap,
+              eatingSpots
+        );
+
+        // Chefs
+
+        List<PlayerType> playerTypes = PlayerType.loadFromJson(
+              levelJson.get("chefs"),
+              spotHashMap
+        );
+
+
+
         return new LevelType(
               interactables,
               chefCollisionArea,
               max_x-min_x,
-              max_y-min_y
-        );
+              max_y-min_y,
+              customerTables,
+              difficulties,
+              playerTypes,
+              levelJson.name);
     }
 }

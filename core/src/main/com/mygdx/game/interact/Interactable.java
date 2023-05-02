@@ -1,11 +1,16 @@
 package com.mygdx.game.interact;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Config;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.player.Player;
-import com.mygdx.game.player.PlayerEngine;
+import com.mygdx.game.actors.Player;
+import com.mygdx.game.actors.Spot;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Interactable {
 
@@ -16,12 +21,11 @@ public class Interactable {
 
 	final public InteractableInLevel instanceOf;
 
-
-	private Ingredient currentIngredient = null;
+	public List<Spot> attachedSpots;
+	public Ingredient currentIngredient = null;
 	private Action currentAction = null;
-	private int actionProgress = 0;
-	private boolean chefDoingAction = false;
-
+	private float actionProgress = 0;
+	private Player playerDoingAction = null;
 	
 	//==========================================================\\
 	//                     CONSTRUCTORS                         \\
@@ -31,15 +35,17 @@ public class Interactable {
 	public Interactable(InteractableInLevel instanceOf)
 	{
 		this.instanceOf = instanceOf;
+		// check if any actions should happen with starting item (which is currently always null)
+		currentAction = instanceOf.actions.get(currentIngredient);
+
+		attachedSpots = List.copyOf(instanceOf.attachedSpots);
 	}
-	
-	
+
 	//==========================================================\\
 	//                      INTERACTION                         \\
 	//==========================================================\\
 
-	// We need to determine what action to take based on the interactable's variables
-	public void handleInteraction(Player player) {
+	public void handleCombination(Player player) {
 
 		for (Combination combination: instanceOf.combinations) {
 			if (
@@ -47,9 +53,8 @@ public class Interactable {
 				currentIngredient == combination.startingOnStation
 			) {
 				player.carrying = combination.endingChefCarrying;
-				currentIngredient = combination.endingOnStation;
+				setIngredient(combination.endingOnStation);
 
-				currentAction = instanceOf.actions.get(currentIngredient);
 				if (combination.resetTime) {
 					actionProgress = 0;
 				}
@@ -59,29 +64,99 @@ public class Interactable {
 		}
 	}
 
+	public void setIngredient(Ingredient ingredient) {
+		currentIngredient = ingredient;
+		currentAction = instanceOf.actions.get(currentIngredient);
+	}
+	public void doAction(Player player) {
+		playerDoingAction = player;
+	}
+
 
 	//==========================================================\\
-	//                         TIMER                            \\
+	//                        UPDATE                            \\
 	//==========================================================\\
 
 	// Increments the counter for the station if required
-	public void update(float timeElapsed)
-	{
-		actionProgress += timeElapsed;
+	public void update(float timeElapsed) {
+
+		// it's a bit weird this bit of logic is done here
+		if (playerDoingAction != null) {
+			for (Spot attachedSpot: attachedSpots) {
+				if (attachedSpot.occupiedBy != null) {
+					attachedSpot.occupiedBy.interactWith(playerDoingAction);
+				}
+			}
+		}
+		if (currentAction != null && !(currentAction.chefRequired && playerDoingAction == null)) {
+			actionProgress += timeElapsed;
+			if (actionProgress > currentAction.timeToComplete) {
+				currentIngredient = currentAction.output;
+				currentAction = null;
+			}
+		}
+		playerDoingAction = null;
 	}
 
 	//==========================================================\\
 	//                         RENDER                           \\
 	//==========================================================\\
 
+	// (float) is used to force floating point division
+	// these functions are admittedly a complete mess
 	public void renderBottom(PolygonSpriteBatch batch) {
-		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos, 1, 1, 0, 10, 32, 22, false, false);
-
+		batch.draw(
+			instanceOf.type.texture,
+			instanceOf.xPos + (float)instanceOf.type.texStartX / Config.unitWidthInPixels,
+			instanceOf.yPos + (float)instanceOf.type.texStartY / Config.unitHeightInPixels,
+			(float) instanceOf.type.texture.getWidth() / Config.unitWidthInPixels,
+			max(0,min((float)instanceOf.type.texture.getHeight() / Config.unitHeightInPixels, instanceOf.type.ySize - (float)instanceOf.type.texStartY / Config.unitHeightInPixels)),
+			0,
+			(int) max(0, (instanceOf.type.texture.getHeight() - instanceOf.type.ySize * Config.unitHeightInPixels + instanceOf.type.texStartY)),
+			instanceOf.type.texture.getWidth(),
+			(int) min(instanceOf.type.texture.getHeight(), Config.unitHeightInPixels * instanceOf.type.ySize - instanceOf.type.texStartY),
+			false, false);
+		if (currentIngredient != null) {
+			batch.draw(
+				currentIngredient.texture,
+				instanceOf.xPos + (float)(instanceOf.type.texStartX + instanceOf.type.texIngredientStartX) / Config.unitWidthInPixels,
+				instanceOf.yPos + (float)(instanceOf.type.texStartY + instanceOf.type.texIngredientStartY) / Config.unitHeightInPixels,
+				(float) currentIngredient.texture.getWidth() / Config.unitWidthInPixels,
+				max(0, min((float)currentIngredient.texture.getHeight() / Config.unitHeightInPixels, instanceOf.type.ySize - (float)(instanceOf.type.texStartY + instanceOf.type.texIngredientStartY) / Config.unitHeightInPixels)),
+				0,
+				(int) max(0, (currentIngredient.texture.getHeight() - instanceOf.type.ySize * Config.unitHeightInPixels + instanceOf.type.texStartY + instanceOf.type.texIngredientStartY)),
+				currentIngredient.texture.getWidth(),
+				(int) min(currentIngredient.texture.getHeight(), (instanceOf.type.ySize * Config.unitHeightInPixels) - instanceOf.type.texStartY - instanceOf.type.texIngredientStartY),
+				false, false);
+		}
 	}
 
 	public void renderTop(PolygonSpriteBatch batch) {
-		batch.draw(instanceOf.type.texture, instanceOf.xPos, instanceOf.yPos + 1, 1, 10f/22f, 0, 0, 32, 10, false, false);
-
+		batch.draw(
+			instanceOf.type.texture,
+			instanceOf.xPos + (float)instanceOf.type.texStartX / Config.unitWidthInPixels,
+			max(instanceOf.yPos + instanceOf.type.ySize, instanceOf.yPos + (float)instanceOf.type.texStartY / Config.unitHeightInPixels),
+			(float)instanceOf.type.texture.getWidth() / Config.unitWidthInPixels,
+			max(0, min((float)instanceOf.type.texture.getHeight() / Config.unitHeightInPixels, (float)(instanceOf.type.texture.getHeight() + instanceOf.type.texStartY) / Config.unitHeightInPixels - instanceOf.type.ySize)),
+			0,
+			0,
+			instanceOf.type.texture.getWidth(),
+			(int) min(instanceOf.type.texture.getHeight(), instanceOf.type.texture.getHeight() - Config.unitHeightInPixels * instanceOf.type.ySize + instanceOf.type.texStartY),
+			false,
+			false);
+		if (currentIngredient != null) {
+			batch.draw(
+				currentIngredient.texture,
+				instanceOf.xPos + (float)(instanceOf.type.texStartX + instanceOf.type.texIngredientStartX) / Config.unitWidthInPixels,
+				max(instanceOf.yPos + instanceOf.type.ySize, instanceOf.yPos + (float)(instanceOf.type.texStartY + instanceOf.type.texIngredientStartY) / Config.unitHeightInPixels),
+				(float) currentIngredient.texture.getWidth() / Config.unitWidthInPixels,
+				max(0, min((float)currentIngredient.texture.getHeight() / Config.unitHeightInPixels, (float)(currentIngredient.texture.getHeight() + instanceOf.type.texStartY + instanceOf.type.texIngredientStartY) / Config.unitHeightInPixels - instanceOf.type.ySize)),
+				0,
+				0,
+				currentIngredient.texture.getWidth(),
+				(int) min(currentIngredient.texture.getHeight(), currentIngredient.texture.getHeight() + instanceOf.type.texStartY + instanceOf.type.texIngredientStartY - Config.unitHeightInPixels * instanceOf.type.ySize),
+				false, false);
+		}
 	}
 
 
@@ -92,25 +167,4 @@ public class Interactable {
 	public float getXPos() { return instanceOf.xPos; }
 
 	public float getYPos() { return instanceOf.yPos; }
-
-	public Texture getIngredientTexture() {
-		if (currentIngredient == null) {
-			return indicatorArrow;
-		} else {
-			return currentIngredient.texture;
-		}
-	}
-
-	public int getCurrentTime() { return actionProgress; }
-
-	public float getPreparationTime() { return currentAction.timeToComplete; }
-
-	public boolean isPreparing() {
-		return currentAction != null;
-	}
-
-	public Rectangle getCollisionRect() {
-		return new Rectangle(instanceOf.xPos, instanceOf.yPos, instanceOf.type.xSize, instanceOf.type.ySize);
-	}
-
 }
