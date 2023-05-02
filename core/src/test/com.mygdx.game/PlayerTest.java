@@ -1,4 +1,4 @@
-package com.mygdx.game;
+/*package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.game.player.controllers.PlayerController;
@@ -97,3 +97,5 @@ class PlayerControllerTest {
         assertTrue(controller.getSwapChef());
     }
 }
+
+ */

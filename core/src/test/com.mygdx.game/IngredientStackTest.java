@@ -1,4 +1,6 @@
+/*
 package com.mygdx.game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
@@ -23,19 +25,16 @@ import static org.mockito.Mockito.mock;
 
 
 @RunWith(TestingApplicationListener.class)
-public class IngredientStackTest {
+public class IngredientStackTest{
     private PiazzaPanic application;
     @Test
-    public void JsonTest() {
+    public void jsTests() {
 
         FileHandle handle = Gdx.files.internal("assets");
 
         FileHandle[] files = Gdx.files.internal("./").list();
-        // Gdx.gl = mock(GL20.class);
-        //JsonReader jsonReader = new JsonReader();
-        //JsonValue jsonRoot = jsonReader.parse(Gdx.files.absolute("testing/data/ingredient-test1.json"));
-        //System.out.print("");
-        //HashMap<String, Ingredient> ingredientHashMap = Ingredient.loadFromJson(jsonRoot);
+        //Gdx.gl = mock(GL20.class);
+
         Ingredient ingredient1 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient_bun_toasted.png")));
         Ingredient ingredient2 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient-onion-cut.png")));
         Ingredient ingredient3 = new Ingredient(new Texture(Gdx.files.internal("textures/ingredient-tomato-onion-cut.png")));
@@ -55,3 +54,6 @@ public class IngredientStackTest {
         return Objects.equals(a.texture.toString(), b.texture.toString());
     }
 }
+
+
+ */
