@@ -13,6 +13,12 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java-library'
+    id 'jacoco'
+    id 'checkstyle'
+}
+
 allprojects {
     apply plugin: "eclipse"
 
