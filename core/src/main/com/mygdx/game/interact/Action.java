@@ -1,8 +1,10 @@
 package com.mygdx.game.interact;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Ingredient;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Action {
@@ -41,6 +43,8 @@ public class Action {
 
             }
         }
+        Gdx.app.log("JSON/Action", "Created " + actionHashmap.values().stream().mapToInt(
+              HashMap::size).sum() + " actions");
         return actionHashmap;
     }
 

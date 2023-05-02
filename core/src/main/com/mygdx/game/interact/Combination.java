@@ -38,8 +38,10 @@ public class Combination {
               '}';
     }
 
-    static public HashMap<InteractableType, ArrayList<Combination>> loadFromJson(JsonValue jsonCombinations,
+    static public HashMap<InteractableType, ArrayList<Combination>> loadFromJson(
+          JsonValue jsonCombinations,
           JsonValue jsonInteractables,
+          JsonValue jsonProfiles,
           HashMap<String, Ingredient> ingredientHashMap,
           HashMap<String, InteractableType> interactableTypeHashMap
     ) {
@@ -198,6 +200,30 @@ public class Combination {
                                 null,
                                 true
                           ));
+                } else if (Objects.equals(jsonModifier.name, "customer-table")) {
+                    for (JsonValue jsonProfile: jsonProfiles) {
+                        for (String ingredientName: jsonProfile.get("orders").asStringArray()) {
+
+                            addCombinationToHashmap(combinationsHashmap,
+                                  new Combination(
+                                        interactableTypeHashMap.get(jsonInteractable.name),
+                                        ingredientHashMap.get(ingredientName),
+                                        null,
+                                        null,
+                                        ingredientHashMap.get(ingredientName),
+                                        true
+                                  ));
+                            addCombinationToHashmap(combinationsHashmap,
+                                  new Combination(
+                                        interactableTypeHashMap.get(jsonInteractable.name),
+                                        null,
+                                        ingredientHashMap.get(ingredientName),
+                                        ingredientHashMap.get(ingredientName),
+                                        null,
+                                        true
+                                  ));
+                        }
+                    }
                 }
             }
         }
@@ -249,6 +275,7 @@ public class Combination {
             }
 
         }
+
         Gdx.app.log("JSON/Combination", "Created " + combinationsHashmap.values().stream().mapToInt(ArrayList::size).sum() + " combinations");
         return combinationsHashmap;
     }

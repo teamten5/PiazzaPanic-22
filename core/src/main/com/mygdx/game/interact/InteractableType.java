@@ -7,6 +7,8 @@ import com.mygdx.game.Config;
 import com.mygdx.game.Ingredient;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.javatuples.Triplet;
 
 public class InteractableType {
     final public float xSize; // height in world units
@@ -16,6 +18,7 @@ public class InteractableType {
     final public int texStartY; // Where the texture starts in pixels (its own) away from bottom side
     final public int texIngredientStartX; // Where the Ingredient texture starts in pixel away from the left side
     final public int texIngredientStartY; // Where the Ingredient texture starts in pixel away from the bottom side
+    final public List<Triplet<String, Integer, Integer>> _customerTable;
 
     public boolean collision;
 
@@ -28,8 +31,9 @@ public class InteractableType {
           int texStartY,
           int texIngredientStartX,
           int texIngredientStartY,
-          boolean interactableCollisions
-    ) {
+          boolean interactableCollisions,
+          List<Triplet<String, Integer, Integer>> customerTable
+          ) {
         this.xSize = xSize;
         this.ySize = ySize;
         this.texture = texture;
@@ -39,6 +43,8 @@ public class InteractableType {
 
         this.texIngredientStartY = texIngredientStartY;
         collision = interactableCollisions;
+
+        this._customerTable = customerTable;
     }
 
     public InteractableInLevel instantiate(float xPos, float yPos,
@@ -55,6 +61,7 @@ public class InteractableType {
             int texStartX = Config.defaultTexStartX;
             int texStartY = Config.defaultTexStartY;
             boolean interactableCollisions = Config.defaultInteractableCollisions;
+            List<Triplet<String, Integer, Integer>> customerTable = new ArrayList<>();
 
             for (JsonValue jsonModifier: jsonInteractable.get("modifiers")) {
                 switch (jsonModifier.name){
@@ -69,6 +76,15 @@ public class InteractableType {
                     case "collision":
                         interactableCollisions = jsonModifier.asBoolean();
                         break;
+                    case "customer-table":
+                        for (JsonValue jsonChair: jsonModifier.get("chairs")) {
+                            customerTable.add(new Triplet<>(
+                                  jsonChair.getString("type"),
+                                  jsonChair.getInt("dx"),
+                                  jsonChair.getInt("dy")
+                            ));
+                        }
+                        break;
                     default:
                         Gdx.app.log("JSON/Interactable", "Unknown modifier: " + jsonModifier.name + " on " + jsonInteractable.name);
                         break;
@@ -80,7 +96,8 @@ public class InteractableType {
                   jsonInteractable.getInt("x-size"),
                   jsonInteractable.getInt("y-size"),
                   new Texture("textures/" + jsonInteractable.getString("texture")),
-                  texStartX, texStartY, texIngredientStartX, texIngredientStartY, interactableCollisions);
+                  texStartX, texStartY, texIngredientStartX, texIngredientStartY,
+                  interactableCollisions, customerTable);
             interactableTypeHashMap.put(jsonInteractable.name, interactableType);
         }
 

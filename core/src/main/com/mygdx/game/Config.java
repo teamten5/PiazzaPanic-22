@@ -15,7 +15,10 @@ public class Config {
 
     public static boolean defaultInteractableCollisions = true;
     public static int loggingLevel = 2;
+
+    public static boolean debugRendering = true;
     // currently only changed on startup
+
 
     //
     // Below should be available in options menu

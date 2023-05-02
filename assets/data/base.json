@@ -83,10 +83,17 @@
             "modifiers": {}
         },
         "customer-counter": {
-            "texture": "indicator_arrow.png",
+            "texture": "counter.png",
             "x-size": 1,
             "y-size": 1,
-            "modifiers": {"customer-table": true}
+            "modifiers": {"customer-table": {
+                "chairs": [
+                    {"dx": -1, "dy": 0,  "type": "chair"},
+                    {"dx": 0,  "dy": 1,  "type": "chair"},
+                    {"dx": 0,  "dy": -1, "type": "chair"},
+                    {"dx": 1,  "dy": 0,  "type": "chair"}
+                ]
+            }}
         },
         "chair": {
             "texture": "chair.png",
@@ -239,51 +246,113 @@
                     {"type": "counter",             "x": 3, "y": 0},
                     {"type": "counter",             "x": 4, "y": 0},
                     {"type": "cutting-station",     "x": 5, "y": 0},
-                    {"type": "plate-pantry",        "x": 6, "y": 1}
+                    {"type": "plate-pantry",        "x": 6, "y": 1},
+                    {"type": "customer-counter",    "x": 3, "y": 5}
                 ],
                 "valid-areas": [
-                    {"x": 0,    "y": 0,     "dx": 13,    "dy": 7},
-                    {"x": 0,    "y": 0,     "dx": 1,    "dy": 6},
+                    {"x": 0,    "y": 0,     "dx": 13,    "dy": 3},
+                    {"x": 0,    "y": 0,     "dx": 1,    "dy": 8},
                     {"x": 0,    "y": 4,     "dx": 8,    "dy": 3}
-                ]
+                ],
+                "spots": {
+                    "spawn-1": {"x": 0.5, "y": 0.5, "facing-x": 0, "facing-y": -1},
+                    "spawn-2": {"x": 0.5, "y": 1.5, "facing-x": 0, "facing-y": -1},
+                    "spawn-3": {"x": 0.5, "y": 2.5, "facing-x": 0, "facing-y": -1},
+                    "customer-spawn": {"x": 0.2, "y": 6.5, "facing-x": 0, "facing-y": -1},
+                    "customer-queue1": {"x": 0.2, "y": 6, "facing-x": 0, "facing-y": -1},
+                    "customer-queue2": {"x": 0.2, "y": 5.5, "facing-x": 0, "facing-y": -1},
+                    "customer-queue3": {"x": 0.2, "y": 5, "facing-x": 0, "facing-y": -1}
+                }
             },
+            "chefs": [
+                {"texture": "temp_chef_1.png", "spawn": "spawn-1"},
+                {"texture": "temp_chef_2.png", "spawn": "spawn-2"},
+                {"texture": "temp_chef_3.png", "spawn": "spawn-3"}
+            ],
             "level-difficulties": [
                 {
                     "name": "Easy",
-                    "starting-orders": [
-                        "salad-lettuce-tomato"
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
                     ],
                     "starting-min-group-size": 1,
                     "starting-max-group-size": 2,
-                    "customers": 8,
-                    "days": 1
+                    "starting-customers": 8,
+                    "days": 1,
+                    "starting-day-length": 20
 
                 }, {
                     "name": "Normal",
-                    "starting-orders": [
-                        "plated-lettuce",
-                        "salad-lettuce-tomato"
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
                     ],
                     "starting-min-group-size": 1,
                     "starting-max-group-size": 2,
                     "starting-customers": 10,
-                    "days": 1
+                    "days": 1,
+                    "starting-day-length": 240
                 }, {
                     "name": "Hard",
-                    "starting-orders": [
-                        "plated-lettuce",
-                        "salad-lettuce-tomato",
-                        "salad-lettuce-tomato-onion"
+                    "profiles": [
+                        {"name": "cus2", "spawn": "customer-spawn", "waiting-spots":  ["customer-queue1", "customer-queue2", "customer-queue3"]}
                     ],
                     "starting-min-group-size": 1,
                     "starting-max-group-size": 2,
                     "starting-customers": 12,
-                    "days": 1
+                    "days": 1,
+                    "starting-day-length": 60
                 }
             ]
         }
     },
-    "people": {
-        "cus1": {"texture": "customer.png"}
+    "profiles": {
+        "cus1": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 25,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
+        },
+        "cus2": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 5,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
+        },
+        "cus3": {
+            "texture": "customer.png",
+            "orders": [
+                "plated-lettuce"
+            ],
+            "walk-speed": 1,
+            "wait-for-seat-patience": 15,
+            "pick-speed": 5,
+            "wait-for-order-patience": 10,
+            "order-speed": 0.5,
+            "wait-for-food-patience": 5,
+            "wait-for-group-patience": 10,
+            "eat-speed": 15,
+
+            "neutral-interact-sound": "customer-neutral-interact.mp3"
+        }
     }
 }

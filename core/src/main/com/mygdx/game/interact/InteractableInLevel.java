@@ -1,9 +1,11 @@
 package com.mygdx.game.interact;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Ingredient;
+import com.mygdx.game.actors.Spot;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
 
 public class InteractableInLevel {
     public float xPos;
@@ -11,6 +13,7 @@ public class InteractableInLevel {
     public InteractableType type;
     protected ArrayList<Combination> combinations;
     protected HashMap<Ingredient, Action> actions;
+    public List<Spot> attachedSpots = new ArrayList<>();
 
     public InteractableInLevel(InteractableType type, float xPos, float yPos,
           ArrayList<Combination> combinations, HashMap<Ingredient, Action> actions) {

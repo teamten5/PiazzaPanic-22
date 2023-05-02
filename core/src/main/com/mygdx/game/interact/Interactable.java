@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.mygdx.game.Config;
 import com.mygdx.game.Ingredient;
-import com.mygdx.game.player.Player;
+import com.mygdx.game.actors.Player;
+import com.mygdx.game.actors.Spot;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Interactable {
 
@@ -18,12 +21,11 @@ public class Interactable {
 
 	final public InteractableInLevel instanceOf;
 
-
-	private Ingredient currentIngredient = null;
+	public List<Spot> attachedSpots;
+	public Ingredient currentIngredient = null;
 	private Action currentAction = null;
 	private float actionProgress = 0;
 	private Player playerDoingAction = null;
-
 	
 	//==========================================================\\
 	//                     CONSTRUCTORS                         \\
@@ -35,13 +37,14 @@ public class Interactable {
 		this.instanceOf = instanceOf;
 		// check if any actions should happen with starting item (which is currently always null)
 		currentAction = instanceOf.actions.get(currentIngredient);
+
+		attachedSpots = List.copyOf(instanceOf.attachedSpots);
 	}
 
 	//==========================================================\\
 	//                      INTERACTION                         \\
 	//==========================================================\\
 
-	// We need to determine what action to take based on the interactable's variables
 	public void handleCombination(Player player) {
 
 		for (Combination combination: instanceOf.combinations) {
@@ -50,9 +53,8 @@ public class Interactable {
 				currentIngredient == combination.startingOnStation
 			) {
 				player.carrying = combination.endingChefCarrying;
-				currentIngredient = combination.endingOnStation;
+				setIngredient(combination.endingOnStation);
 
-				currentAction = instanceOf.actions.get(currentIngredient);
 				if (combination.resetTime) {
 					actionProgress = 0;
 				}
@@ -60,6 +62,11 @@ public class Interactable {
 				return;
 			}
 		}
+	}
+
+	public void setIngredient(Ingredient ingredient) {
+		currentIngredient = ingredient;
+		currentAction = instanceOf.actions.get(currentIngredient);
 	}
 	public void doAction(Player player) {
 		playerDoingAction = player;
@@ -72,6 +79,15 @@ public class Interactable {
 
 	// Increments the counter for the station if required
 	public void update(float timeElapsed) {
+
+		// it's a bit weird this bit of logic is done here
+		if (playerDoingAction != null) {
+			for (Spot attachedSpot: attachedSpots) {
+				if (attachedSpot.occupiedBy != null) {
+					attachedSpot.occupiedBy.interactWith(playerDoingAction);
+				}
+			}
+		}
 		if (currentAction != null && !(currentAction.chefRequired && playerDoingAction == null)) {
 			actionProgress += timeElapsed;
 			if (actionProgress > currentAction.timeToComplete) {

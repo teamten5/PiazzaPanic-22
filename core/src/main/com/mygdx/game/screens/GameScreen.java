@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.Config;
+import com.mygdx.game.GameViewport;
+import com.mygdx.game.Ingredient;
+import com.mygdx.game.PiazzaPanic;
 import com.mygdx.game.interact.Action;
 import com.mygdx.game.interact.Combination;
 import com.mygdx.game.interact.InteractableType;
@@ -33,10 +37,6 @@ public class GameScreen extends InputAdapter implements Screen {
 	private final ShapeRenderer shapeRenderer;
 	OrthographicCamera camera;
 	GameViewport viewport;
-
-	// A timer to track how long the screen has been running
-	static float masterTimer;
-	private Label timerLabel;
 
 	// A reference to the main game file
 	private final PiazzaPanic main;
@@ -69,21 +69,6 @@ public class GameScreen extends InputAdapter implements Screen {
 		batch = new PolygonSpriteBatch();
 
 		shapeRenderer = new ShapeRenderer();
-
-		masterTimer = 0f;
-
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		BitmapFont font = new BitmapFont();
-		labelStyle.font = font;
-		labelStyle.fontColor = Color.WHITE;
-
-		timerLabel = new Label("0s", labelStyle);
-		timerLabel.setPosition(-1, -1);
-		timerLabel.setAlignment(Align.left);
-
-
-
-
 	}
 
 	
@@ -123,10 +108,6 @@ public class GameScreen extends InputAdapter implements Screen {
 		shapeRenderer.begin(ShapeType.Line);
 		currentLevel.renderShapes(shapeRenderer);
 		shapeRenderer.end();
-
-		// Increment the timer and update UI
-		masterTimer += Gdx.graphics.getDeltaTime();
-		timerLabel.setText((int) masterTimer);
 	}
 	
 	

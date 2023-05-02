@@ -1,10 +1,11 @@
-package com.mygdx.game.player.controllers;
+package com.mygdx.game.actors.controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonValue.ValueType;
 import com.mygdx.game.Config;
 
-public class PlayerController extends Controller {
+public class UserController extends Controller {
 
     private boolean combinationJustDone = false;
     private boolean chefSwapJustDone = false;
@@ -22,33 +23,33 @@ public class PlayerController extends Controller {
         boolean right = Gdx.input.isKeyPressed(Config.KBRight);
         if (up) {
             y = y + 3.14f * delta;
-            facing_y = 0.5f;
+            facingY = 0.5f;
             if (!(right || left)) {
-                facing_x = 0f;
+                facingX = 0f;
             }
         }
 
         if (down) {
             y = y - 3.14f * delta;
-            facing_y = -0.5f;
+            facingY = -0.5f;
             if (!(right || left)) {
-                facing_x = 0f;
+                facingX = 0f;
             }
         }
 
         if (right) {
             x = x + 3.14f * delta;
-            facing_x = 0.8f;
+            facingX = 0.8f;
             if (!(up || down)) {
-                facing_y = 0f;
+                facingY = 0f;
             }
         }
 
         if (left) {
             x = x - 3.14f * delta;
-            facing_x = -0.8f;
+            facingX = -0.8f;
             if (!(up || down)) {
-                facing_y = 0f;
+                facingY = 0f;
             }
         }
 
@@ -69,5 +70,14 @@ public class PlayerController extends Controller {
         if (Gdx.input.isKeyPressed(Config.KBDoAction)) {
             doAction = true;
         }
+    }
+
+    @Override
+    public JsonValue saveGame() {
+        JsonValue saveData = new JsonValue(ValueType.object);
+
+        saveData.addChild("type", new JsonValue("user"));
+
+        return saveData;
     }
 }
