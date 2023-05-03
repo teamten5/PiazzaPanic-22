@@ -101,7 +101,7 @@ project(":core") {
     }
     }
     checkstyle {
-       // toolVersion = '10.4'
+        toolVersion = '10.4'
         configFile = rootProject.resources.text.fromArchiveEntry(configurations.checkstyleRules, 'google_checks.xml').asFile()
         configProperties = [
                 'checkstyle.cache.file': "${rootProject.buildDir}/checkstyle/cacheFile"
