@@ -19,6 +19,13 @@ plugins {
     id 'checkstyle'
 }
 
+def checkstyleVersion = '10.4’
+
+checkstyle {
+    toolVersion "${checkstyleVersion}"
+    config = resources.text.fromArchiveEntry(configurations.checkstyleRules, 'google_checks.xml')
+}
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "jacoco"
