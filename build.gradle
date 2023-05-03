@@ -22,8 +22,7 @@ plugins {
 def checkstyleVersion = '10.4'
 
 checkstyle {
-    toolVersion "${checkstyleVersion}"
-    config = resources.text.fromArchiveEntry(configurations.checkstyleRules, 'google_checks.xml')
+toolVersion "${checkstyleVersion}”
 }
 
 configurations {
