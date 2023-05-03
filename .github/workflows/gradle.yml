@@ -33,3 +33,8 @@ jobs:
       with:
         name: jacocoHTML
         path: core/build/jacocoHtml/
+    - name: Upload library JAR
+      uses: actions/upload-artifact@v3
+      with:
+        name: lib.jar
+        path: build/libs/PiazzaPanic-22-1.0
