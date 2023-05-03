@@ -19,16 +19,6 @@ plugins {
     id 'checkstyle'
 }
 
-def checkstyleVersion = '10.4'
-
-checkstyle {
-toolVersion "${checkstyleVersion}”
-}
-
-configurations {
-    checkstyleRules
-}
-
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "jacoco"
@@ -70,6 +60,17 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
     apply plugin: "jacoco"
+    apply plugin: "checkstyle"
+    
+    def checkstyleVersion = '10.4'
+
+    checkstyle {
+        toolVersion "${checkstyleVersion}”
+    }
+
+    configurations {
+        checkstyleRules
+    }
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
