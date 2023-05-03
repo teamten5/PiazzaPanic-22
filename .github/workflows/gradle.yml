@@ -38,3 +38,8 @@ jobs:
       with:
         name: lib.jar
         path: core/build/libs/core-1.0.jar
+    - name: Upload Checkstyle report
+      uses: actions/upload-artifact@v3
+      with:
+        name: checkstyle-report
+        path: core/build/reports/checkstyle
