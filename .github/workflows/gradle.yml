@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: lib.jar
-        path: build/libs/PiazzaPanic-22-1.0
+        path: build/libs/PiazzaPanic-22-1.0.jar
