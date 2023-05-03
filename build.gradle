@@ -19,6 +19,8 @@ plugins {
     id 'checkstyle'
 }
 
+
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "jacoco"
@@ -61,12 +63,8 @@ project(":core") {
     apply plugin: "java-library"
     apply plugin: "jacoco"
     apply plugin: "checkstyle"
-    
-    def checkstyleVersion = '10.4'
 
-    checkstyle {
-        toolVersion "${checkstyleVersion}”
-    }
+    def checkstyleVersion = '10.4'
 
     configurations {
         checkstyleRules
@@ -102,8 +100,13 @@ project(":core") {
         }
     }
     }
-checkstyle {
-    // same toolVersion
-    config = resources.text.fromArchiveEntry(configurations.checkstyleRules,'google_checks.xml')
-}
+    checkstyle {
+        toolVersion = '10.4'
+        configFile = rootProject.resources.text.fromArchiveEntry(configurations.checkstyleRules, 'google_checks.xml').asFile()
+        configProperties = [
+                'checkstyle.cache.file': "${rootProject.buildDir}/checkstyle/cacheFile"
+        ]
+        showViolations = true
+        //reportsDir = file("${rootProject.buildDir}/checkstyle/checkstyle.xml")
+    }
 }
