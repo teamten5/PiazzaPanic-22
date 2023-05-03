@@ -26,6 +26,10 @@ checkstyle {
     config = resources.text.fromArchiveEntry(configurations.checkstyleRules, 'google_checks.xml')
 }
 
+configurations {
+    checkstyleRules
+}
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "jacoco"
@@ -78,6 +82,9 @@ project(":core") {
         //testImplementation('junit:junit:4.13')
         testImplementation('org.mockito:mockito-core:5.2.0')
         testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+        checkstyleRules("com.puppycrawl.tools:checkstyle:${checkstyleVersion}") {
+            transitive = false
+        }
     }
 
     test {
@@ -95,4 +102,8 @@ project(":core") {
         }
     }
     }
+checkstyle {
+    // same toolVersion
+    config = resources.text.fromArchiveEntry(configurations.checkstyleRules,'google_checks.xml')
+}
 }
