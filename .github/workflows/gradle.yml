@@ -32,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: jacocoHTML
-        path: core/build/jacocoHTML/
+        path: core/build/jacocoHtml/
